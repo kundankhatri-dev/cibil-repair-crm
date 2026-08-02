@@ -1,0 +1,185 @@
+{
+    "success": true,
+    "articles": [
+        {
+            "id": "credit_6a6edce26a208",
+            "title": "CIBIL Score Update: New Factors Affecting Your Credit Rating in 2025",
+            "excerpt": "TransUnion CIBIL introduces new parameters for credit scoring. Learn what changed and how it affects your loan eligibility.",
+            "link": "https:\/\/www.cibil.com\/resources\/news",
+            "category": "credit",
+            "source": "CIBIL",
+            "published_at": "2026-08-01 06:00:02",
+            "views": 55414
+        },
+        {
+            "id": "credit_6a6edce26a242",
+            "title": "How to Improve Your CIBIL Score Fast - Expert Tips 2025",
+            "excerpt": "Practical strategies to boost your credit score within 30 days. Expert advice from certified credit counselors.",
+            "link": "https:\/\/www.cibil.com\/resources\/tips",
+            "category": "credit",
+            "source": "CIBIL",
+            "published_at": "2026-07-31 06:00:02",
+            "views": 59515
+        },
+        {
+            "id": "manual_6a6edce26a24a",
+            "title": "RBI Keeps Repo Rate Unchanged at 6.5% for 8th Consecutive Time",
+            "excerpt": "The Monetary Policy Committee maintained status quo on benchmark interest rates, providing continued relief to home loan borrowers.",
+            "link": "https:\/\/www.rbi.org.in\/",
+            "category": "rbi",
+            "source": "RBI Official",
+            "published_at": "2026-07-31 06:00:02",
+            "views": 25033
+        },
+        {
+            "id": "credit_6a6edce26a246",
+            "title": "Equifax Launches New Credit Scoring Model for Indian Consumers",
+            "excerpt": "New algorithm promises more accurate credit assessment for thin-file borrowers and first-time loan applicants.",
+            "link": "https:\/\/www.equifax.com\/newsroom",
+            "category": "credit",
+            "source": "Equifax",
+            "published_at": "2026-07-30 06:00:02",
+            "views": 35563
+        },
+        {
+            "id": "manual_6a6edce26a24b",
+            "title": "SBI Reduces Home Loan Interest Rates - Festive Offer 2025",
+            "excerpt": "State Bank of India announces special festive offer with reduced home loan interest rates starting from 8.40%.",
+            "link": "https:\/\/www.sbi.co.in\/web\/press-release",
+            "category": "banking",
+            "source": "SBI",
+            "published_at": "2026-07-30 06:00:02",
+            "views": 54421
+        },
+        {
+            "id": "credit_6a6edce26a248",
+            "title": "Experian Introduces Free Credit Report Access for All Indians",
+            "excerpt": "Experian India now offers free annual credit reports to promote financial literacy and awareness.",
+            "link": "https:\/\/www.experian.in\/blogs",
+            "category": "credit",
+            "source": "Experian",
+            "published_at": "2026-07-29 06:00:02",
+            "views": 46679
+        },
+        {
+            "id": "manual_6a6edce26a24d",
+            "title": "HDFC Bank Launches New Premium Credit Card with Travel Benefits",
+            "excerpt": "New credit card offers unlimited lounge access, travel insurance, and reward points on every spend.",
+            "link": "https:\/\/www.hdfcbank.com\/personal\/press-room",
+            "category": "banking",
+            "source": "HDFC Bank",
+            "published_at": "2026-07-29 06:00:02",
+            "views": 56940
+        },
+        {
+            "id": "manual_6a6edce26a24f",
+            "title": "ICICI Bank Introduces Zero Balance Savings Account with Benefits",
+            "excerpt": "New digital savings account with no minimum balance requirement and free online transfers.",
+            "link": "https:\/\/www.icicibank.com\/about-us\/media\/press-releases",
+            "category": "banking",
+            "source": "ICICI Bank",
+            "published_at": "2026-07-28 06:00:02",
+            "views": 27579
+        },
+        {
+            "id": "manual_6a6edce26a250",
+            "title": "RBI Announces New Guidelines for Credit Card Issuance",
+            "excerpt": "New rules require banks to provide customers with multiple card network options at the time of issuance.",
+            "link": "https:\/\/www.rbi.org.in\/",
+            "category": "rbi",
+            "source": "RBI Official",
+            "published_at": "2026-07-27 06:00:02",
+            "views": 47470
+        },
+        {
+            "id": "orig_6a6edce26a252",
+            "title": "How to Remove a Written-Off Account from Your CIBIL Report in 2025",
+            "excerpt": "A \"Written-Off\" account is one of the most damaging entries on your CIBIL report. It CAN be legally removed. Complete step-by-step legal guide.",
+            "link": "blog\/how-to-remove-written-off-account-from-cibil.html",
+            "category": "guide",
+            "source": "CIBIL Repair",
+            "published_at": "2026-07-23 06:00:02",
+            "views": 61785,
+            "featured": true
+        },
+        {
+            "id": "orig_6a6edce26a256",
+            "title": "Settled vs Closed Account in CIBIL: The Critical Difference That Costing You Your Home Loan",
+            "excerpt": "Millions of Indians have \"Settled\" accounts without realizing this single word can get every loan application rejected.",
+            "link": "blog\/settled-vs-closed-cibil.html",
+            "category": "guide",
+            "source": "CIBIL Repair",
+            "published_at": "2026-07-22 06:00:02",
+            "views": 67968,
+            "featured": false
+        },
+        {
+            "id": "orig_6a6edce26a258",
+            "title": "7 CIBIL Score Myths That Are Silently Costing Indians Lakhs Every Year",
+            "excerpt": "From \"checking your score lowers it\" to \"settling a loan is better than defaulting\" \u2014 we expose the most dangerous CIBIL myths.",
+            "link": "blog\/cibil-score-myths.html",
+            "category": "tips",
+            "source": "CIBIL Repair",
+            "published_at": "2026-07-21 06:00:02",
+            "views": 31158,
+            "featured": false
+        },
+        {
+            "id": "orig_6a6edce26a259",
+            "title": "Home Loan Rejected? 7 Steps to Fix Your CIBIL Score and Get Approved in 90 Days",
+            "excerpt": "Got a home loan rejection? Our credit experts outline the exact 7-step recovery plan that has helped 2,000+ clients.",
+            "link": "blog\/home-loan-rejected-cibil.html",
+            "category": "loan",
+            "source": "CIBIL Repair",
+            "published_at": "2026-07-20 06:00:02",
+            "views": 30424,
+            "featured": false
+        },
+        {
+            "id": "orig_6a6edce26a25b",
+            "title": "RBI's New Credit Reporting Rules 2024: What Every Indian Borrower Must Know",
+            "excerpt": "The Reserve Bank of India has issued critical new guidelines on credit bureau reporting. Complete breakdown.",
+            "link": "blog\/rbi-credit-bureau-guidelines.html",
+            "category": "law",
+            "source": "CIBIL Repair",
+            "published_at": "2026-07-19 06:00:02",
+            "views": 97343,
+            "featured": false
+        },
+        {
+            "id": "orig_6a6edce26a25d",
+            "title": "CIBIL vs Equifax vs Experian vs CRIF: Which Credit Bureau Matters Most for Indian Loan Applications?",
+            "excerpt": "India has 4 credit bureaus \u2014 and different banks check different ones. Complete comparison guide.",
+            "link": "blog\/4-credit-bureaus-india-comparison.html",
+            "category": "guide",
+            "source": "CIBIL Repair",
+            "published_at": "2026-07-18 06:00:02",
+            "views": 32654,
+            "featured": false
+        },
+        {
+            "id": "orig_6a6edce26a25e",
+            "title": "The Hidden Link Between Your Credit Card Usage and CIBIL Score",
+            "excerpt": "Using 80% of your credit limit feels normal \u2014 but it is secretly tanking your score. Here is the magic number you should never cross.",
+            "link": "blog\/credit-card-cibil-connection.html",
+            "category": "tips",
+            "source": "CIBIL Repair",
+            "published_at": "2026-07-17 06:00:02",
+            "views": 49571,
+            "featured": false
+        },
+        {
+            "id": "orig_6a6edce26a25f",
+            "title": "\"Suit Filed\" on Your CIBIL Report? Here is the Exact Legal Process to Get It Removed",
+            "excerpt": "A \"Suit Filed\" entry is the single most damaging thing on a credit report \u2014 yet 92% of cases can be resolved.",
+            "link": "blog\/suit-filed-cibil-removal.html",
+            "category": "law",
+            "source": "CIBIL Repair",
+            "published_at": "2026-07-16 06:00:02",
+            "views": 34965,
+            "featured": false
+        }
+    ],
+    "total": 17,
+    "last_update": "2026-08-02 06:00:02"
+}

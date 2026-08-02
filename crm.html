@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FranchiseCRM - Role Based Platform</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#6366f1;--primary-dark:#4f46e5;--primary-light:#e0e7ff;--secondary:#0ea5e9;--accent:#f59e0b;--success:#10b981;--danger:#ef4444;--warning:#f59e0b;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;--gray-400:#94a3b8;--gray-500:#64748b;--gray-600:#475569;--gray-700:#334155;--gray-800:#1e293b;--gray-900:#0f172a;--sidebar-w:260px;--header-h:64px;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);--shadow-lg:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--transition:.2s ease}
+body{font-family:"Inter",sans-serif;background:var(--gray-50);color:var(--gray-800);overflow:hidden;height:100vh}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--gray-300);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--gray-400)}
+#loginScreen{position:fixed;inset:0;z-index:9999;display:flex;background:linear-gradient(135deg,#1e1b4b,#312e81,#3730a3);overflow:hidden}
+#loginScreen::before{content:"";position:absolute;width:600px;height:600px;border-radius:50%;background:rgba(99,102,241,.15);top:-200px;right:-200px;animation:pulse 4s ease-in-out infinite}
+#loginScreen::after{content:"";position:absolute;width:400px;height:400px;border-radius:50%;background:rgba(14,165,233,.1);bottom:-100px;left:-100px;animation:pulse 4s ease-in-out infinite 2s}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.login-container{position:relative;z-index:1;display:flex;width:100%;max-width:1200px;margin:auto;background:rgba(255,255,255,.05);backdrop-filter:blur(20px);border-radius:24px;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.1)}
+.login-left{flex:1;padding:60px;display:flex;flex-direction:column;justify-content:center;color:#fff}
+.login-left h1{font-size:2.5rem;font-weight:800;margin-bottom:8px;line-height:1.2}
+.login-left h1 span{background:linear-gradient(135deg,#818cf8,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.login-left p{color:rgba(255,255,255,.7);font-size:1.05rem;margin-bottom:32px;line-height:1.6}
+.login-features{display:grid;gap:16px}
+.login-feature{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(255,255,255,.06);border-radius:12px;border:1px solid rgba(255,255,255,.08)}
+.login-feature i{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:1rem}
+.login-feature:nth-child(1) i{background:rgba(99,102,241,.2);color:#818cf8}
+.login-feature:nth-child(2) i{background:rgba(16,185,129,.2);color:#34d399}
+.login-feature:nth-child(3) i{background:rgba(245,158,11,.2);color:#fbbf24}
+.login-feature:nth-child(4) i{background:rgba(239,68,68,.2);color:#f87171}
+.login-feature div{font-size:.9rem}
+.login-feature div strong{display:block;margin-bottom:2px;color:#fff}
+.login-feature div small{color:rgba(255,255,255,.6)}
+.login-right{width:420px;padding:60px 48px;background:rgba(255,255,255,.95);display:flex;flex-direction:column;justify-content:center}
+.login-right h2{font-size:1.5rem;font-weight:700;color:var(--gray-900);margin-bottom:4px}
+.login-right p.sub{color:var(--gray-500);font-size:.9rem;margin-bottom:28px}
+.role-cards{display:grid;gap:10px;margin-bottom:24px}
+.role-card{display:flex;align-items:center;gap:14px;padding:14px 16px;border:2px solid var(--gray-200);border-radius:12px;cursor:pointer;transition:var(--transition);background:#fff}
+.role-card:hover{border-color:var(--primary-light);background:var(--gray-50)}
+.role-card.active{border-color:var(--primary);background:var(--primary-light)}
+.role-card .role-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.role-card:nth-child(1) .role-icon{background:#ede9fe;color:#7c3aed}
+.role-card:nth-child(2) .role-icon{background:#dbeafe;color:#2563eb}
+.role-card:nth-child(3) .role-icon{background:#d1fae5;color:#059669}
+.role-card:nth-child(4) .role-icon{background:#fef3c7;color:#d97706}
+.role-card .role-info{flex:1}
+.role-card .role-info strong{display:block;font-size:.95rem}
+.role-card .role-info small{color:var(--gray-500);font-size:.8rem}
+.role-card .check{width:20px;height:20px;border-radius:50%;border:2px solid var(--gray-300);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--transition)}
+.role-card.active .check{border-color:var(--primary);background:var(--primary)}
+.role-card.active .check::after{content:"\f00c";font-family:"Font Awesome 6 Free";font-weight:900;font-size:11px;color:#fff}
+#loginBtn{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;font-size:1rem;font-weight:600;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:8px}
+#loginBtn:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 4px 15px rgba(99,102,241,.4)}
+#loginBtn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+#app{display:none;height:100vh}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:var(--sidebar-w);background:var(--gray-900);z-index:100;display:flex;flex-direction:column;transition:transform var(--transition)}
+.sidebar-brand{display:flex;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sidebar-brand .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;color:#fff}
+.sidebar-brand span{font-weight:700;font-size:1.1rem;color:#fff}
+.sidebar-brand small{display:block;font-size:.7rem;color:var(--gray-400);font-weight:400}
+.sidebar-user{display:flex;align-items:center;gap:10px;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sidebar-user .avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.85rem;flex-shrink:0}
+.sidebar-user .info{flex:1;min-width:0}
+.sidebar-user .info div{font-size:.85rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sidebar-user .info small{font-size:.75rem;color:var(--gray-400);text-transform:capitalize}
+.sidebar-nav{flex:1;overflow-y:auto;padding:12px 10px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;color:var(--gray-400);text-decoration:none;cursor:pointer;transition:var(--transition);font-size:.88rem;font-weight:500;margin-bottom:2px}
+.nav-item:hover{color:#fff;background:rgba(255,255,255,.06)}
+.nav-item.active{color:#fff;background:rgba(99,102,241,.2)}
+.nav-item i{width:20px;text-align:center;font-size:1rem}
+.sidebar-logout{margin:10px;padding:10px 14px;border-radius:10px;color:var(--gray-400);cursor:pointer;transition:var(--transition);display:flex;align-items:center;gap:10px;font-size:.88rem;border-top:1px solid rgba(255,255,255,.08);margin-top:0}
+.sidebar-logout:hover{color:#f87171;background:rgba(239,68,68,.1)}
+.main{margin-left:var(--sidebar-w);height:100vh;display:flex;flex-direction:column}
+.header{height:var(--header-h);display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid var(--gray-200);background:#fff;flex-shrink:0}
+.header-left{display:flex;align-items:center;gap:16px}
+#menuToggleBtn{display:none;background:none;border:none;font-size:1.3rem;color:var(--gray-600);cursor:pointer;padding:4px}
+.header-search{position:relative}
+.header-search input{width:300px;padding:8px 14px 8px 36px;border:1px solid var(--gray-200);border-radius:8px;font-size:.85rem;outline:none;background:var(--gray-50);transition:var(--transition)}
+.header-search input:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px var(--primary-light)}
+.header-search i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--gray-400);font-size:.9rem}
+.header-right{display:flex;align-items:center;gap:16px}
+.header-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--gray-200);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gray-600);position:relative;transition:var(--transition)}
+.header-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
+.header-btn .dot{width:8px;height:8px;border-radius:50%;background:var(--danger);position:absolute;top:6px;right:6px;border:2px solid #fff}
+.header-user{display:flex;align-items:center;gap:8px;padding:4px 12px 4px 4px;border-radius:10px;cursor:pointer;transition:var(--transition)}
+.header-user:hover{background:var(--gray-50)}
+.header-user .avatar{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.8rem}
+.header-user .info div{font-size:.85rem;font-weight:600}
+.header-user .info small{font-size:.72rem;color:var(--gray-500);text-transform:capitalize}
+.content{flex:1;overflow-y:auto;padding:28px}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.page-header h2{font-size:1.5rem;font-weight:700}
+.page-header p{color:var(--gray-500);font-size:.9rem;margin-top:4px}
+.page-actions{display:flex;gap:8px;flex-wrap:wrap}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:28px}
+.stat-card{background:#fff;border-radius:var(--radius);padding:20px;border:1px solid var(--gray-200);box-shadow:var(--shadow);transition:var(--transition)}
+.stat-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.stat-card .stat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.stat-card .stat-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.stat-card .stat-label{font-size:.82rem;color:var(--gray-500);font-weight:500}
+.stat-card .stat-value{font-size:1.6rem;font-weight:700;margin-bottom:4px}
+.stat-card .stat-change{font-size:.8rem;display:flex;align-items:center;gap:4px}
+.stat-card .stat-change.up{color:var(--success)}
+.stat-card .stat-change.down{color:var(--danger)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:900px){.grid-2{grid-template-columns:1fr}}
+.card{background:#fff;border-radius:var(--radius);border:1px solid var(--gray-200);box-shadow:var(--shadow)}
+.card-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--gray-100)}
+.card-header h3{font-size:.95rem;font-weight:600}
+.card-body{padding:20px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.87rem}
+thead th{text-align:left;padding:10px 12px;font-weight:600;color:var(--gray-500);font-size:.8rem;text-transform:uppercase;letter-spacing:.03em;border-bottom:2px solid var(--gray-100);white-space:nowrap}
+tbody td{padding:10px 12px;border-bottom:1px solid var(--gray-100);vertical-align:middle}
+tbody tr:hover{background:var(--gray-50)}
+.status{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:500}
+.status.active{background:#d1fae5;color:#065f46}
+.status.inactive{background:#fee2e2;color:#991b1b}
+.status.pending{background:#fef3c7;color:#92400e}
+.badge{display:inline-flex;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600}
+.badge.gold{background:#fef3c7;color:#92400e}
+.badge.silver{background:#f1f5f9;color:#475569}
+.badge.bronze{background:#fed7aa;color:#9a3412}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1px solid transparent;font-size:.85rem;font-weight:500;cursor:pointer;transition:var(--transition);text-decoration:none}
+.btn-primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+.btn-primary:hover{background:var(--primary-dark);box-shadow:0 4px 12px rgba(99,102,241,.35)}
+.btn-success{background:var(--success);color:#fff}
+.btn-success:hover{background:#059669}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-danger:hover{background:#dc2626}
+.btn-warning{background:var(--warning);color:#fff}
+.btn-warning:hover{background:#d97706}
+.btn-outline{background:#fff;color:var(--gray-700);border-color:var(--gray-200)}
+.btn-outline:hover{background:var(--gray-50);border-color:var(--gray-300)}
+.btn-sm{padding:5px 10px;font-size:.8rem}
+.btn-icon{width:34px;height:34px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:8px}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:16px;width:90%;max-width:560px;max-height:85vh;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);animation:slideUp .25s}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--gray-100)}
+.modal-header h3{font-size:1.05rem;font-weight:600}
+.modal-close{width:32px;height:32px;border-radius:8px;border:none;background:var(--gray-100);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gray-500);font-size:1.1rem;transition:var(--transition)}
+.modal-close:hover{background:var(--gray-200)}
+.modal-body{padding:24px;overflow-y:auto;max-height:calc(85vh - 130px)}
+.modal-footer{display:flex;justify-content:flex-end;gap:8px;padding:16px 24px;border-top:1px solid var(--gray-100)}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:.85rem;font-weight:500;margin-bottom:6px;color:var(--gray-700)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:9px 12px;border:1px solid var(--gray-200);border-radius:8px;font-size:.9rem;outline:none;transition:var(--transition);font-family:inherit;background:#fff}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-light)}
+.form-group textarea{resize:vertical;min-height:80px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;min-height:400px}
+.kanban-col{background:var(--gray-50);border-radius:12px;padding:12px;border:1px solid var(--gray-200)}
+.kanban-col h4{font-size:.82rem;font-weight:600;color:var(--gray-600);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.kanban-col h4 span{background:var(--gray-200);color:var(--gray-600);padding:1px 8px;border-radius:10px;font-size:.75rem}
+.kanban-card{background:#fff;border-radius:8px;padding:12px;margin-bottom:8px;border:1px solid var(--gray-200);cursor:pointer;transition:var(--transition);box-shadow:var(--shadow)}
+.kanban-card:hover{box-shadow:var(--shadow-lg);border-color:var(--primary-light)}
+.kanban-card .kb-title{font-size:.85rem;font-weight:600;margin-bottom:4px}
+.kanban-card .kb-meta{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:var(--gray-500)}
+.kanban-card .kb-source{font-size:.7rem;padding:2px 6px;border-radius:4px;background:var(--gray-100)}
+@media(max-width:1100px){.kanban{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.kanban{grid-template-columns:1fr}}
+.chart-bar{display:flex;align-items:flex-end;gap:6px;height:180px;padding:10px 0}
+.chart-bar .bar{flex:1;border-radius:4px 4px 0 0;position:relative;min-height:4px;transition:var(--transition);display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.chart-bar .bar:hover{opacity:.8}
+.chart-bar .bar .val{font-size:.65rem;font-weight:600;color:var(--gray-600);margin-bottom:4px}
+.chart-bar .bar .lbl{font-size:.65rem;color:var(--gray-400);margin-top:6px;white-space:nowrap}
+.activity-feed{display:flex;flex-direction:column;gap:12px}
+.activity-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--gray-100)}
+.activity-item:last-child{border-bottom:none}
+.activity-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.activity-content{flex:1}
+.activity-content div{font-size:.85rem;line-height:1.4}
+.activity-content small{font-size:.75rem;color:var(--gray-400)}
+.toast-container{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast{display:flex;align-items:center;gap:12px;padding:14px 18px;background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.15);border-left:4px solid var(--primary);min-width:300px;max-width:400px;animation:slideIn .3s}
+.toast.success{border-left-color:var(--success)}
+.toast.error{border-left-color:var(--danger)}
+.toast.warning{border-left-color:var(--warning)}
+.toast i{font-size:1.2rem}
+.toast.success i{color:var(--success)}
+.toast.error i{color:var(--danger)}
+.toast.warning i{color:var(--warning)}
+.toast .toast-text{flex:1}
+.toast .toast-text div{font-size:.88rem;font-weight:500}
+.toast .toast-text small{font-size:.78rem;color:var(--gray-500)}
+.toast .toast-close{background:none;border:none;cursor:pointer;color:var(--gray-400);font-size:1rem;padding:2px}
+@keyframes slideIn{from{opacity:0;transform:translateX(50px)}to{opacity:1;transform:translateX(0)}}
+.commission-bar{display:flex;flex-direction:column;gap:12px}
+.comm-item{display:flex;align-items:center;gap:12px}
+.comm-item .comm-name{width:120px;font-size:.85rem;font-weight:500;flex-shrink:0}
+.comm-item .comm-track{flex:1;height:24px;background:var(--gray-100);border-radius:12px;overflow:hidden;position:relative}
+.comm-item .comm-fill{height:100%;border-radius:12px;transition:width .6s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:.7rem;color:#fff;font-weight:600}
+.comm-item .comm-val{width:70px;text-align:right;font-size:.8rem;font-weight:600;flex-shrink:0}
+.empty-state{text-align:center;padding:40px 20px;color:var(--gray-400)}
+.empty-state i{font-size:2.5rem;margin-bottom:12px;opacity:.5}
+.empty-state p{font-size:.9rem;margin-bottom:16px}
+.messages-layout{display:grid;grid-template-columns:300px 1fr;height:500px;border:1px solid var(--gray-200);border-radius:12px;overflow:hidden;background:#fff}
+.msg-list{border-right:1px solid var(--gray-200);overflow-y:auto}
+.msg-list-item{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;transition:var(--transition);border-bottom:1px solid var(--gray-100)}
+.msg-list-item:hover{background:var(--gray-50)}
+.msg-list-item .avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.85rem;flex-shrink:0}
+.msg-list-item .msg-info{flex:1;min-width:0}
+.msg-list-item .msg-info div{font-size:.85rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.msg-list-item .msg-info small{font-size:.75rem;color:var(--gray-400);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.msg-list-item .msg-time{font-size:.72rem;color:var(--gray-400);flex-shrink:0}
+.msg-list-item .unread{width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0}
+.msg-area{display:flex;flex-direction:column}
+.msg-header{padding:14px 20px;border-bottom:1px solid var(--gray-100);font-weight:600;font-size:.9rem}
+.msg-body{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px}
+.msg-bubble{max-width:75%;padding:10px 14px;border-radius:12px;font-size:.87rem;line-height:1.4}
+.msg-bubble.sent{align-self:flex-end;background:var(--primary);color:#fff;border-bottom-right-radius:4px}
+.msg-bubble.received{align-self:flex-start;background:var(--gray-100);border-bottom-left-radius:4px}
+.msg-bubble .msg-time{font-size:.7rem;opacity:.7;margin-top:4px;display:block}
+.msg-input-wrap{display:flex;align-items:center;gap:8px;padding:12px 16px;border-top:1px solid var(--gray-200)}
+.msg-input-wrap input{flex:1;padding:10px 14px;border:1px solid var(--gray-200);border-radius:8px;outline:none;font-size:.87rem}
+.msg-input-wrap input:focus{border-color:var(--primary)}
+.msg-input-wrap button{width:38px;height:38px;border-radius:8px;border:none;background:var(--primary);color:#fff;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center}
+.msg-input-wrap button:hover{background:var(--primary-dark)}
+@media(max-width:768px){
+.sidebar{transform:translateX(-100%)}
+.sidebar.open{transform:translateX(0)}
+.main{margin-left:0}
+#menuToggleBtn{display:block}
+.header-search input{width:180px}
+.login-container{flex-direction:column;margin:20px;border-radius:16px}
+.login-left{padding:32px}
+.login-right{width:100%;padding:32px}
+.messages-layout{grid-template-columns:1fr}
+.login-left h1{font-size:1.8rem}
+.stats-grid{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+}
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-container">
+    <div class="login-left">
+      <h1>Franchise<span>CRM</span></h1>
+      <p>Complete role-based franchise management platform with lead generation, pipeline tracking, and performance analytics.</p>
+      <div class="login-features">
+        <div class="login-feature"><i class="fas fa-globe"></i><div><strong>Multi-Site Management</strong><small>Manage all franchise locations from one dashboard</small></div></div>
+        <div class="login-feature"><i class="fas fa-plug"></i><div><strong>Lead Generation Suite</strong><small>Connectors, agents, and pipeline management</small></div></div>
+        <div class="login-feature"><i class="fas fa-chart-line"></i><div><strong>Real-Time Analytics</strong><small>Conversion tracking, commissions, and KPIs</small></div></div>
+        <div class="login-feature"><i class="fas fa-users"></i><div><strong>Role-Based Access</strong><small>Admin - Partner - Client - Staff with tailored tools</small></div></div>
+      </div>
+    </div>
+    <div class="login-right">
+      <h2>Welcome Back</h2>
+      <p class="sub">Select your role to access the dashboard</p>
+      <div class="role-cards" id="roleCards">
+        <div class="role-card" data-role="admin"><div class="role-icon"><i class="fas fa-shield-halved"></i></div><div class="role-info"><strong>Admin</strong><small>Full system control and analytics</small></div><div class="check"></div></div>
+        <div class="role-card active" data-role="partner"><div class="role-icon"><i class="fas fa-store"></i></div><div class="role-info"><strong>Partner</strong><small>Franchise dashboard and lead generation</small></div><div class="check"></div></div>
+        <div class="role-card" data-role="client"><div class="role-icon"><i class="fas fa-user"></i></div><div class="role-info"><strong>Client</strong><small>Personal lead tracking and messaging</small></div><div class="check"></div></div>
+        <div class="role-card" data-role="staff"><div class="role-icon"><i class="fas fa-headset"></i></div><div class="role-info"><strong>Staff</strong><small>Assigned leads, tasks, and performance</small></div><div class="check"></div></div>
+      </div>
+      <button id="loginBtn"><i class="fas fa-arrow-right-to-bracket"></i> Access Dashboard</button>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="logo">F</div>
+      <div><span>FranchiseCRM</span><small>Management Platform</small></div>
+    </div>
+    <div class="sidebar-user" id="sidebarUser">
+      <div class="avatar" style="background:var(--primary);color:#fff">A</div>
+      <div class="info"><div id="sbUserName">User</div><small id="sbUserRole">role</small></div>
+    </div>
+    <nav class="sidebar-nav" id="sidebarNav"></nav>
+    <div class="sidebar-logout" id="logoutBtn"><i class="fas fa-right-from-bracket"></i> Sign Out</div>
+  </aside>
+
+  <div class="main">
+    <header class="header">
+      <div class="header-left">
+        <button id="menuToggleBtn"><i class="fas fa-bars"></i></button>
+        <div class="header-search"><i class="fas fa-search"></i><input type="text" id="globalSearch" placeholder="Search leads, partners, agents..."></div>
+      </div>
+      <div class="header-right">
+        <button class="header-btn" id="notifBtn"><i class="fas fa-bell"></i><span class="dot"></span></button>
+        <button class="header-btn" id="helpBtn"><i class="fas fa-circle-question"></i></button>
+        <div class="header-user">
+          <div class="avatar" style="background:var(--primary);color:#fff" id="headerAvatar">A</div>
+          <div class="info"><div id="headerName">User</div><small id="headerRole">role</small></div>
+        </div>
+      </div>
+    </header>
+    <div class="content" id="mainContent"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Modal</h3>
+      <button class="modal-close" id="modalClose"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer" id="modalFooter"></div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+var COLORS = ["#6366f1","#0ea5e9","#10b981","#f59e0b","#ef4444","#8b5cf6","#ec4899","#14b8a6","#f97316","#84cc16"];
+var CONNECTOR_TYPES = [
+  {value:"social",label:"Social Media"},{value:"search",label:"Search Engine"},{value:"web",label:"Website"},
+  {value:"referral",label:"Referral"},{value:"email",label:"Email Marketing"},{value:"event",label:"Events"},{value:"other",label:"Other"}
+];
+var initialData = {
+  partners:[
+    {id:"P001",name:"John Franchise",company:"Franchise One",email:"john@franchise1.com",phone:"555-0101",tier:"Gold",status:"active",leadsGenerated:145,conversionRate:23.4,revenue:89450,joinDate:"2024-01-15",avatar:"JF"},
+    {id:"P002",name:"Jane Partner",company:"Franchise Two",email:"jane@franchise2.com",phone:"555-0102",tier:"Silver",status:"active",leadsGenerated:89,conversionRate:18.7,revenue:52300,joinDate:"2024-03-20",avatar:"JP"},
+    {id:"P003",name:"Bob Franchise",company:"Franchise Three",email:"bob@franchise3.com",phone:"555-0103",tier:"Bronze",status:"active",leadsGenerated:56,conversionRate:14.2,revenue:28100,joinDate:"2024-06-10",avatar:"BF"},
+    {id:"P004",name:"Alice Partner",company:"Franchise Four",email:"alice@franchise4.com",phone:"555-0104",tier:"Gold",status:"inactive",leadsGenerated:23,conversionRate:21.8,revenue:15200,joinDate:"2024-02-28",avatar:"AP"}
+  ],
+  connectors:[
+    {id:"C1",partnerId:"P001",name:"Facebook Ads",type:"social",status:"active",apiKey:"fb_sk_a1b2c3d4",budget:2500,spent:1830,leads:67,conversionRate:3.2,lastSync:"2025-07-29 14:32",connected:true,platformIcon:"facebook"},
+    {id:"C2",partnerId:"P001",name:"Google Ads",type:"search",status:"active",apiKey:"ga_sk_e5f6g7h8",budget:3000,spent:2150,leads:52,conversionRate:2.8,lastSync:"2025-07-29 13:15",connected:true,platformIcon:"google"},
+    {id:"C3",partnerId:"P002",name:"Website Forms",type:"web",status:"active",apiKey:"wf_sk_i9j0k1l2",budget:1000,spent:800,leads:34,conversionRate:4.1,lastSync:"2025-07-29 12:00",connected:true,platformIcon:"globe"},
+    {id:"C4",partnerId:"P001",name:"Referral Program",type:"referral",status:"inactive",apiKey:"rf_sk_m3n4o5p6",budget:1500,spent:0,leads:12,conversionRate:5.5,lastSync:"2025-07-28 09:45",connected:false,platformIcon:"users"},
+    {id:"C5",partnerId:"P002",name:"LinkedIn Ads",type:"social",status:"active",apiKey:"li_sk_q7r8s9t0",budget:2000,spent:1450,leads:28,conversionRate:2.1,lastSync:"2025-07-29 11:30",connected:true,platformIcon:"linkedin"},
+    {id:"C6",partnerId:"P003",name:"Email Campaigns",type:"email",status:"active",apiKey:"em_sk_u1v2w3x4",budget:800,spent:520,leads:19,conversionRate:3.8,lastSync:"2025-07-29 10:00",connected:true,platformIcon:"envelope"},
+    {id:"C7",partnerId:"P004",name:"Trade Show",type:"event",status:"inactive",apiKey:"ev_sk_y5z6a7b8",budget:1200,spent:1100,leads:8,conversionRate:6.2,lastSync:"2025-07-27 15:20",connected:false,platformIcon:"calendar"}
+  ],
+  agents:[
+    {id:"A1",partnerId:"P001",name:"Alice Johnson",email:"alice@f1.com",phone:"555-1001",status:"active",leads:23,deals:8,commission:15,earnings:12300,hired:"2024-02-01",rating:4.8,avatar:"AJ"},
+    {id:"A2",partnerId:"P001",name:"Bob Smith",email:"bob@f1.com",phone:"555-1002",status:"active",leads:18,deals:5,commission:12,earnings:8750,hired:"2024-04-15",rating:4.2,avatar:"BS"},
+    {id:"A3",partnerId:"P002",name:"Carol White",email:"carol@f2.com",phone:"555-2001",status:"active",leads:15,deals:6,commission:14,earnings:9600,hired:"2024-03-01",rating:4.5,avatar:"CW"},
+    {id:"A4",partnerId:"P001",name:"David Brown",email:"david@f1.com",phone:"555-1003",status:"inactive",leads:7,deals:2,commission:10,earnings:3200,hired:"2024-06-01",rating:3.8,avatar:"DB"},
+    {id:"A5",partnerId:"P002",name:"Eve Davis",email:"eve@f2.com",phone:"555-2002",status:"active",leads:11,deals:4,commission:13,earnings:6100,hired:"2024-05-15",rating:4.0,avatar:"ED"},
+    {id:"A6",partnerId:"P003",name:"Frank Miller",email:"frank@f3.com",phone:"555-3001",status:"active",leads:9,deals:3,commission:11,earnings:4200,hired:"2024-07-01",rating:3.9,avatar:"FM"}
+  ],
+  clients:[
+    {id:"CL1",partnerId:"P001",name:"Sarah Client",email:"sarah@email.com",phone:"555-3001",company:"Acme Corp",status:"active",leads:5,deals:2,joined:"2024-01-20",avatar:"SC"},
+    {id:"CL2",partnerId:"P001",name:"Tom Wilson",email:"tom@email.com",phone:"555-3002",company:"Wilson Inc",status:"active",leads:3,deals:1,joined:"2024-02-15",avatar:"TW"},
+    {id:"CL3",partnerId:"P002",name:"Uma Patel",email:"uma@email.com",phone:"555-3003",company:"Patel Group",status:"active",leads:4,deals:0,joined:"2024-04-01",avatar:"UP"}
+  ],
+  staff:[
+    {id:"S1",name:"Mike Staff",email:"mike@franchise.com",phone:"555-4001",role:"Sales Rep",status:"active",leadsAssigned:12,deals:5,rating:4.3,joined:"2024-01-10",avatar:"MS"},
+    {id:"S2",name:"Lisa Support",email:"lisa@franchise.com",phone:"555-4002",role:"Support Agent",status:"active",leadsAssigned:8,deals:3,rating:4.6,joined:"2024-02-20",avatar:"LS"},
+    {id:"S3",name:"James Lead",email:"james@franchise.com",phone:"555-4003",role:"Lead Dev",status:"active",leadsAssigned:15,deals:7,rating:4.1,joined:"2024-03-05",avatar:"JL"}
+  ],
+  leads:[
+    {id:"L1",partnerId:"P001",connectorId:"C1",agentId:"A1",clientId:"CL1",name:"Big Corp Deal",company:"Big Corp",contact:"John Big",email:"john@bigcorp.com",phone:"555-5001",source:"Facebook Ads",stage:"qualified",value:50000,probability:60,created:"2025-07-20",notes:"Interested in enterprise plan"},
+    {id:"L2",partnerId:"P001",connectorId:"C2",agentId:"A2",name:"Midwest Expansion",company:"Midwest Inc",contact:"Jane Midwest",email:"jane@midwest.com",phone:"555-5002",source:"Google Ads",stage:"contacted",value:25000,probability:30,created:"2025-07-22"},
+    {id:"L3",partnerId:"P002",connectorId:"C3",agentId:"A3",name:"Startup Growth",company:"Startup X",contact:"Bob Startup",email:"bob@startupx.com",phone:"555-5003",source:"Website Forms",stage:"new",value:15000,probability:15,created:"2025-07-25"},
+    {id:"L4",partnerId:"P001",connectorId:"C4",agentId:"A1",name:"Referral Partner",company:"Partner Co",contact:"Alice Ref",email:"alice@partnerco.com",phone:"555-5004",source:"Referral Program",stage:"converted",value:75000,probability:100,created:"2025-07-10"},
+    {id:"L5",partnerId:"P001",connectorId:"C1",agentId:"A1",name:"Enterprise Suite",company:"Enterprise Ltd",contact:"Sarah Ent",email:"sarah@enterprise.com",phone:"555-5005",source:"Facebook Ads",stage:"qualified",value:120000,probability:65,created:"2025-07-18"},
+    {id:"L6",partnerId:"P002",connectorId:"C5",agentId:"A3",name:"Tech Alliance",company:"Tech Alliance",contact:"Mark Tech",email:"mark@techalliance.com",phone:"555-5006",source:"LinkedIn Ads",stage:"contacted",value:35000,probability:25,created:"2025-07-23"},
+    {id:"L7",partnerId:"P003",connectorId:"C6",agentId:"A6",name:"Local Business",company:"Local Biz",contact:"Sam Local",email:"sam@localbiz.com",phone:"555-5007",source:"Email Campaigns",stage:"new",value:8000,probability:10,created:"2025-07-27"},
+    {id:"L8",partnerId:"P001",connectorId:"C2",agentId:"A2",name:"Regional Chain",company:"Regional Chain",contact:"Diana Reg",email:"diana@regional.com",phone:"555-5008",source:"Google Ads",stage:"lost",value:45000,probability:0,created:"2025-07-05"}
+  ],
+  tasks:[
+    {id:"T1",assignedTo:"S1",leadId:"L1",title:"Follow up demo call",due:"2025-07-31",priority:"high",status:"pending"},
+    {id:"T2",assignedTo:"S1",leadId:"L2",title:"Send proposal",due:"2025-07-30",priority:"medium",status:"in_progress"},
+    {id:"T3",assignedTo:"S2",leadId:"L3",title:"Qualify lead",due:"2025-08-01",priority:"low",status:"pending"},
+    {id:"T4",assignedTo:"S3",leadId:"L5",title:"Schedule second demo",due:"2025-07-29",priority:"high",status:"done"}
+  ],
+  messages:[
+    {id:"M1",senderId:"CL1",recipientId:"P001",text:"Hi, I want to discuss the proposal",timestamp:"2025-07-29 10:30",read:false},
+    {id:"M2",senderId:"P001",recipientId:"CL1",text:"Sure, let me check the details",timestamp:"2025-07-29 10:32",read:true},
+    {id:"M3",senderId:"CL2",recipientId:"P001",text:"When can we schedule the onboarding?",timestamp:"2025-07-28 14:00",read:false}
+  ],
+  activities:[]
+};
+function generateActivity(data){
+  var acts=[];
+  data.leads.forEach(function(l){acts.push({type:"lead",icon:"fa-bolt",color:"#6366f1",text:'Lead "'+l.name+'" moved to <strong>'+l.stage+"</strong> stage",time:"2 hours ago",role:"partner",partnerId:l.partnerId})});
+  data.connectors.forEach(function(c){acts.push({type:"connector",icon:"fa-plug",color:"#0ea5e9",text:c.name+" "+(c.connected?"synced":"disconnected")+" -- "+c.leads+" leads generated",time:c.connected?"1 hour ago":"1 day ago",role:"partner",partnerId:c.partnerId})});
+  data.agents.forEach(function(a){acts.push({type:"agent",icon:"fa-user-tie",color:"#10b981",text:a.name+" "+(a.status==="active"?"closed":"is now")+" "+(a.deals>0?a.deals+" deals":a.status),time:"3 hours ago",role:"partner",partnerId:a.partnerId})});
+  data.activities=acts;
+}
+generateActivity(initialData);
+
+var ROLES = {
+  admin:{pages:["overview","partners","connectors","users","activity"],default:"overview"},
+  partner:{pages:["dashboard","connectors","agents","pipeline","leads","commissions","reports","messages","settings"],default:"dashboard"},
+  client:{pages:["myleads","messages","profile","notifications"],default:"myleads"},
+  staff:{pages:["assigned","tasks","performance","messages","schedule"],default:"assigned"}
+};
+var ROLE_INFO = {
+  admin:{name:"Admin User",email:"admin@franchise.com",avatar:"AU",color:"#7c3aed"},
+  partner:{name:"John Franchise",email:"john@franchise1.com",avatar:"JF",color:"#2563eb",partnerId:"P001"},
+  client:{name:"Sarah Client",email:"sarah@email.com",avatar:"SC",color:"#059669",clientId:"CL1"},
+  staff:{name:"Mike Staff",email:"mike@franchise.com",avatar:"MS",color:"#d97706",staffId:"S1"}
+};
+var NAV_LABELS = {
+  admin:{overview:"Overview",partners:"Partners",connectors:"All Connectors",users:"Users",activity:"Activity Log"},
+  partner:{dashboard:"Dashboard",connectors:"Connectors",agents:"Agents",pipeline:"Pipeline",leads:"Leads",commissions:"Commissions",reports:"Reports",messages:"Messages",settings:"Settings"},
+  client:{myleads:"My Leads",messages:"Messages",profile:"Profile",notifications:"Notifications"},
+  staff:{assigned:"Assigned Leads",tasks:"Tasks",performance:"Performance",messages:"Messages",schedule:"Schedule"}
+};
+var NAV_ICONS = {
+  overview:"fa-chart-pie",dashboard:"fa-gauge-high",partners:"fa-store",connectors:"fa-plug",agents:"fa-user-tie",
+  pipeline:"fa-arrow-trend-up",leads:"fa-bolt",commissions:"fa-sack-dollar",reports:"fa-chart-column",users:"fa-users",
+  activity:"fa-clock-rotate-left",messages:"fa-comments",settings:"fa-gear",myleads:"fa-list-check",profile:"fa-user",
+  notifications:"fa-bell",assigned:"fa-briefcase",tasks:"fa-check-double",performance:"fa-chart-simple",schedule:"fa-calendar"
+};
+var state = {currentRole:null,currentUser:null,data:JSON.parse(JSON.stringify(initialData)),currentPage:null,selectedContact:null};
+function uid(){return Math.random().toString(36).substring(2,9)}
+function toast(msg,type){
+  if(!type)type="success";
+  var c=document.getElementById("toastContainer");
+  var t=document.createElement("div");
+  t.className="toast "+type;
+  var icon=type==="success"?"fa-check-circle":type==="error"?"fa-circle-exclamation":"fa-triangle-exclamation";
+  t.innerHTML='<i class="fas '+icon+'"></i><div class="toast-text"><div>'+msg+'</div><small>Just now</small></div><button class="toast-close" onclick="this.parentElement.remove()"><i class="fas fa-xmark"></i></button>';
+  c.appendChild(t);
+  setTimeout(function(){t.remove()},4000);
+}
+function showModal(){document.getElementById("modalOverlay").classList.add("show")}
+function closeModal(){document.getElementById("modalOverlay").classList.remove("show")}
+function setModal(title,body,actions){
+  document.getElementById("modalTitle").textContent=title;
+  document.getElementById("modalBody").innerHTML=body;
+  var footer=document.getElementById("modalFooter");
+  footer.innerHTML="";
+  if(actions){
+    actions.forEach(function(a){
+      var btn=document.createElement("button");
+      btn.className="btn "+a.class;
+      btn.textContent=a.text;
+      btn.onclick=a.action;
+      footer.appendChild(btn);
+    });
+  }
+  showModal();
+}
+function login(role){
+  state.currentRole=role;
+  state.currentUser=ROLE_INFO[role];
+  state.currentPage=ROLES[role].default;
+  document.getElementById("loginScreen").style.display="none";
+  document.getElementById("app").style.display="flex";
+  renderApp();
+}
+function logout(){
+  state.currentRole=null;state.currentUser=null;state.currentPage=null;
+  document.getElementById("app").style.display="none";
+  document.getElementById("loginScreen").style.display="flex";
+}
+function renderApp(){
+  var role=state.currentRole,user=state.currentUser,info=ROLE_INFO[role];
+  document.getElementById("sidebarUser").querySelector(".avatar").style.cssText="background:"+info.color+";color:#fff";
+  document.getElementById("sidebarUser").querySelector(".avatar").textContent=info.avatar;
+  document.getElementById("sbUserName").textContent=info.name;
+  document.getElementById("sbUserRole").textContent=role;
+  document.getElementById("headerAvatar").style.background=info.color;
+  document.getElementById("headerAvatar").textContent=info.avatar;
+  document.getElementById("headerName").textContent=info.name;
+  document.getElementById("headerRole").textContent=role;
+  var nav=document.getElementById("sidebarNav");nav.innerHTML="";
+  var pages=ROLES[role].pages;
+  pages.forEach(function(p,i){
+    var el=document.createElement("a");
+    el.className="nav-item"+(p===state.currentPage?" active":"");
+    el.dataset.page=p;
+    el.innerHTML='<i class="fas '+NAV_ICONS[p]+'"></i>'+NAV_LABELS[role][p];
+    el.onclick=function(){navigate(p)};
+    nav.appendChild(el);
+    if(i===pages.length-8||i===pages.length-5){
+      var div=document.createElement("div");
+      div.style.cssText="height:1px;background:rgba(255,255,255,.06);margin:8px 0";
+      nav.appendChild(div);
+    }
+  });
+  renderPage(state.currentPage);
+}
+function navigate(page){
+  if(!ROLES[state.currentRole].pages.includes(page))return;
+  state.currentPage=page;
+  document.querySelectorAll(".nav-item").forEach(function(el){el.classList.toggle("active",el.dataset.page===page)});
+  renderPage(page);
+  if(window.innerWidth<=768)document.getElementById("sidebar").classList.remove("open");
+}
+function renderCurrentPage(){renderPage(state.currentPage)}
+
+function renderPage(page){
+  var role = state.currentRole;
+  var el = document.getElementById("mainContent");
+  if(role === "admin"){
+    if(page === "overview"){el.innerHTML = renderAdminOverview();}
+    else if(page === "partners"){el.innerHTML = renderAdminPartners();}
+    else if(page === "connectors"){el.innerHTML = renderAdminConnectors();}
+    else if(page === "users"){el.innerHTML = renderAdminUsers();}
+    else if(page === "activity"){el.innerHTML = renderAdminActivity();}
+  } else if(role === "partner"){
+    if(page === "dashboard"){el.innerHTML = renderPartnerDashboard();}
+    else if(page === "connectors"){el.innerHTML = renderPartnerConnectors();}
+    else if(page === "agents"){el.innerHTML = renderPartnerAgents();}
+    else if(page === "pipeline"){el.innerHTML = renderPartnerPipeline();}
+    else if(page === "leads"){el.innerHTML = renderPartnerLeads();}
+    else if(page === "commissions"){el.innerHTML = renderPartnerCommissions();}
+    else if(page === "reports"){el.innerHTML = renderPartnerReports();}
+    else if(page === "messages"){el.innerHTML = renderMessagesUI();}
+    else if(page === "settings"){el.innerHTML = renderPartnerSettings();}
+  } else if(role === "client"){
+    if(page === "myleads"){el.innerHTML = renderClientLeads();}
+    else if(page === "messages"){el.innerHTML = renderMessagesUI();}
+    else if(page === "profile"){el.innerHTML = renderClientProfile();}
+    else if(page === "notifications"){el.innerHTML = renderClientNotifs();}
+  } else if(role === "staff"){
+    if(page === "assigned"){el.innerHTML = renderStaffAssigned();}
+    else if(page === "tasks"){el.innerHTML = renderStaffTasks();}
+    else if(page === "performance"){el.innerHTML = renderStaffPerf();}
+    else if(page === "messages"){el.innerHTML = renderStaffMessages();}
+    else if(page === "schedule"){el.innerHTML = renderStaffSchedule();}
+  }
+}
+function renderAdminOverview(){
+  var data = state.data;
+  var totalPartners = data.partners.length;
+  var totalLeads = data.leads.length;
+  var totalRevenue = 0;
+  data.partners.forEach(function(p){totalRevenue += p.revenue;});
+  var totalConnectors = data.connectors.length;
+  var totalAgents = data.agents.length;
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var revenues = [28000,32000,29000,35000,41000,38000,42000,45000,39000,43000,47000,51000];
+  var maxRev = 0;
+  revenues.forEach(function(r){if(r > maxRev) maxRev = r;});
+  var barHtml = "";
+  for(var i = 0; i < 12; i++){
+    var h = Math.round((revenues[i] / maxRev) * 160);
+    barHtml += '<div class="bar" style="height:' + h + 'px;background:' + COLORS[i % COLORS.length] + '"><span class="val">$' + (revenues[i] / 1000) + 'k</span><span class="lbl">' + months[i] + '</span></div>';
+  }
+  var actHtml = "";
+  data.activities.forEach(function(a){
+    actHtml += '<div class="activity-item"><div class="activity-icon" style="background:' + a.color + '22;color:' + a.color + '"><i class="fas ' + a.icon + '"></i></div><div class="activity-content"><div>' + a.text + '</div><small>' + a.time + '</small></div></div>';
+  });
+  return '<div class="page-header"><div><h2>Admin Overview</h2><p>Complete system analytics at a glance</p></div></div><div class="stats-grid"><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Partners</div><div class="stat-icon" style="background:' + COLORS[0] + '22;color:' + COLORS[0] + '"><i class="fas fa-store"></i></div></div><div class="stat-value">' + totalPartners + '</div><div class="stat-change up"><i class="fas fa-arrow-up"></i> 2 new this month</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Leads</div><div class="stat-icon" style="background:' + COLORS[1] + '22;color:' + COLORS[1] + '"><i class="fas fa-bolt"></i></div></div><div class="stat-value">' + totalLeads + '</div><div class="stat-change up"><i class="fas fa-arrow-up"></i> 12% increase</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Revenue</div><div class="stat-icon" style="background:' + COLORS[2] + '22;color:' + COLORS[2] + '"><i class="fas fa-dollar-sign"></i></div></div><div class="stat-value">$' + totalRevenue.toLocaleString() + '</div><div class="stat-change up"><i class="fas fa-arrow-up"></i> 8.3% growth</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Network Size</div><div class="stat-icon" style="background:' + COLORS[3] + '22;color:' + COLORS[3] + '"><i class="fas fa-users"></i></div></div><div class="stat-value">' + (totalConnectors + totalAgents) + '</div><div class="stat-change up"><i class="fas fa-arrow-up"></i> ' + totalConnectors + ' connectors + ' + totalAgents + ' agents</div></div></div><div class="grid-2"><div class="card"><div class="card-header"><h3><i class="fas fa-chart-line" style="color:' + COLORS[0] + '"></i> Monthly Revenue</h3></div><div class="card-body"><div class="chart-bar">' + barHtml + '</div></div></div><div class="card"><div class="card-header"><h3><i class="fas fa-clock"></i> Recent Activity</h3></div><div class="card-body"><div class="activity-feed">' + actHtml + '</div></div></div></div>';
+}
+function renderAdminPartners(){
+  var data = state.data;
+  var rows = "";
+  data.partners.forEach(function(p){
+    var tierBadge = "";
+    if(p.tier === "Gold") tierBadge = '<span class="badge gold">Gold</span>';
+    else if(p.tier === "Silver") tierBadge = '<span class="badge silver">Silver</span>';
+    else tierBadge = '<span class="badge bronze">Bronze</span>';
+    var statusBadge = '<span class="status ' + p.status + '">' + p.status + '</span>';
+    rows += '<tr><td><div style="display:flex;align-items:center;gap:10px"><div class="avatar" style="width:34px;height:34px;border-radius:50%;background:' + COLORS[0] + ';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.8rem;flex-shrink:0">' + p.avatar + '</div><div><div style="font-weight:600;font-size:.85rem">' + p.name + '</div><small style="color:var(--gray-400)">' + p.email + '</small></div></div></td><td>' + p.company + '</td><td>' + tierBadge + '</td><td>' + p.leadsGenerated + '</td><td>$' + p.revenue.toLocaleString() + '</td><td>' + p.conversionRate + '%</td><td>' + statusBadge + '</td></tr>';
+  });
+  return '<div class="page-header"><div><h2>Partners</h2><p>Manage all franchise partners</p></div><div class="page-actions"><button class="btn btn-primary" onclick="showAddPartnerModal()"><i class="fas fa-plus"></i> Add Partner</button></div></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Partner</th><th>Company</th><th>Tier</th><th>Leads</th><th>Revenue</th><th>Conversion</th><th>Status</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+}
+function renderAdminConnectors(){
+  var data = state.data;
+  var total = data.connectors.length;
+  var active = 0;
+  var totalBudget = 0;
+  var totalLeads = 0;
+  data.connectors.forEach(function(c){
+    if(c.status === "active") active++;
+    totalBudget += c.budget;
+    totalLeads += c.leads;
+  });
+  var rows = "";
+  data.connectors.forEach(function(c){
+    var partner = null;
+    data.partners.forEach(function(p){if(p.id === c.partnerId) partner = p;});
+    var partnerName = partner ? partner.name : "Unknown";
+    var statusBadge = '<span class="status ' + c.status + '">' + (c.connected ? "Connected" : "Disconnected") + '</span>';
+    var typeLabel = "";
+    CONNECTOR_TYPES.forEach(function(t){if(t.value === c.type) typeLabel = t.label;});
+    var iconName = c.platformIcon || "plug";
+    rows += '<tr><td><div style="display:flex;align-items:center;gap:8px"><i class="fab fa-' + iconName + '" style="color:' + COLORS[1] + ';font-size:1.1rem"></i><span style="font-weight:500">' + c.name + '</span></div></td><td>' + typeLabel + '</td><td>' + partnerName + '</td><td>$' + c.budget.toLocaleString() + '</td><td>$' + c.spent.toLocaleString() + '</td><td>' + c.leads + '</td><td>' + c.conversionRate + '%</td><td>' + statusBadge + '</td></tr>';
+  });
+  return '<div class="page-header"><div><h2>All Connectors</h2><p>Monitor all connector channels across partners</p></div></div><div class="stats-grid"><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Connectors</div><div class="stat-icon" style="background:' + COLORS[0] + '22;color:' + COLORS[0] + '"><i class="fas fa-plug"></i></div></div><div class="stat-value">' + total + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Active</div><div class="stat-icon" style="background:' + COLORS[2] + '22;color:' + COLORS[2] + '"><i class="fas fa-check-circle"></i></div></div><div class="stat-value">' + active + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Budget</div><div class="stat-icon" style="background:' + COLORS[3] + '22;color:' + COLORS[3] + '"><i class="fas fa-wallet"></i></div></div><div class="stat-value">$' + totalBudget.toLocaleString() + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Leads</div><div class="stat-icon" style="background:' + COLORS[4] + '22;color:' + COLORS[4] + '"><i class="fas fa-bolt"></i></div></div><div class="stat-value">' + totalLeads + '</div></div></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Name</th><th>Type</th><th>Partner</th><th>Budget</th><th>Spent</th><th>Leads</th><th>Conv.Rate</th><th>Status</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+}
+function renderAdminUsers(){
+  var data = state.data;
+  var rows = "";
+  data.partners.forEach(function(u){
+    rows += '<tr><td><div style="display:flex;align-items:center;gap:10px"><div class="avatar" style="width:34px;height:34px;border-radius:50%;background:' + COLORS[0] + ';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.8rem">' + u.avatar + '</div><div><div style="font-weight:500">' + u.name + '</div><small style="color:var(--gray-400)">' + u.email + '</small></div></div></td><td>' + u.email + '</td><td><span class="badge gold">Partner</span></td><td><span class="status ' + u.status + '">' + u.status + '</span></td><td>' + u.joinDate + '</td></tr>';
+  });
+  data.staff.forEach(function(u){
+    rows += '<tr><td><div style="display:flex;align-items:center;gap:10px"><div class="avatar" style="width:34px;height:34px;border-radius:50%;background:' + COLORS[3] + ';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.8rem">' + u.avatar + '</div><div><div style="font-weight:500">' + u.name + '</div><small style="color:var(--gray-400)">' + u.email + '</small></div></div></td><td>' + u.email + '</td><td><span class="badge silver">Staff</span></td><td><span class="status ' + u.status + '">' + u.status + '</span></td><td>' + u.joined + '</td></tr>';
+  });
+  data.clients.forEach(function(u){
+    rows += '<tr><td><div style="display:flex;align-items:center;gap:10px"><div class="avatar" style="width:34px;height:34px;border-radius:50%;background:' + COLORS[2] + ';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.8rem">' + u.avatar + '</div><div><div style="font-weight:500">' + u.name + '</div><small style="color:var(--gray-400)">' + u.email + '</small></div></div></td><td>' + u.email + '</td><td><span class="badge bronze">Client</span></td><td><span class="status ' + u.status + '">' + u.status + '</span></td><td>' + u.joined + '</td></tr>';
+  });
+  return '<div class="page-header"><div><h2>Users</h2><p>All system users by role</p></div></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Joined</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+}
+function renderAdminActivity(){
+  var data = state.data;
+  var actHtml = "";
+  data.activities.forEach(function(a){
+    actHtml += '<div class="activity-item"><div class="activity-icon" style="background:' + a.color + '22;color:' + a.color + '"><i class="fas ' + a.icon + '"></i></div><div class="activity-content"><div>' + a.text + '</div><small>' + a.time + '</small></div></div>';
+  });
+  return '<div class="page-header"><div><h2>Activity Log</h2><p>Complete system activity feed</p></div></div><div class="card"><div class="card-body"><div class="activity-feed">' + (actHtml || '<div class="empty-state"><i class="fas fa-clock"></i><p>No recent activity</p></div>') + '</div></div></div>';
+}
+function renderPartnerDashboard(){
+  var pid = state.currentUser.partnerId;
+  var data = state.data;
+  var myLeads = [], myConnectors = [], myAgents = [];
+  data.leads.forEach(function(l){if(l.partnerId === pid) myLeads.push(l);});
+  data.connectors.forEach(function(c){if(c.partnerId === pid) myConnectors.push(c);});
+  data.agents.forEach(function(a){if(a.partnerId === pid) myAgents.push(a);});
+  var partner = null;
+  data.partners.forEach(function(p){if(p.id === pid) partner = p;});
+  var revenue = partner ? partner.revenue : 0;
+  var activeCons = "";
+  myConnectors.forEach(function(c){
+    activeCons += '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--gray-100)"><div style="display:flex;align-items:center;gap:8px"><i class="fas fa-plug" style="color:' + COLORS[1] + '"></i><span style="font-weight:500;font-size:.85rem">' + c.name + '</span></div><div><span class="status ' + c.status + '">' + c.leads + ' leads</span></div></div>';
+  });
+  var topAgents = "";
+  myAgents.sort(function(a,b){return b.earnings - a.earnings;});
+  myAgents.forEach(function(a){
+    topAgents += '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--gray-100)"><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="width:30px;height:30px;border-radius:50%;background:' + COLORS[2] + ';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.7rem">' + a.avatar + '</div><div><div style="font-size:.85rem;font-weight:500">' + a.name + '</div><small style="color:var(--gray-400)">$' + a.earnings.toLocaleString() + '</small></div></div><span class="badge gold">' + a.deals + ' deals</span></div>';
+  });
+  return '<div class="page-header"><div><h2>Partner Dashboard</h2><p>Welcome back, ' + state.currentUser.name + '</p></div></div><div class="stats-grid"><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Leads</div><div class="stat-icon" style="background:' + COLORS[0] + '22;color:' + COLORS[0] + '"><i class="fas fa-bolt"></i></div></div><div class="stat-value">' + myLeads.length + '</div><div class="stat-change up"><i class="fas fa-arrow-up"></i> Active pipeline</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Connectors</div><div class="stat-icon" style="background:' + COLORS[1] + '22;color:' + COLORS[1] + '"><i class="fas fa-plug"></i></div></div><div class="stat-value">' + myConnectors.length + '</div><div class="stat-change ' + (myConnectors.filter(function(c){return c.status === "active";}).length > 0 ? "up" : "down") + '"><i class="fas fa-circle"></i> ' + myConnectors.filter(function(c){return c.status === "active";}).length + ' active</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Agents</div><div class="stat-icon" style="background:' + COLORS[2] + '22;color:' + COLORS[2] + '"><i class="fas fa-user-tie"></i></div></div><div class="stat-value">' + myAgents.length + '</div><div class="stat-change up"><i class="fas fa-arrow-up"></i> ' + myAgents.filter(function(a){return a.status === "active";}).length + ' active</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Revenue</div><div class="stat-icon" style="background:' + COLORS[3] + '22;color:' + COLORS[3] + '"><i class="fas fa-dollar-sign"></i></div></div><div class="stat-value">$' + revenue.toLocaleString() + '</div><div class="stat-change up"><i class="fas fa-arrow-up"></i> YTD earnings</div></div></div><div style="display:flex;gap:10px;margin-bottom:24px"><button class="btn btn-primary" onclick="showAddConnectorModal()"><i class="fas fa-plus"></i> Add Connector</button><button class="btn btn-success" onclick="showAddAgentModal()"><i class="fas fa-plus"></i> Add Agent</button></div><div class="grid-2"><div class="card"><div class="card-header"><h3>Active Connectors</h3></div><div class="card-body">' + (activeCons || '<div class="empty-state"><i class="fas fa-plug"></i><p>No connectors yet</p></div>') + '</div></div><div class="card"><div class="card-header"><h3>Top Agents</h3></div><div class="card-body">' + (topAgents || '<div class="empty-state"><i class="fas fa-user-tie"></i><p>No agents yet</p></div>') + '</div></div></div><div style="margin-top:20px">' + renderMiniPipeline(pid) + '</div>';
+}
+function renderPartnerConnectors(){
+  var pid = state.currentUser.partnerId;
+  var data = state.data;
+  var myConnectors = [];
+  data.connectors.forEach(function(c){if(c.partnerId === pid) myConnectors.push(c);});
+  var total = myConnectors.length;
+  var active = 0, budget = 0, leads = 0;
+  myConnectors.forEach(function(c){if(c.status === "active") active++; budget += c.budget; leads += c.leads;});
+  var rows = "";
+  myConnectors.forEach(function(c){
+    var typeLabel = "";
+    CONNECTOR_TYPES.forEach(function(t){if(t.value === c.type) typeLabel = t.label;});
+    var statusBadge = '<span class="status ' + c.status + '">' + (c.connected ? "Connected" : "Disconnected") + '</span>';
+    var iconName = c.platformIcon || "plug";
+    rows += '<tr><td><div style="display:flex;align-items:center;gap:8px"><i class="fab fa-' + iconName + '" style="color:' + COLORS[1] + ';font-size:1.2rem"></i><span style="font-weight:600">' + c.name + '</span></div></td><td>' + typeLabel + '</td><td><code style="background:var(--gray-100);padding:3px 8px;border-radius:4px;font-size:.75rem;color:var(--gray-600)">' + c.apiKey + '</code></td><td>$' + c.budget.toLocaleString() + '</td><td>$' + c.spent.toLocaleString() + '</td><td>' + c.leads + '</td><td>' + c.conversionRate + '%</td><td>' + statusBadge + '</td><td style="font-size:.78rem;color:var(--gray-500)">' + c.lastSync + '</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-outline" onclick="editConnector(\'' + c.id + '\')"><i class="fas fa-edit"></i></button><button class="btn btn-sm btn-danger" onclick="deleteConnector(\'' + c.id + '\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+  });
+  return '<div class="page-header"><div><h2>My Connectors</h2><p>Manage your lead generation channels</p></div><div class="page-actions"><button class="btn btn-primary" onclick="showAddConnectorModal()"><i class="fas fa-plus"></i> Add Connector</button></div></div><div class="stats-grid"><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Connectors</div><div class="stat-icon" style="background:' + COLORS[0] + '22;color:' + COLORS[0] + '"><i class="fas fa-plug"></i></div></div><div class="stat-value">' + total + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Active</div><div class="stat-icon" style="background:' + COLORS[2] + '22;color:' + COLORS[2] + '"><i class="fas fa-check-circle"></i></div></div><div class="stat-value">' + active + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Budget</div><div class="stat-icon" style="background:' + COLORS[3] + '22;color:' + COLORS[3] + '"><i class="fas fa-wallet"></i></div></div><div class="stat-value">$' + budget.toLocaleString() + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Leads</div><div class="stat-icon" style="background:' + COLORS[4] + '22;color:' + COLORS[4] + '"><i class="fas fa-bolt"></i></div></div><div class="stat-value">' + leads + '</div></div></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Name</th><th>Type</th><th>API Key</th><th>Budget</th><th>Spent</th><th>Leads</th><th>Conv.Rate</th><th>Status</th><th>Last Sync</th><th>Actions</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+}
+function renderPartnerAgents(){
+  var pid = state.currentUser.partnerId;
+  var data = state.data;
+  var myAgents = [];
+  data.agents.forEach(function(a){if(a.partnerId === pid) myAgents.push(a);});
+  var totalAgents = myAgents.length;
+  var activeAgents = 0, totalLeads = 0, totalDeals = 0;
+  myAgents.forEach(function(a){
+    if(a.status === "active") activeAgents++;
+    totalLeads += a.leads;
+    totalDeals += a.deals;
+  });
+  var perfBars = "", maxEarnings = 0;
+  myAgents.forEach(function(a){if(a.earnings > maxEarnings) maxEarnings = a.earnings;});
+  myAgents.forEach(function(a, i){
+    var bw = maxEarnings > 0 ? Math.round((a.earnings / maxEarnings) * 100) : 0;
+    perfBars += '<div class="comm-item"><div class="comm-name">' + a.name + '</div><div class="comm-track"><div class="comm-fill" style="width:' + bw + '%;background:' + COLORS[i % COLORS.length] + '"></div></div><div class="comm-val">$' + a.earnings.toLocaleString() + '</div></div>';
+  });
+  var dealChartBars = "", maxDeals = 0;
+  myAgents.forEach(function(a){if(a.deals > maxDeals) maxDeals = a.deals;});
+  myAgents.forEach(function(a, i){
+    var bh = maxDeals > 0 ? Math.round((a.deals / maxDeals) * 160) : 0;
+    dealChartBars += '<div class="bar" style="height:' + bh + 'px;background:' + COLORS[i % COLORS.length] + '"><span class="val">' + a.deals + '</span><span class="lbl">' + a.name.split(" ")[0] + '</span></div>';
+  });
+  var rows = "";
+  myAgents.forEach(function(a){
+    var stars = "";
+    for(var s = 0; s < 5; s++){
+      stars += '<i class="fas fa-star" style="color:' + (s < Math.round(a.rating) ? COLORS[3] : "var(--gray-200)") + ';font-size:.7rem"></i>';
+    }
+    rows += '<tr><td><div style="display:flex;align-items:center;gap:10px"><div class="avatar" style="width:34px;height:34px;border-radius:50%;background:' + COLORS[2] + ';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.8rem">' + a.avatar + '</div><div><div style="font-weight:600;font-size:.85rem">' + a.name + '</div><small style="color:var(--gray-400)">Hired: ' + a.hired + '</small></div></div></td><td>' + a.email + '</td><td>' + a.phone + '</td><td>' + a.leads + '</td><td>' + a.deals + '</td><td>' + a.commission + '%</td><td>$' + a.earnings.toLocaleString() + '</td><td>' + stars + '</td><td><span class="status ' + a.status + '">' + a.status + '</span></td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-outline" onclick="editAgent(\'' + a.id + '\')"><i class="fas fa-edit"></i></button><button class="btn btn-sm btn-danger" onclick="deleteAgent(\'' + a.id + '\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+  });
+  return '<div class="page-header"><div><h2>My Agents</h2><p>Manage your sales team</p></div><div class="page-actions"><button class="btn btn-primary" onclick="showAddAgentModal()"><i class="fas fa-plus"></i> Add Agent</button></div></div><div class="stats-grid"><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Agents</div><div class="stat-icon" style="background:' + COLORS[0] + '22;color:' + COLORS[0] + '"><i class="fas fa-user-tie"></i></div></div><div class="stat-value">' + totalAgents + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Active</div><div class="stat-icon" style="background:' + COLORS[2] + '22;color:' + COLORS[2] + '"><i class="fas fa-check-circle"></i></div></div><div class="stat-value">' + activeAgents + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Leads</div><div class="stat-icon" style="background:' + COLORS[1] + '22;color:' + COLORS[1] + '"><i class="fas fa-bolt"></i></div></div><div class="stat-value">' + totalLeads + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Deals</div><div class="stat-icon" style="background:' + COLORS[3] + '22;color:' + COLORS[3] + '"><i class="fas fa-handshake"></i></div></div><div class="stat-value">' + totalDeals + '</div></div></div><div class="grid-2"><div class="card"><div class="card-header"><h3>Agent Performance by Earnings</h3></div><div class="card-body"><div class="commission-bar">' + (perfBars || '<div class="empty-state"><i class="fas fa-chart-bar"></i><p>No performance data</p></div>') + '</div></div></div><div class="card"><div class="card-header"><h3>Agent Deals</h3></div><div class="card-body"><div class="chart-bar">' + (dealChartBars || '<div class="empty-state"><i class="fas fa-chart-bar"></i><p>No deals data</p></div>') + '</div></div></div></div><div class="card" style="margin-top:20px"><div class="table-wrap"><table><thead><tr><th>Agent</th><th>Email</th><th>Phone</th><th>Leads</th><th>Deals</th><th>Commission%</th><th>Earnings</th><th>Rating</th><th>Status</th><th>Actions</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+}
+function showAddConnectorModal(){
+  var typeOpts = "";
+  CONNECTOR_TYPES.forEach(function(t){typeOpts += '<option value="' + t.value + '">' + t.label + '</option>';});
+  var body = '<div class="form-group"><label>Connector Name</label><input type="text" id="conName" placeholder="e.g. Facebook Ads"></div><div class="form-group"><label>Type</label><select id="conType">' + typeOpts + '</select></div><div class="form-group"><label>Monthly Budget ($)</label><input type="number" id="conBudget" placeholder="e.g. 2000"></div><div class="form-group"><label>Platform Icon</label><select id="conIcon"><option value="facebook">Facebook</option><option value="google">Google</option><option value="linkedin">LinkedIn</option><option value="globe">Website</option><option value="envelope">Email</option><option value="users">Referral</option><option value="calendar">Event</option></select></div>';
+  setModal("Add Connector", body, [{text:"Cancel",class:"btn-outline",action:closeModal},{text:"Add Connector",class:"btn-primary",action:function(){
+    var name = document.getElementById("conName").value;
+    if(!name){toast("Please enter a connector name","error");return;}
+    var con = {
+      id:"C" + uid(),
+      partnerId:state.currentUser.partnerId,
+      name:name,
+      type:document.getElementById("conType").value,
+      status:"active",
+      apiKey:"sk_" + uid(),
+      budget:parseFloat(document.getElementById("conBudget").value) || 0,
+      spent:0,
+      leads:0,
+      conversionRate:0,
+      lastSync:"Just now",
+      connected:true,
+      platformIcon:document.getElementById("conIcon").value
+    };
+    state.data.connectors.push(con);
+    closeModal();
+    toast("Connector added successfully");
+    renderCurrentPage();
+  }}]);
+}
+function showAddAgentModal(){
+  var body = '<div class="form-group"><label>Agent Name</label><input type="text" id="agentName" placeholder="e.g. John Doe"></div><div class="form-row"><div class="form-group"><label>Email</label><input type="email" id="agentEmail" placeholder="email@example.com"></div><div class="form-group"><label>Phone</label><input type="text" id="agentPhone" placeholder="555-0000"></div></div><div class="form-group"><label>Commission Rate (%)</label><input type="number" id="agentComm" placeholder="e.g. 15" step="0.1"></div>';
+  setModal("Add Agent", body, [{text:"Cancel",class:"btn-outline",action:closeModal},{text:"Add Agent",class:"btn-primary",action:function(){
+    var name = document.getElementById("agentName").value;
+    if(!name){toast("Please enter agent name","error");return;}
+    var agent = {
+      id:"A" + uid(),
+      partnerId:state.currentUser.partnerId,
+      name:name,
+      email:document.getElementById("agentEmail").value || "no-email",
+      phone:document.getElementById("agentPhone").value || "",
+      status:"active",
+      leads:0,
+      deals:0,
+      commission:parseFloat(document.getElementById("agentComm").value) || 0,
+      earnings:0,
+      hired:new Date().toISOString().split("T")[0],
+      rating:0,
+      avatar:name.split(" ").map(function(n){return n[0];}).join("")
+    };
+    state.data.agents.push(agent);
+    closeModal();
+    toast("Agent added successfully");
+    renderCurrentPage();
+  }}]);
+}
+function showAddLeadModal(){
+  var pid = state.currentUser.partnerId;
+  var data = state.data;
+  var agentOpts = '<option value="">Unassigned</option>';
+  data.agents.forEach(function(a){
+    if(a.partnerId === pid) agentOpts += '<option value="' + a.id + '">' + a.name + '</option>';
+  });
+  var connOpts = '<option value="">Select Connector</option>';
+  data.connectors.forEach(function(c){
+    if(c.partnerId === pid) connOpts += '<option value="' + c.id + '">' + c.name + '</option>';
+  });
+  var stages = ["new","contacted","qualified","converted","lost"];
+  var stageOpts = "";
+  stages.forEach(function(s){stageOpts += '<option value="' + s + '">' + s.charAt(0).toUpperCase() + s.slice(1) + '</option>';});
+  var body = '<div class="form-row"><div class="form-group"><label>Lead Name</label><input type="text" id="leadName" placeholder="e.g. Big Corp Deal"></div><div class="form-group"><label>Company</label><input type="text" id="leadCompany" placeholder="e.g. Big Corp"></div></div><div class="form-row"><div class="form-group"><label>Contact Person</label><input type="text" id="leadContact" placeholder="e.g. John Big"></div><div class="form-group"><label>Lead Value ($)</label><input type="number" id="leadValue" placeholder="e.g. 50000"></div></div><div class="form-row"><div class="form-group"><label>Assign Agent</label><select id="leadAgent">' + agentOpts + '</select></div><div class="form-group"><label>Connector Source</label><select id="leadConnector">' + connOpts + '</select></div></div><div class="form-row"><div class="form-group"><label>Stage</label><select id="leadStage">' + stageOpts + '</select></div><div class="form-group"><label>Probability (%)</label><input type="number" id="leadProb" placeholder="e.g. 50"></div></div><div class="form-group"><label>Notes</label><textarea id="leadNotes" placeholder="Additional notes..."></textarea></div>';
+  setModal("Add Lead", body, [{text:"Cancel",class:"btn-outline",action:closeModal},{text:"Add Lead",class:"btn-primary",action:function(){
+    var name = document.getElementById("leadName").value;
+    if(!name){toast("Please enter lead name","error");return;}
+    var connId = document.getElementById("leadConnector").value;
+    var conn = null;
+    data.connectors.forEach(function(c){if(c.id === connId) conn = c;});
+    var lead = {
+      id:"L" + uid(),
+      partnerId:pid,
+      connectorId:connId,
+      agentId:document.getElementById("leadAgent").value || "",
+      name:name,
+      company:document.getElementById("leadCompany").value || "",
+      contact:document.getElementById("leadContact").value || "",
+      source:conn ? conn.name : "",
+      stage:document.getElementById("leadStage").value,
+      value:parseFloat(document.getElementById("leadValue").value) || 0,
+      probability:parseFloat(document.getElementById("leadProb").value) || 0,
+      created:new Date().toISOString().split("T")[0],
+      notes:document.getElementById("leadNotes").value || ""
+    };
+    state.data.leads.push(lead);
+    closeModal();
+    toast("Lead added successfully");
+    renderCurrentPage();
+  }}]);
+}
+function editConnector(id){
+  var data = state.data;
+  var conn = null;
+  data.connectors.forEach(function(c){if(c.id === id) conn = c;});
+  if(!conn){toast("Connector not found","error");return;}
+  var typeOpts = "";
+  CONNECTOR_TYPES.forEach(function(t){
+    var sel = t.value === conn.type ? "selected" : "";
+    typeOpts += '<option value="' + t.value + '" ' + sel + '>' + t.label + '</option>';
+  });
+  var body = '<div class="form-group"><label>Connector Name</label><input type="text" id="editConName" value="' + conn.name + '"></div><div class="form-group"><label>Type</label><select id="editConType">' + typeOpts + '</select></div><div class="form-group"><label>Monthly Budget ($)</label><input type="number" id="editConBudget" value="' + conn.budget + '"></div>';
+  setModal("Edit Connector", body, [{text:"Cancel",class:"btn-outline",action:closeModal},{text:"Save Changes",class:"btn-primary",action:function(){
+    conn.name = document.getElementById("editConName").value;
+    conn.type = document.getElementById("editConType").value;
+    conn.budget = parseFloat(document.getElementById("editConBudget").value) || 0;
+    closeModal();
+    toast("Connector updated");
+    renderCurrentPage();
+  }}]);
+}
+function deleteConnector(id){
+  if(!confirm("Are you sure you want to delete this connector?")) return;
+  var data = state.data;
+  var idx = -1;
+  for(var i = 0; i < data.connectors.length; i++){
+    if(data.connectors[i].id === id){idx = i; break;}
+  }
+  if(idx > -1){
+    data.connectors.splice(idx, 1);
+    toast("Connector deleted");
+    renderCurrentPage();
+  }
+}
+function editAgent(id){
+  var data = state.data;
+  var agent = null;
+  data.agents.forEach(function(a){if(a.id === id) agent = a;});
+  if(!agent){toast("Agent not found","error");return;}
+  var body = '<div class="form-group"><label>Agent Name</label><input type="text" id="editAgentName" value="' + agent.name + '"></div><div class="form-row"><div class="form-group"><label>Email</label><input type="email" id="editAgentEmail" value="' + agent.email + '"></div><div class="form-group"><label>Phone</label><input type="text" id="editAgentPhone" value="' + agent.phone + '"></div></div><div class="form-group"><label>Commission Rate (%)</label><input type="number" id="editAgentComm" value="' + agent.commission + '" step="0.1"></div>';
+  setModal("Edit Agent", body, [{text:"Cancel",class:"btn-outline",action:closeModal},{text:"Save Changes",class:"btn-primary",action:function(){
+    agent.name = document.getElementById("editAgentName").value;
+    agent.email = document.getElementById("editAgentEmail").value;
+    agent.phone = document.getElementById("editAgentPhone").value;
+    agent.commission = parseFloat(document.getElementById("editAgentComm").value) || 0;
+    closeModal();
+    toast("Agent updated");
+    renderCurrentPage();
+  }}]);
+}
+function deleteAgent(id){
+  if(!confirm("Are you sure you want to delete this agent?")) return;
+  var data = state.data;
+  var idx = -1;
+  for(var i = 0; i < data.agents.length; i++){
+    if(data.agents[i].id === id){idx = i; break;}
+  }
+  if(idx > -1){
+    data.agents.splice(idx, 1);
+    toast("Agent deleted");
+    renderCurrentPage();
+  }
+}
+function renderPartnerPipeline(){
+  var pid = state.currentUser.partnerId;
+  var data = state.data;
+  var myLeads = [];
+  data.leads.forEach(function(l){if(l.partnerId === pid) myLeads.push(l);});
+  var stages = ["new","contacted","qualified","converted","lost"];
+  var stageLabels = ["New","Contacted","Qualified","Converted","Lost"];
+  var stageData = {};
+  stages.forEach(function(s){stageData[s] = [];});
+  myLeads.forEach(function(l){
+    if(stageData[l.stage]) stageData[l.stage].push(l);
+  });
+  var totalPipeline = myLeads.length;
+  var totalValue = 0;
+  myLeads.forEach(function(l){totalValue += l.value;});
+  var wonLeads = stageData["converted"] ? stageData["converted"].length : 0;
+  var lostLeads = stageData["lost"] ? stageData["lost"].length : 0;
+  var kanbanHtml = "";
+  stages.forEach(function(s, si){
+    var cards = "";
+    (stageData[s] || []).forEach(function(l){
+      var probColor = l.probability > 70 ? "var(--success)" : l.probability > 30 ? "var(--warning)" : "var(--danger)";
+      cards += '<div class="kanban-card" onclick="showLeadDetail(\'' + l.id + '\')"><div class="kb-title">' + l.name + '</div><div class="kb-meta"><span>$' + l.value.toLocaleString() + '</span><span style="color:' + probColor + ';font-weight:600">' + l.probability + '%</span></div><div><small class="kb-source">' + (l.source || "N/A") + '</small></div></div>';
+    });
+    kanbanHtml += '<div class="kanban-col"><h4>' + stageLabels[si] + ' <span>' + (stageData[s] ? stageData[s].length : 0) + '</span></h4>' + (cards || '<div class="empty-state" style="padding:20px 10px"><i class="fas fa-arrow-right" style="font-size:1.2rem"></i><p style="font-size:.8rem">No leads</p></div>') + '</div>';
+  });
+  return '<div class="page-header"><div><h2>Pipeline</h2><p>Track your leads through the sales pipeline</p></div><div class="page-actions"><button class="btn btn-primary" onclick="showAddLeadModal()"><i class="fas fa-plus"></i> Add Lead</button></div></div><div class="stats-grid"><div class="stat-card"><div class="stat-header"><div class="stat-label">Pipeline Total</div><div class="stat-icon" style="background:' + COLORS[0] + '22;color:' + COLORS[0] + '"><i class="fas fa-list"></i></div></div><div class="stat-value">' + totalPipeline + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Won</div><div class="stat-icon" style="background:' + COLORS[2] + '22;color:' + COLORS[2] + '"><i class="fas fa-trophy"></i></div></div><div class="stat-value">' + wonLeads + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Lost</div><div class="stat-icon" style="background:' + COLORS[4] + '22;color:' + COLORS[4] + '"><i class="fas fa-xmark"></i></div></div><div class="stat-value">' + lostLeads + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Value</div><div class="stat-icon" style="background:' + COLORS[3] + '22;color:' + COLORS[3] + '"><i class="fas fa-dollar-sign"></i></div></div><div class="stat-value">$' + totalValue.toLocaleString() + '</div></div></div><div class="kanban">' + kanbanHtml + '</div>';
+}
+function showLeadDetail(id){
+  var data = state.data;
+  var lead = null;
+  data.leads.forEach(function(l){if(l.id === id) lead = l;});
+  if(!lead){toast("Lead not found","error");return;}
+  var stages = ["new","contacted","qualified","converted","lost"];
+  var stageOpts = "";
+  stages.forEach(function(s){
+    var sel = s === lead.stage ? "selected" : "";
+    stageOpts += '<option value="' + s + '" ' + sel + '>' + s.charAt(0).toUpperCase() + s.slice(1) + '</option>';
+  });
+  var agentName = "Unassigned";
+  data.agents.forEach(function(a){if(a.id === lead.agentId) agentName = a.name;});
+  var body = '<div style="margin-bottom:16px"><div style="font-size:1.2rem;font-weight:700;margin-bottom:4px">' + lead.name + '</div><div style="color:var(--gray-500);margin-bottom:12px">' + (lead.company || "No company") + '</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:.88rem;margin-bottom:16px"><div><strong>Contact:</strong> ' + (lead.contact || "N/A") + '</div><div><strong>Email:</strong> ' + (lead.email || "N/A") + '</div><div><strong>Phone:</strong> ' + (lead.phone || "N/A") + '</div><div><strong>Source:</strong> ' + (lead.source || "N/A") + '</div><div><strong>Value:</strong> $' + lead.value.toLocaleString() + '</div><div><strong>Probability:</strong> ' + lead.probability + '%</div><div><strong>Agent:</strong> ' + agentName + '</div><div><strong>Created:</strong> ' + lead.created + '</div></div><div class="form-group"><label>Change Stage</label><select id="leadStageChange">' + stageOpts + '</select></div>' + (lead.notes ? '<div><strong>Notes:</strong><p style="color:var(--gray-600);font-size:.85rem;margin-top:4px">' + lead.notes + '</p></div>' : "") + '</div>';
+  setModal("Lead Details", body, [{text:"Close",class:"btn-outline",action:closeModal},{text:"Update Stage",class:"btn-primary",action:function(){
+    var newStage = document.getElementById("leadStageChange").value;
+    lead.stage = newStage;
+    if(newStage === "converted") lead.probability = 100;
+    else if(newStage === "lost") lead.probability = 0;
+    closeModal();
+    toast("Lead stage updated to " + newStage);
+    renderCurrentPage();
+  }}]);
+}
+function renderPartnerLeads(){
+  var pid = state.currentUser.partnerId;
+  var data = state.data;
+  var myLeads = [];
+  data.leads.forEach(function(l){if(l.partnerId === pid) myLeads.push(l);});
+  var rows = "";
+  myLeads.forEach(function(l){
+    var agentName = "Unassigned";
+    data.agents.forEach(function(a){if(a.id === l.agentId) agentName = a.name;});
+    var stageBadge = l.stage === "converted" ? '<span class="status active">Converted</span>' : l.stage === "lost" ? '<span class="status inactive">Lost</span>' : l.stage === "qualified" ? '<span class="status" style="background:#dbeafe;color:#1e40af">Qualified</span>' : l.stage === "contacted" ? '<span class="status pending">Contacted</span>' : '<span class="status" style="background:#f1f5f9;color:#475569">New</span>';
+    rows += '<tr style="cursor:pointer" onclick="showLeadDetail(\'' + l.id + '\')"><td><div><div style="font-weight:600;font-size:.85rem">' + l.name + '</div><small style="color:var(--gray-400)">' + (l.contact || "") + '</small></div></td><td>' + (l.company || "-") + '</td><td>' + (l.source || "-") + '</td><td>' + agentName + '</td><td>' + stageBadge + '</td><td>$' + l.value.toLocaleString() + '</td><td>' + l.probability + '%</td><td style="font-size:.8rem;color:var(--gray-500)">' + l.created + '</td></tr>';
+  });
+  return '<div class="page-header"><div><h2>My Leads</h2><p>All leads generated by your connectors and agents</p></div><div class="page-actions"><button class="btn btn-primary" onclick="showAddLeadModal()"><i class="fas fa-plus"></i> Add Lead</button></div></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Lead</th><th>Company</th><th>Source</th><th>Agent</th><th>Stage</th><th>Value</th><th>Prob</th><th>Created</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+}
+function renderPartnerCommissions(){
+  var pid = state.currentUser.partnerId;
+  var data = state.data;
+  var myAgents = [];
+  data.agents.forEach(function(a){if(a.partnerId === pid) myAgents.push(a);});
+  var totalLeads = 0, totalDeals = 0, totalEarnings = 0;
+  myAgents.forEach(function(a){totalLeads += a.leads; totalDeals += a.deals; totalEarnings += a.earnings;});
+  var avgDeal = totalDeals > 0 ? Math.round(totalEarnings / totalDeals) : 0;
+  var bars = "", max = 0;
+  myAgents.forEach(function(a){if(a.earnings > max) max = a.earnings;});
+  myAgents.forEach(function(a, i){
+    var bw = max > 0 ? Math.round((a.earnings / max) * 100) : 0;
+    bars += '<div class="comm-item"><div class="comm-name">' + a.name + '</div><div class="comm-track"><div class="comm-fill" style="width:' + bw + '%;background:' + COLORS[i % COLORS.length] + '">' + (bw > 20 ? "$" + a.earnings.toLocaleString() : "") + '</div></div><div class="comm-val">$' + a.earnings.toLocaleString() + '</div></div>';
+  });
+  var rows = "";
+  myAgents.forEach(function(a){
+    var ad = a.deals > 0 ? Math.round(a.earnings / a.deals) : 0;
+    rows += '<tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="width:30px;height:30px;border-radius:50%;background:' + COLORS[2] + ';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.7rem">' + a.avatar + '</div><span style="font-weight:500">' + a.name + '</span></div></td><td>' + a.leads + '</td><td>' + a.deals + '</td><td>' + a.commission + '%</td><td>$' + a.earnings.toLocaleString() + '</td><td>$' + ad.toLocaleString() + '</td></tr>';
+  });
+  return '<div class="page-header"><div><h2>Commissions</h2><p>Agent commission breakdown and earnings</p></div></div><div class="stats-grid"><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Leads</div><div class="stat-icon" style="background:' + COLORS[0] + '22;color:' + COLORS[0] + '"><i class="fas fa-bolt"></i></div></div><div class="stat-value">' + totalLeads + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Deals Closed</div><div class="stat-icon" style="background:' + COLORS[2] + '22;color:' + COLORS[2] + '"><i class="fas fa-handshake"></i></div></div><div class="stat-value">' + totalDeals + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Earnings</div><div class="stat-icon" style="background:' + COLORS[3] + '22;color:' + COLORS[3] + '"><i class="fas fa-sack-dollar"></i></div></div><div class="stat-value">$' + totalEarnings.toLocaleString() + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Avg Per Deal</div><div class="stat-icon" style="background:' + COLORS[1] + '22;color:' + COLORS[1] + '"><i class="fas fa-chart-line"></i></div></div><div class="stat-value">$' + avgDeal.toLocaleString() + '</div></div></div><div class="card" style="margin-bottom:20px"><div class="card-header"><h3>Commission Breakdown</h3></div><div class="card-body"><div class="commission-bar">' + bars + '</div></div></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Agent</th><th>Leads</th><th>Deals</th><th>Commission Rate</th><th>Earnings</th><th>Avg/Deal</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+}
+function renderPartnerReports(){
+  var pid = state.currentUser.partnerId;
+  var data = state.data;
+  var myLeads = [];
+  data.leads.forEach(function(l){if(l.partnerId === pid) myLeads.push(l);});
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var monthCounts = [0,0,0,0,0,0,0,0,0,0,0,0];
+  myLeads.forEach(function(l){
+    var m = parseInt(l.created.split("-")[1]) - 1;
+    if(m >= 0 && m < 12) monthCounts[m]++;
+  });
+  var maxMonth = 1; monthCounts.forEach(function(c){if(c > maxMonth) maxMonth = c;});
+  var leadChart = "";
+  for(var i = 0; i < 12; i++){
+    var h = maxMonth > 0 ? Math.round((monthCounts[i] / maxMonth) * 160) : 0;
+    if(h < 4 && monthCounts[i] > 0) h = 4;
+    leadChart += '<div class="bar" style="height:' + h + 'px;background:' + COLORS[0] + '"><span class="val">' + monthCounts[i] + '</span><span class="lbl">' + months[i] + '</span></div>';
+  }
+  var sources = {};
+  myLeads.forEach(function(l){
+    var s = l.source || "Other";
+    if(!sources[s]) sources[s] = 0;
+    sources[s]++;
+  });
+  var sourceKeys = Object.keys(sources);
+  var maxSrc = 1;
+  sourceKeys.forEach(function(k){if(sources[k] > maxSrc) maxSrc = sources[k];});
+  var srcBars = "";
+  sourceKeys.forEach(function(k, i){
+    var bw = Math.round((sources[k] / maxSrc) * 100);
+    srcBars += '<div class="comm-item"><div class="comm-name">' + k + '</div><div class="comm-track"><div class="comm-fill" style="width:' + bw + '%;background:' + COLORS[(i + 1) % COLORS.length] + '">' + sources[k] + '</div></div><div class="comm-val">' + sources[k] + '</div></div>';
+  });
+  var stages = ["new","contacted","qualified","converted","lost"];
+  var stageLabels = ["New","Contacted","Qualified","Converted","Lost"];
+  var stageCounts = [0,0,0,0,0];
+  myLeads.forEach(function(l){
+    var idx = stages.indexOf(l.stage);
+    if(idx > -1) stageCounts[idx]++;
+  });
+  var maxStage = 1; stageCounts.forEach(function(c){if(c > maxStage) maxStage = c;});
+  var funnel = "";
+  stageCounts.forEach(function(c, i){
+    var fw = maxStage > 0 ? Math.round((c / maxStage) * 100) : 0;
+    funnel += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><div style="width:100px;font-size:.85rem;font-weight:500;text-align:right">' + stageLabels[i] + '</div><div style="flex:1;height:28px;background:var(--gray-100);border-radius:6px;overflow:hidden"><div style="height:100%;width:' + fw + '%;background:' + COLORS[i % COLORS.length] + ';border-radius:6px;display:flex;align-items:center;padding-left:8px;color:#fff;font-size:.8rem;font-weight:600">' + c + '</div></div></div>';
+  });
+  var actHtml = "";
+  data.activities.forEach(function(a){
+    if(a.partnerId === pid){
+      actHtml += '<div class="activity-item"><div class="activity-icon" style="background:' + a.color + '22;color:' + a.color + '"><i class="fas ' + a.icon + '"></i></div><div class="activity-content"><div>' + a.text + '</div><small>' + a.time + '</small></div></div>';
+    }
+  });
+  return '<div class="page-header"><div><h2>Reports</h2><p>Analytics and performance reports</p></div></div><div class="grid-2"><div class="card"><div class="card-header"><h3><i class="fas fa-chart-bar" style="color:' + COLORS[0] + '"></i> Monthly Leads</h3></div><div class="card-body"><div class="chart-bar">' + leadChart + '</div></div></div><div class="card"><div class="card-header"><h3><i class="fas fa-plug" style="color:' + COLORS[1] + '"></i> Lead Sources</h3></div><div class="card-body"><div class="commission-bar">' + (srcBars || '<div class="empty-state"><i class="fas fa-chart-pie"></i><p>No source data</p></div>') + '</div></div></div></div><div class="grid-2" style="margin-top:20px"><div class="card"><div class="card-header"><h3><i class="fas fa-filter" style="color:' + COLORS[2] + '"></i> Conversion Funnel</h3></div><div class="card-body">' + (funnel || '<div class="empty-state"><i class="fas fa-filter"></i><p>No funnel data</p></div>') + '</div></div><div class="card"><div class="card-header"><h3><i class="fas fa-clock"></i> Recent Activity</h3></div><div class="card-body"><div class="activity-feed">' + (actHtml || '<div class="empty-state"><i class="fas fa-clock"></i><p>No recent activity</p></div>') + '</div></div></div></div>';
+}
+function renderPartnerSettings(){
+  var user = state.currentUser;
+  var data = state.data;
+  var partner = null;
+  data.partners.forEach(function(p){if(p.id === user.partnerId) partner = p;});
+  if(!partner) return '<div class="empty-state"><i class="fas fa-gear"></i><p>Settings not available</p></div>';
+  return '<div class="page-header"><div><h2>Settings</h2><p>Your account and profile settings</p></div></div><div class="card" style="max-width:600px"><div class="card-body"><div style="display:flex;align-items:center;gap:16px;margin-bottom:24px"><div class="avatar" style="width:64px;height:64px;border-radius:50%;background:' + user.color + ';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.4rem">' + user.avatar + '</div><div><div style="font-size:1.2rem;font-weight:700">' + partner.name + '</div><div style="color:var(--gray-500);font-size:.9rem">' + partner.email + '</div></div></div><div style="display:grid;gap:16px"><div class="form-group"><label>Company Name</label><input type="text" value="' + partner.company + '" readonly style="background:var(--gray-50)"></div><div class="form-row"><div class="form-group"><label>Phone</label><input type="text" value="' + partner.phone + '" readonly style="background:var(--gray-50)"></div><div class="form-group"><label>Tier</label><input type="text" value="' + partner.tier + '" readonly style="background:var(--gray-50)"></div></div><div class="form-row"><div class="form-group"><label>Status</label><input type="text" value="' + partner.status + '" readonly style="background:var(--gray-50)"></div><div class="form-group"><label>Member Since</label><input type="text" value="' + partner.joinDate + '" readonly style="background:var(--gray-50)"></div></div></div></div></div>';
+}
+function renderMiniPipeline(pid){
+  var data = state.data;
+  var myLeads = [];
+  data.leads.forEach(function(l){if(l.partnerId === pid) myLeads.push(l);});
+  var stages = ["new","contacted","qualified","converted","lost"];
+  var stageLabels = ["New","Contacted","Qualified","Converted","Lost"];
+  var cols = "";
+  stages.forEach(function(s, si){
+    var leads = [];
+    myLeads.forEach(function(l){if(l.stage === s) leads.push(l);});
+    var cards = "";
+    leads.forEach(function(l){
+      cards += '<div class="kanban-card" onclick="showLeadDetail(\'' + l.id + '\')" style="padding:8px;margin-bottom:4px"><div class="kb-title" style="font-size:.8rem">' + l.name + '</div><div class="kb-meta" style="font-size:.7rem"><span>$' + l.value.toLocaleString() + '</span><span style="color:' + (l.probability > 50 ? "var(--success)" : "var(--warning)") + '">' + l.probability + '%</span></div></div>';
+    });
+    cols += '<div class="kanban-col" style="padding:8px"><h4 style="font-size:.75rem">' + stageLabels[si] + ' <span>' + leads.length + '</span></h4>' + cards + '</div>';
+  });
+  return '<div class="card"><div class="card-header"><h3><i class="fas fa-arrow-trend-up"></i> Pipeline Overview</h3><a class="btn btn-sm btn-outline" onclick="navigate(\'' + "pipeline" + '\')">View Full Pipeline <i class="fas fa-arrow-right"></i></a></div><div class="card-body"><div class="kanban" style="grid-template-columns:repeat(5,1fr);gap:8px">' + cols + '</div></div></div>';
+}
+function renderClientLeads(){
+  var cid = state.currentUser.clientId;
+  var data = state.data;
+  var myLeads = [];
+  data.leads.forEach(function(l){if(l.clientId === cid) myLeads.push(l);});
+  var activeLeads = 0, convertedLeads = 0, totalValue = 0;
+  myLeads.forEach(function(l){
+    if(l.stage !== "lost" && l.stage !== "converted") activeLeads++;
+    if(l.stage === "converted") convertedLeads++;
+    totalValue += l.value;
+  });
+  var rows = "";
+  myLeads.forEach(function(l){
+    var stageBadge = l.stage === "converted" ? '<span class="status active">Converted</span>' : l.stage === "lost" ? '<span class="status inactive">' + l.stage + '</span>' : '<span class="status pending">' + l.stage + '</span>';
+    rows += '<tr><td><div><div style="font-weight:600">' + l.name + '</div><small style="color:var(--gray-400)">' + (l.company || "") + '</small></div></td><td>' + (l.source || "-") + '</td><td>' + stageBadge + '</td><td>$' + l.value.toLocaleString() + '</td><td>' + l.probability + '%</td><td>' + l.created + '</td></tr>';
+  });
+  return '<div class="page-header"><div><h2>My Leads</h2><p>Leads assigned to you</p></div></div><div class="stats-grid"><div class="stat-card"><div class="stat-header"><div class="stat-label">Active Leads</div><div class="stat-icon" style="background:' + COLORS[0] + '22;color:' + COLORS[0] + '"><i class="fas fa-bolt"></i></div></div><div class="stat-value">' + activeLeads + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Converted</div><div class="stat-icon" style="background:' + COLORS[2] + '22;color:' + COLORS[2] + '"><i class="fas fa-check-circle"></i></div></div><div class="stat-value">' + convertedLeads + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Value</div><div class="stat-icon" style="background:' + COLORS[3] + '22;color:' + COLORS[3] + '"><i class="fas fa-dollar-sign"></i></div></div><div class="stat-value">$' + totalValue.toLocaleString() + '</div></div></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Lead</th><th>Source</th><th>Stage</th><th>Value</th><th>Prob</th><th>Created</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+}
+function renderClientProfile(){
+  var data = state.data;
+  var cid = state.currentUser.clientId;
+  var client = null;
+  data.clients.forEach(function(c){if(c.id === cid) client = c;});
+  if(!client) return '<div class="empty-state"><i class="fas fa-user"></i><p>Profile not found</p></div>';
+  return '<div class="page-header"><div><h2>My Profile</h2><p>Manage your personal information</p></div></div><div class="card" style="max-width:600px"><div class="card-body"><div style="display:flex;align-items:center;gap:16px;margin-bottom:24px"><div class="avatar" style="width:72px;height:72px;border-radius:50%;background:' + state.currentUser.color + ';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.6rem">' + client.avatar + '</div><div><div style="font-size:1.3rem;font-weight:700">' + client.name + '</div><div style="color:var(--gray-500)">' + client.email + '</div></div></div><div style="display:grid;gap:16px"><div class="form-row"><div class="form-group"><label>Full Name</label><input type="text" id="profName" value="' + client.name + '"></div><div class="form-group"><label>Email</label><input type="email" value="' + client.email + '" readonly style="background:var(--gray-50)"></div></div><div class="form-row"><div class="form-group"><label>Phone</label><input type="text" id="profPhone" value="' + client.phone + '"></div><div class="form-group"><label>Company</label><input type="text" id="profCompany" value="' + (client.company || "") + '"></div></div><div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px"><button class="btn btn-primary" onclick="saveClientProfile()"><i class="fas fa-save"></i> Save Changes</button></div></div></div></div>';
+}
+function saveClientProfile(){
+  var data = state.data;
+  var cid = state.currentUser.clientId;
+  var client = null;
+  data.clients.forEach(function(c){if(c.id === cid) client = c;});
+  if(!client) return;
+  client.name = document.getElementById("profName").value;
+  client.phone = document.getElementById("profPhone").value;
+  client.company = document.getElementById("profCompany").value;
+  toast("Profile updated successfully");
+  renderCurrentPage();
+}
+function renderClientNotifs(){
+  var data = state.data;
+  var cid = state.currentUser.clientId;
+  var notifHtml = "";
+  data.activities.forEach(function(a){
+    notifHtml += '<div class="activity-item"><div class="activity-icon" style="background:' + a.color + '22;color:' + a.color + '"><i class="fas ' + a.icon + '"></i></div><div class="activity-content"><div>' + a.text + '</div><small>' + a.time + '</small></div></div>';
+  });
+  data.messages.forEach(function(m){
+    if(m.senderId === cid || m.recipientId === cid){
+      notifHtml += '<div class="activity-item"><div class="activity-icon" style="background:' + COLORS[1] + '22;color:' + COLORS[1] + '"><i class="fas fa-envelope"></i></div><div class="activity-content"><div>' + (m.read ? "" : '<span class="badge gold">New</span> ') + 'Message: ' + m.text.substring(0, 60) + '</div><small>' + m.timestamp + '</small></div></div>';
+    }
+  });
+  return '<div class="page-header"><div><h2>Notifications</h2><p>Recent activity and messages</p></div></div><div class="card"><div class="card-body"><div class="activity-feed">' + (notifHtml || '<div class="empty-state"><i class="fas fa-bell"></i><p>No notifications</p></div>') + '</div></div></div>';
+}
+function renderStaffAssigned(){
+  var sid = state.currentUser.staffId;
+  var data = state.data;
+  var myTasks = [];
+  data.tasks.forEach(function(t){if(t.assignedTo === sid) myTasks.push(t);});
+  var myLeads = [];
+  myTasks.forEach(function(t){
+    data.leads.forEach(function(l){if(l.id === t.leadId) myLeads.push(l);});
+  });
+  var pending = 0, inProgress = 0, done = 0;
+  myTasks.forEach(function(t){
+    if(t.status === "pending") pending++;
+    else if(t.status === "in_progress") inProgress++;
+    else if(t.status === "done") done++;
+  });
+  var rows = "";
+  myTasks.forEach(function(t){
+    var lead = null;
+    data.leads.forEach(function(l){if(l.id === t.leadId) lead = l;});
+    var statusBadge = t.status === "done" ? '<span class="status active">Done</span>' : t.status === "in_progress" ? '<span class="status pending">In Progress</span>' : '<span class="status" style="background:#f1f5f9;color:#475569">Pending</span>';
+    var priorityBadge = t.priority === "high" ? '<span class="badge gold">High</span>' : t.priority === "medium" ? '<span class="badge silver">Medium</span>' : '<span class="badge bronze">Low</span>';
+    rows += '<tr><td><div style="font-weight:500">' + t.title + '</div></td><td>' + (lead ? lead.name : "-") + '</td><td>' + t.due + '</td><td>' + priorityBadge + '</td><td>' + statusBadge + '</td></tr>';
+  });
+  return '<div class="page-header"><div><h2>Assigned Leads</h2><p>Your assigned tasks and leads</p></div></div><div class="stats-grid"><div class="stat-card"><div class="stat-header"><div class="stat-label">Pending</div><div class="stat-icon" style="background:' + COLORS[3] + '22;color:' + COLORS[3] + '"><i class="fas fa-clock"></i></div></div><div class="stat-value">' + pending + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">In Progress</div><div class="stat-icon" style="background:' + COLORS[0] + '22;color:' + COLORS[0] + '"><i class="fas fa-spinner"></i></div></div><div class="stat-value">' + inProgress + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Completed</div><div class="stat-icon" style="background:' + COLORS[2] + '22;color:' + COLORS[2] + '"><i class="fas fa-check-circle"></i></div></div><div class="stat-value">' + done + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Total Tasks</div><div class="stat-icon" style="background:' + COLORS[1] + '22;color:' + COLORS[1] + '"><i class="fas fa-list"></i></div></div><div class="stat-value">' + myTasks.length + '</div></div></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Task</th><th>Lead</th><th>Due</th><th>Priority</th><th>Status</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+}
+function renderStaffTasks(){
+  var sid = state.currentUser.staffId;
+  var data = state.data;
+  var myTasks = [];
+  data.tasks.forEach(function(t){if(t.assignedTo === sid) myTasks.push(t);});
+  var actHtml = "";
+  myTasks.forEach(function(t){
+    var lead = null;
+    data.leads.forEach(function(l){if(l.id === t.leadId) lead = l;});
+    var statusBadge = t.status === "done" ? '<span class="status active">Done</span>' : t.status === "in_progress" ? '<span class="status pending">In Progress</span>' : '<span class="status" style="background:#f1f5f9;color:#475569">Pending</span>';
+    actHtml += '<div class="activity-item"><div class="activity-icon" style="background:' + (t.priority === "high" ? COLORS[4] : t.priority === "medium" ? COLORS[3] : COLORS[1]) + '22;color:' + (t.priority === "high" ? COLORS[4] : t.priority === "medium" ? COLORS[3] : COLORS[1]) + '"><i class="fas ' + (t.status === "done" ? "fa-check" : "fa-tasks") + '"></i></div><div class="activity-content"><div><strong>' + t.title + '</strong> &mdash; ' + (lead ? lead.name : "Lead") + '</div><div style="display:flex;gap:8px;margin-top:4px"><span class="badge ' + (t.priority === "high" ? "gold" : t.priority === "medium" ? "silver" : "bronze") + '">' + t.priority + '</span> ' + statusBadge + '<small style="color:var(--gray-400);margin-left:auto">Due: ' + t.due + '</small></div></div></div>';
+  });
+  return '<div class="page-header"><div><h2>My Tasks</h2><p>Track your task progress</p></div></div><div class="card"><div class="card-body"><div class="activity-feed">' + (actHtml || '<div class="empty-state"><i class="fas fa-tasks"></i><p>No tasks assigned</p></div>') + '</div></div></div>';
+}
+function renderStaffPerf(){
+  var sid = state.currentUser.staffId;
+  var data = state.data;
+  var staff = null;
+  data.staff.forEach(function(s){if(s.id === sid) staff = s;});
+  if(!staff) return '<div class="empty-state"><i class="fas fa-chart-simple"></i><p>Performance data not available</p></div>';
+  var myTasks = [];
+  data.tasks.forEach(function(t){if(t.assignedTo === sid) myTasks.push(t);});
+  var doneTasks = 0;
+  myTasks.forEach(function(t){if(t.status === "done") doneTasks++;});
+  var convRate = staff.leadsAssigned > 0 ? Math.round((staff.deals / staff.leadsAssigned) * 100) : 0;
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var perfValues = [3,5,2,7,4,6,8,5,9,6,7,staff.deals];
+  var maxP = 1; perfValues.forEach(function(v){if(v > maxP) maxP = v;});
+  var perfBars = "";
+  for(var i = 0; i < 12; i++){
+    var ph = Math.round((perfValues[i] / maxP) * 160);
+    perfBars += '<div class="bar" style="height:' + ph + 'px;background:' + COLORS[i % COLORS.length] + '"><span class="val">' + perfValues[i] + '</span><span class="lbl">' + months[i] + '</span></div>';
+  }
+  var actHtml = "";
+  myTasks.forEach(function(t){
+    actHtml += '<div class="activity-item"><div class="activity-icon" style="background:' + (t.status === "done" ? COLORS[2] : COLORS[3]) + '22;color:' + (t.status === "done" ? COLORS[2] : COLORS[3]) + '"><i class="fas ' + (t.status === "done" ? "fa-check" : "fa-clock") + '"></i></div><div class="activity-content"><div>' + t.title + '</div><small>Due: ' + t.due + ' | ' + t.status + '</small></div></div>';
+  });
+  return '<div class="page-header"><div><h2>Performance</h2><p>Your performance metrics</p></div></div><div class="stats-grid"><div class="stat-card"><div class="stat-header"><div class="stat-label">Leads Assigned</div><div class="stat-icon" style="background:' + COLORS[0] + '22;color:' + COLORS[0] + '"><i class="fas fa-bolt"></i></div></div><div class="stat-value">' + staff.leadsAssigned + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Deals Closed</div><div class="stat-icon" style="background:' + COLORS[2] + '22;color:' + COLORS[2] + '"><i class="fas fa-handshake"></i></div></div><div class="stat-value">' + staff.deals + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Rating</div><div class="stat-icon" style="background:' + COLORS[3] + '22;color:' + COLORS[3] + '"><i class="fas fa-star"></i></div></div><div class="stat-value">' + staff.rating + '</div></div><div class="stat-card"><div class="stat-header"><div class="stat-label">Conversion</div><div class="stat-icon" style="background:' + COLORS[1] + '22;color:' + COLORS[1] + '"><i class="fas fa-percent"></i></div></div><div class="stat-value">' + convRate + '%</div></div></div><div class="grid-2"><div class="card"><div class="card-header"><h3><i class="fas fa-chart-line"></i> Monthly Performance</h3></div><div class="card-body"><div class="chart-bar">' + perfBars + '</div></div></div><div class="card"><div class="card-header"><h3><i class="fas fa-clock"></i> Recent Activity</h3></div><div class="card-body"><div class="activity-feed">' + (actHtml || '<div class="empty-state"><i class="fas fa-clock"></i><p>No recent activity</p></div>') + '</div></div></div></div>';
+}
+function renderStaffSchedule(){
+  var data = state.data;
+  var days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  var grid = "";
+  for(var d = 0; d < 7; d++){
+    var dayEvents = "";
+    data.tasks.forEach(function(t){
+      var dt = new Date(t.due);
+      var dayIdx = dt.getDay();
+      var dayName = days[dayIdx === 0 ? 6 : dayIdx - 1];
+      if(dayName === days[d]){
+        dayEvents += '<div style="padding:4px 8px;margin-bottom:4px;border-radius:6px;font-size:.75rem;background:' + (t.priority === "high" ? COLORS[4] + "22" : t.priority === "medium" ? COLORS[3] + "22" : COLORS[1] + "22") + ';border-left:3px solid ' + (t.priority === "high" ? COLORS[4] : t.priority === "medium" ? COLORS[3] : COLORS[1]) + '"><div style="font-weight:500;font-size:.78rem">' + t.title + '</div><small style="color:var(--gray-500)">' + t.status + '</small></div>';
+      }
+    });
+    grid += '<div style="border:1px solid var(--gray-200);border-radius:8px;padding:8px;min-height:120px;background:#fff"><div style="font-weight:600;font-size:.8rem;color:var(--gray-500);margin-bottom:8px;text-align:center;padding-bottom:6px;border-bottom:1px solid var(--gray-100)">' + days[d] + '</div>' + (dayEvents || '<div style="font-size:.72rem;color:var(--gray-400);text-align:center;padding-top:20px">No events</div>') + '</div>';
+  }
+  return '<div class="page-header"><div><h2>Schedule</h2><p>Weekly task and event calendar</p></div></div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px">' + grid + '</div>';
+}
+function renderStaffMessages(){
+  return renderMessagesUI();
+}
+function renderMessagesUI(){
+  var role = state.currentRole;
+  var data = state.data;
+  var contacts = [];
+  var currentId = state.currentUser[role === "partner" ? "partnerId" : role === "client" ? "clientId" : "staffId"];
+  if(role === "partner"){
+    data.clients.forEach(function(c){if(c.partnerId === currentId) contacts.push({id:c.id, name:c.name, avatar:c.avatar, color:COLORS[2], type:"client"});});
+    data.staff.forEach(function(s){contacts.push({id:s.id, name:s.name, avatar:s.avatar, color:COLORS[3], type:"staff"});});
+  } else if(role === "client"){
+    var client = null;
+    data.clients.forEach(function(c){if(c.id === currentId) client = c;});
+    if(client){
+      data.partners.forEach(function(p){if(p.id === client.partnerId) contacts.push({id:p.id, name:p.name, avatar:p.avatar, color:COLORS[0], type:"partner"});});
+    }
+  } else if(role === "staff"){
+    data.partners.forEach(function(p){contacts.push({id:p.id, name:p.name, avatar:p.avatar, color:COLORS[0], type:"partner"});});
+    data.clients.forEach(function(c){contacts.push({id:c.id, name:c.name, avatar:c.avatar, color:COLORS[2], type:"client"});});
+  } else if(role === "admin"){
+    data.partners.forEach(function(p){contacts.push({id:p.id, name:p.name, avatar:p.avatar, color:COLORS[0], type:"partner"});});
+    data.staff.forEach(function(s){contacts.push({id:s.id, name:s.name, avatar:s.avatar, color:COLORS[3], type:"staff"});});
+    data.clients.forEach(function(c){contacts.push({id:c.id, name:c.name, avatar:c.avatar, color:COLORS[2], type:"client"});});
+  }
+  var listHtml = "";
+  contacts.forEach(function(c){
+    var msgs = [];
+    data.messages.forEach(function(m){
+      if((m.senderId === currentId && m.recipientId === c.id) || (m.senderId === c.id && m.recipientId === currentId)) msgs.push(m);
+    });
+    var lastMsg = msgs.length > 0 ? msgs[msgs.length - 1] : null;
+    var lastText = lastMsg ? lastMsg.text.substring(0, 40) : "No messages yet";
+    var lastTime = lastMsg ? lastMsg.timestamp : "";
+    var unread = 0;
+    data.messages.forEach(function(m){if(m.senderId === c.id && m.recipientId === currentId && !m.read) unread++;});
+    var selectedClass = state.selectedContact === c.id ? ' style="background:var(--primary-light)"' : "";
+    listHtml += '<div class="msg-list-item"' + selectedClass + ' onclick="selectContact(\'' + c.id + '\')"><div class="avatar" style="background:' + c.color + ';color:#fff">' + c.avatar + '</div><div class="msg-info"><div>' + c.name + ' <small style="color:var(--gray-400);font-weight:400">(' + c.type + ')</small></div><small>' + lastText + '</small></div>' + (unread > 0 ? '<div class="unread"></div>' : "") + '<div class="msg-time">' + lastTime.split(" ")[1] + '</div></div>';
+  });
+  var msgBodyHtml = "";
+  var selectedContact = null;
+  contacts.forEach(function(c){if(c.id === state.selectedContact) selectedContact = c;});
+  if(selectedContact){
+    var convMsgs = [];
+    data.messages.forEach(function(m){
+      if((m.senderId === currentId && m.recipientId === selectedContact.id) || (m.senderId === selectedContact.id && m.recipientId === currentId)) convMsgs.push(m);
+    });
+    convMsgs.forEach(function(m){
+      var isSent = m.senderId === currentId;
+      msgBodyHtml += '<div class="msg-bubble ' + (isSent ? "sent" : "received") + '">' + m.text + '<span class="msg-time">' + m.timestamp + '</span></div>';
+    });
+    msgBodyHtml = '<div class="msg-header">' + selectedContact.name + '</div><div class="msg-body" id="msgBody">' + msgBodyHtml + '</div><div class="msg-input-wrap"><input type="text" id="msgInput" placeholder="Type a message..." onkeypress="if(event.key===\'Enter\')sendMessage()"><button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button></div>';
+  } else {
+    msgBodyHtml = '<div class="msg-body" style="align-items:center;justify-content:center"><div class="empty-state"><i class="fas fa-comments"></i><p>Select a contact to start messaging</p></div></div>';
+  }
+  return '<div class="page-header"><div><h2>Messages</h2><p>Chat with partners, clients, and staff</p></div></div><div class="messages-layout"><div class="msg-list">' + listHtml + '</div><div class="msg-area">' + msgBodyHtml + '</div></div>';
+}
+function selectContact(contactId){
+  state.selectedContact = contactId;
+  renderCurrentPage();
+}
+function sendMessage(){
+  var input = document.getElementById("msgInput");
+  if(!input || !input.value.trim()) return;
+  var role = state.currentRole;
+  var currentId = state.currentUser[role === "partner" ? "partnerId" : role === "client" ? "clientId" : "staffId"];
+  var msg = {
+    id:"M" + uid(),
+    senderId:currentId,
+    recipientId:state.selectedContact,
+    text:input.value.trim(),
+    timestamp:new Date().toISOString().replace("T"," ").substring(0,16),
+    read:false
+  };
+  state.data.messages.push(msg);
+  input.value = "";
+  renderCurrentPage();
+  setTimeout(function(){
+    var body = document.getElementById("msgBody");
+    if(body) body.scrollTop = body.scrollHeight;
+  }, 50);
+}
+function showAddPartnerModal(){
+  var body = '<div class="form-row"><div class="form-group"><label>Partner Name</label><input type="text" id="partnerName" placeholder="e.g. New Partner"></div><div class="form-group"><label>Company</label><input type="text" id="partnerCompany" placeholder="e.g. Franchise X"></div></div><div class="form-row"><div class="form-group"><label>Email</label><input type="email" id="partnerEmail" placeholder="email@franchise.com"></div><div class="form-group"><label>Phone</label><input type="text" id="partnerPhone" placeholder="555-0000"></div></div><div class="form-row"><div class="form-group"><label>Tier</label><select id="partnerTier"><option value="Gold">Gold</option><option value="Silver">Silver</option><option value="Bronze">Bronze</option></select></div><div class="form-group"><label>Status</label><select id="partnerStatus"><option value="active">Active</option><option value="inactive">Inactive</option></select></div></div>';
+  setModal("Add Partner", body, [{text:"Cancel",class:"btn-outline",action:closeModal},{text:"Add Partner",class:"btn-primary",action:function(){
+    var name = document.getElementById("partnerName").value;
+    if(!name){toast("Please enter partner name","error");return;}
+    var partner = {
+      id:"P" + uid(),
+      name:name,
+      company:document.getElementById("partnerCompany").value || "",
+      email:document.getElementById("partnerEmail").value || "",
+      phone:document.getElementById("partnerPhone").value || "",
+      tier:document.getElementById("partnerTier").value,
+      status:document.getElementById("partnerStatus").value,
+      leadsGenerated:0,
+      conversionRate:0,
+      revenue:0,
+      joinDate:new Date().toISOString().split("T")[0],
+      avatar:name.split(" ").map(function(n){return n[0];}).join("")
+    };
+    state.data.partners.push(partner);
+    closeModal();
+    toast("Partner added successfully");
+    renderCurrentPage();
+  }}]);
+}
+
+// Event listeners
+document.getElementById("loginBtn").onclick = function() {
+  var selected = document.querySelector(".role-card.active");
+  if(selected) login(selected.dataset.role);
+};
+document.querySelectorAll(".role-card").forEach(function(el) {
+  el.onclick = function() {
+    document.querySelectorAll(".role-card").forEach(function(c) { c.classList.remove("active"); });
+    el.classList.add("active");
+  };
+});
+document.getElementById("logoutBtn").onclick = logout;
+document.getElementById("menuToggleBtn").onclick = function() {
+  document.getElementById("sidebar").classList.toggle("open");
+};
+document.getElementById("modalClose").onclick = closeModal;
+document.getElementById("modalOverlay").onclick = function(e) {
+  if(e.target === e.currentTarget) closeModal();
+};
+document.getElementById("globalSearch").oninput = function() {
+  var q = this.value.toLowerCase().trim();
+  if(!q) return;
+  var d = state.data;
+  var results = [];
+  d.leads.forEach(function(l) { if(l.name.toLowerCase().includes(q)||l.company.toLowerCase().includes(q)) results.push(l.name+" (Lead)"); });
+  d.partners.forEach(function(p) { if(p.name.toLowerCase().includes(q)||p.company.toLowerCase().includes(q)) results.push(p.name+" (Partner)"); });
+  d.agents.forEach(function(a) { if(a.name.toLowerCase().includes(q)) results.push(a.name+" (Agent)"); });
+  if(results.length>0) toast("Found: "+results.slice(0,3).join(", ")+(results.length>3?" +"+(results.length-3)+" more":""));
+};
+document.getElementById("notifBtn").onclick = function() { toast("No new notifications","warning"); };
+document.getElementById("helpBtn").onclick = function() { toast("Help: Select a role to begin exploring the CRM","warning"); };
+</script>
+</body>
+</html>

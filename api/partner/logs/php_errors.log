@@ -1,0 +1,185 @@
+[06-Jun-2026 16:58:26 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'commission_amount' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php:39
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php(39): mysqli_query()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php on line 39
+[06-Jun-2026 16:59:06 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'commission_amount' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php:39
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php(39): mysqli_query()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php on line 39
+[06-Jun-2026 16:59:06 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[06-Jun-2026 16:59:15 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'commission_amount' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php:39
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php(39): mysqli_query()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php on line 39
+[06-Jun-2026 16:59:15 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[06-Jun-2026 16:59:16 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'commission_amount' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php:39
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php(39): mysqli_query()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php on line 39
+[06-Jun-2026 16:59:16 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[06-Jun-2026 16:59:34 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[06-Jun-2026 16:59:34 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'commission_amount' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php:39
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php(39): mysqli_query()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php on line 39
+[06-Jun-2026 17:06:01 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[06-Jun-2026 17:06:41 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'commission_amount' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php:39
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php(39): mysqli_query()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php on line 39
+[06-Jun-2026 17:06:41 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[06-Jun-2026 17:06:47 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'commission_amount' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php:39
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php(39): mysqli_query()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php on line 39
+[06-Jun-2026 17:06:50 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[06-Jun-2026 17:06:50 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'commission_amount' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php:39
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php(39): mysqli_query()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/dashboard.php on line 39
+[06-Jun-2026 17:09:44 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[06-Jun-2026 17:18:20 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[06-Jun-2026 17:26:55 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[28-Jun-2026 16:23:32 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[28-Jun-2026 16:23:41 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[28-Jun-2026 16:23:45 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[28-Jun-2026 16:25:25 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[28-Jun-2026 16:25:48 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[28-Jun-2026 16:26:01 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[28-Jun-2026 16:26:07 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[28-Jun-2026 16:26:33 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[28-Jun-2026 16:30:52 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'INSERT INTO' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/add_lead.php:121
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/add_lead.php(121): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/add_lead.php on line 121
+[28-Jun-2026 16:30:58 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'INSERT INTO' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/add_lead.php:121
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/add_lead.php(121): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/add_lead.php on line 121
+[28-Jun-2026 16:31:02 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'INSERT INTO' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/add_lead.php:121
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/add_lead.php(121): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/add_lead.php on line 121
+[28-Jun-2026 16:31:19 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'INSERT INTO' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/add_lead.php:121
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/add_lead.php(121): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/add_lead.php on line 121
+[28-Jun-2026 16:36:08 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[28-Jun-2026 16:36:11 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'service_type' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php:97
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php(97): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_leads.php on line 97
+[28-Jun-2026 16:54:36 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'amount' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_dashboard.php:98
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_dashboard.php(98): mysqli_prepare()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_dashboard.php on line 98
+[28-Jun-2026 17:04:36 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'amount' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_dashboard.php:87
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_dashboard.php(87): mysqli_query()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_dashboard.php on line 87
+[28-Jun-2026 17:04:46 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'amount' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_dashboard.php:87
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_dashboard.php(87): mysqli_query()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_dashboard.php on line 87
+[28-Jun-2026 17:04:55 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'amount' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_dashboard.php:87
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_dashboard.php(87): mysqli_query()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_dashboard.php on line 87
+[28-Jun-2026 17:08:34 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'amount' in 'SELECT' in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_dashboard.php:88
+Stack trace:
+#0 /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_dashboard.php(88): mysqli_query()
+#1 {main}
+  thrown in /home/u929623538/domains/cibilrepair.in/public_html/api/partner/get_dashboard.php on line 88

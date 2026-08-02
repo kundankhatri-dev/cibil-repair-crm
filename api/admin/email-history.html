@@ -1,0 +1,626 @@
+<!-- /admin/email-history.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email History | CIBIL Repair</title>
+    <style>
+        :root {
+            --brand: #0d9e78;
+            --bg-base: #f0f4f8;
+            --bg-surface: #ffffff;
+            --border: rgba(0,0,0,0.07);
+            --text-primary: #0d1b2a;
+            --text-secondary: #4a5568;
+            --text-muted: #8a9bb0;
+            --r-md: 10px;
+            --r-lg: 16px;
+            --shadow-sm: 0 2px 6px rgba(0,0,0,0.06);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-base);
+            color: var(--text-primary);
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .header h1 { font-size: 24px; }
+        .header-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 16px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+        .stat-card .number { font-size: 28px; font-weight: 700; }
+        .stat-card .label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-card.sent .number { color: #059669; }
+        .stat-card.failed .number { color: #dc2626; }
+        .stat-card.pending .number { color: #d97706; }
+        .stat-card.total .number { color: var(--brand); }
+        
+        /* Filters */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+            background: var(--bg-surface);
+            padding: 16px;
+            border-radius: var(--r-lg);
+            border: 1px solid var(--border);
+        }
+        .filters input, .filters select {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            font-size: 13px;
+            background: var(--bg-base);
+            color: var(--text-primary);
+        }
+        .filters input:focus, .filters select:focus {
+            outline: none;
+            border-color: var(--brand);
+        }
+        
+        /* Table */
+        .table-wrap { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-surface);
+            border-radius: var(--r-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        thead th {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            background: var(--bg-sunken);
+            border-bottom: 1px solid var(--border);
+        }
+        tbody td {
+            padding: 12px 16px;
+            font-size: 13px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        tbody tr:hover td { background: rgba(13,158,120,0.04); }
+        tbody tr:last-child td { border-bottom: none; }
+        
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 99px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .badge-sent { background: #ecfdf5; color: #059669; }
+        .badge-failed { background: #fef2f2; color: #dc2626; }
+        .badge-pending { background: #fffbeb; color: #d97706; }
+        .badge-gray { background: #f3f4f6; color: #6b7280; }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: var(--r-md);
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--bg-sunken);
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .btn:hover { background: var(--border); }
+        .btn-primary { background: var(--brand); color: #fff; }
+        .btn-primary:hover { background: #0a7d60; }
+        .btn-danger { background: #fef2f2; color: #dc2626; }
+        .btn-danger:hover { background: #dc2626; color: #fff; }
+        .btn-sm { padding: 4px 10px; font-size: 12px; }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .pagination-actions { display: flex; gap: 6px; }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+        .empty-state i { font-size: 48px; display: block; margin-bottom: 12px; opacity: 0.5; }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-box {
+            background: var(--bg-surface);
+            border-radius: var(--r-lg);
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-title { font-size: 18px; font-weight: 700; }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+        .modal-close:hover { color: var(--text-primary); }
+        .modal-body { padding: 20px; max-height: 70vh; overflow-y: auto; }
+        .modal-body .message { 
+            background: var(--bg-sunken);
+            padding: 16px;
+            border-radius: var(--r-md);
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .modal-footer {
+            padding: 12px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .filters { flex-direction: column; }
+            .filters input, .filters select { width: 100%; }
+            .header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    
+    <!-- Header -->
+    <div class="header">
+        <h1>📧 Email History</h1>
+        <div class="header-actions">
+            <button class="btn" onclick="loadHistory()"><i class="fas fa-sync-alt"></i> Refresh</button>
+            <button class="btn btn-danger" onclick="clearHistory()"><i class="fas fa-trash"></i> Clear</button>
+            <button class="btn btn-primary" onclick="exportHistory()"><i class="fas fa-download"></i> Export</button>
+        </div>
+    </div>
+    
+    <!-- Stats -->
+    <div class="stats-grid" id="statsGrid">
+        <div class="stat-card total"><div class="number" id="statTotal">-</div><div class="label">Total</div></div>
+        <div class="stat-card sent"><div class="number" id="statSent">-</div><div class="label">Sent</div></div>
+        <div class="stat-card pending"><div class="number" id="statPending">-</div><div class="label">Pending</div></div>
+        <div class="stat-card failed"><div class="number" id="statFailed">-</div><div class="label">Failed</div></div>
+    </div>
+    
+    <!-- Filters -->
+    <div class="filters">
+        <input type="text" id="searchInput" placeholder="Search emails..." oninput="applyFilters()">
+        <select id="statusFilter" onchange="applyFilters()">
+            <option value="">All Status</option>
+            <option value="sent">Sent</option>
+            <option value="failed">Failed</option>
+            <option value="pending">Pending</option>
+        </select>
+        <input type="date" id="dateFrom" onchange="applyFilters()">
+        <input type="date" id="dateTo" onchange="applyFilters()">
+        <button class="btn btn-sm" onclick="resetFilters()"><i class="fas fa-undo"></i> Reset</button>
+    </div>
+    
+    <!-- Table -->
+    <div class="table-wrap" id="historyContainer">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Recipient</th>
+                    <th>Template</th>
+                    <th>Subject</th>
+                    <th>Sent At</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="historyBody">
+                <tr>
+                    <td colspan="7"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading...</p></div></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Pagination -->
+    <div class="pagination">
+        <div class="records-info" id="recordsInfo">Showing 0 - 0 of 0</div>
+        <div class="pagination-actions">
+            <button class="btn btn-sm" onclick="changePage(-1)" id="prevPage"><i class="fas fa-chevron-left"></i></button>
+            <span id="pageInfo" style="padding: 4px 12px; font-size: 13px;">Page 1</span>
+            <button class="btn btn-sm" onclick="changePage(1)" id="nextPage"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="detailModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <span class="modal-title">📄 Email Details</span>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="modalBody">
+            <!-- Dynamic content -->
+        </div>
+        <div class="modal-footer">
+            <button class="btn" onclick="closeModal()">Close</button>
+            <button class="btn btn-primary" onclick="copyModalContent()"><i class="fas fa-copy"></i> Copy</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ── CONFIG ──
+let currentPage = 1;
+const perPage = 20;
+let totalRecords = 0;
+let currentData = [];
+
+// ── LOAD HISTORY ──
+async function loadHistory(page = 1) {
+    currentPage = page;
+    const offset = (page - 1) * perPage;
+    const search = document.getElementById('searchInput').value;
+    const status = document.getElementById('statusFilter').value;
+    const dateFrom = document.getElementById('dateFrom').value;
+    const dateTo = document.getElementById('dateTo').value;
+    
+    let url = `/api/email/history.php?limit=${perPage}&offset=${offset}`;
+    if (search) url += `&search=${encodeURIComponent(search)}`;
+    if (status) url += `&status=${encodeURIComponent(status)}`;
+    if (dateFrom) url += `&date_from=${encodeURIComponent(dateFrom)}`;
+    if (dateTo) url += `&date_to=${encodeURIComponent(dateTo)}`;
+    
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.success) {
+            currentData = data.data;
+            totalRecords = data.total;
+            renderHistory(data);
+            updateStats(data.stats);
+            updatePagination(data);
+        } else {
+            console.error('Error loading history:', data.error);
+            document.getElementById('historyBody').innerHTML = `
+                <tr><td colspan="7"><div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Error: ${data.error}</p></div></td></tr>
+            `;
+        }
+    } catch (e) {
+        console.error('Error loading history:', e);
+        document.getElementById('historyBody').innerHTML = `
+            <tr><td colspan="7"><div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Error loading history</p></div></td></tr>
+        `;
+    }
+}
+
+// ── RENDER HISTORY ──
+function renderHistory(data) {
+    const tbody = document.getElementById('historyBody');
+    
+    if (!data.data || data.data.length === 0) {
+        tbody.innerHTML = `
+            <tr><td colspan="7"><div class="empty-state"><i class="fas fa-inbox"></i><p>No email history found</p></div></td></tr>
+        `;
+        return;
+    }
+    
+    tbody.innerHTML = data.data.map((h, i) => {
+        const statusClass = {
+            'sent': 'badge-sent',
+            'failed': 'badge-failed',
+            'pending': 'badge-pending'
+        }[h.status] || 'badge-gray';
+        
+        const templateDisplay = h.template_key ? `<span class="badge badge-gray">${esc(h.template_key)}</span>` : '—';
+        const dateDisplay = h.formatted_date || h.sent_at || h.created_at || '—';
+        
+        return `
+            <tr>
+                <td>${(data.offset || 0) + i + 1}</td>
+                <td><strong>${esc(h.recipient_email)}</strong></td>
+                <td>${templateDisplay}</td>
+                <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${esc(h.subject)}</td>
+                <td style="font-size: 12px; color: var(--text-muted);">${dateDisplay}</td>
+                <td><span class="badge ${statusClass}">${esc(h.status)}</span></td>
+                <td>
+                    <button class="btn btn-sm" onclick="viewDetail(${h.id})"><i class="fas fa-eye"></i></button>
+                    ${h.status === 'failed' ? `<button class="btn btn-sm" onclick="retryEmail(${h.id})"><i class="fas fa-redo"></i></button>` : ''}
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+// ── UPDATE STATS ──
+function updateStats(stats) {
+    if (!stats) return;
+    document.getElementById('statTotal').textContent = stats.total || 0;
+    document.getElementById('statSent').textContent = stats.sent || 0;
+    document.getElementById('statPending').textContent = stats.pending || 0;
+    document.getElementById('statFailed').textContent = stats.failed || 0;
+}
+
+// ── UPDATE PAGINATION ──
+function updatePagination(data) {
+    const total = data.total || 0;
+    const offset = data.offset || 0;
+    const limit = data.limit || perPage;
+    const start = total > 0 ? offset + 1 : 0;
+    const end = Math.min(offset + limit, total);
+    const totalPages = Math.ceil(total / limit) || 1;
+    
+    document.getElementById('recordsInfo').textContent = `Showing ${start} - ${end} of ${total}`;
+    document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
+    document.getElementById('prevPage').disabled = currentPage <= 1;
+    document.getElementById('nextPage').disabled = currentPage >= totalPages;
+}
+
+// ── VIEW DETAIL ──
+async function viewDetail(id) {
+    try {
+        const response = await fetch(`/api/email/history.php?id=${id}`);
+        const data = await response.json();
+        
+        if (data.success && data.data) {
+            const h = data.data;
+            document.getElementById('modalBody').innerHTML = `
+                <div style="margin-bottom: 12px;">
+                    <strong>To:</strong> ${esc(h.recipient_email)}
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <strong>Subject:</strong> ${esc(h.subject)}
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <strong>Template:</strong> ${esc(h.template_key || '—')}
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <strong>Status:</strong> <span class="badge ${h.status === 'sent' ? 'badge-sent' : h.status === 'failed' ? 'badge-failed' : 'badge-pending'}">${esc(h.status)}</span>
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <strong>Sent At:</strong> ${h.formatted_date || h.sent_at || '—'}
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <strong>Message:</strong>
+                </div>
+                <div class="message">${esc(h.message || h.message_preview || 'No message content')}</div>
+                ${h.error_message ? `
+                    <div style="margin-top: 12px; padding: 12px; background: #fef2f2; border-radius: 8px; border-left: 3px solid #dc2626;">
+                        <strong style="color: #dc2626;">Error:</strong> ${esc(h.error_message)}
+                    </div>
+                ` : ''}
+            `;
+            openModal();
+        } else {
+            toast('Email not found', 'error');
+        }
+    } catch (e) {
+        toast('Error loading details', 'error');
+    }
+}
+
+// ── RETRY EMAIL ──
+async function retryEmail(id) {
+    if (!confirm('Retry sending this email?')) return;
+    
+    try {
+        const response = await fetch('/api/email.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                action: 'retry',
+                id: id
+            })
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+            toast('Email queued for retry', 'success');
+            loadHistory(currentPage);
+        } else {
+            toast(data.error || 'Failed to retry', 'error');
+        }
+    } catch (e) {
+        toast('Error retrying email', 'error');
+    }
+}
+
+// ── CLEAR HISTORY ──
+async function clearHistory() {
+    if (!confirm('Delete all email history? This action cannot be undone.')) return;
+    if (!confirm('Are you sure?')) return;
+    
+    try {
+        const response = await fetch('/api/email/history.php?action=clear', {
+            method: 'POST'
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+            toast('History cleared', 'success');
+            loadHistory(1);
+        } else {
+            toast(data.error || 'Failed to clear history', 'error');
+        }
+    } catch (e) {
+        toast('Error clearing history', 'error');
+    }
+}
+
+// ── EXPORT HISTORY ──
+function exportHistory() {
+    const search = document.getElementById('searchInput').value;
+    const status = document.getElementById('statusFilter').value;
+    const dateFrom = document.getElementById('dateFrom').value;
+    const dateTo = document.getElementById('dateTo').value;
+    
+    let url = `/api/email/history.php?action=export&format=csv`;
+    if (search) url += `&search=${encodeURIComponent(search)}`;
+    if (status) url += `&status=${encodeURIComponent(status)}`;
+    if (dateFrom) url += `&date_from=${encodeURIComponent(dateFrom)}`;
+    if (dateTo) url += `&date_to=${encodeURIComponent(dateTo)}`;
+    
+    window.open(url, '_blank');
+    toast('Exporting history...', 'info');
+}
+
+// ── FILTERS ──
+function applyFilters() {
+    loadHistory(1);
+}
+
+function resetFilters() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('statusFilter').value = '';
+    document.getElementById('dateFrom').value = '';
+    document.getElementById('dateTo').value = '';
+    loadHistory(1);
+}
+
+// ── PAGINATION ──
+function changePage(delta) {
+    const newPage = currentPage + delta;
+    if (newPage < 1) return;
+    loadHistory(newPage);
+}
+
+// ── MODAL ──
+function openModal() {
+    document.getElementById('detailModal').classList.add('open');
+}
+
+function closeModal() {
+    document.getElementById('detailModal').classList.remove('open');
+}
+
+function copyModalContent() {
+    const content = document.querySelector('#modalBody .message')?.textContent || '';
+    navigator.clipboard.writeText(content).then(() => {
+        toast('Copied to clipboard!', 'success');
+    }).catch(() => {
+        toast('Failed to copy', 'error');
+    });
+}
+
+// ── TOAST ──
+function toast(msg, type) {
+    const colors = {
+        success: '#059669',
+        error: '#dc2626',
+        info: '#2563eb',
+        warning: '#d97706'
+    };
+    const toast = document.createElement('div');
+    toast.style.cssText = `
+        position: fixed; bottom: 20px; right: 20px;
+        background: ${colors[type] || '#333'};
+        color: white; padding: 12px 24px;
+        border-radius: 8px; font-size: 14px;
+        z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        animation: slideIn 0.3s ease; max-width: 400px;
+    `;
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// ── ESCAPE ──
+function esc(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', () => {
+    loadHistory(1);
+});
+
+// Close modal on overlay click
+document.getElementById('detailModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+});
+</script>
+</body>
+</html>

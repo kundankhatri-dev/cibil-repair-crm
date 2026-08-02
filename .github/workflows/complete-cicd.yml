@@ -1,0 +1,21 @@
+# .github/workflows/complete-cicd.yml
+name: Deploy CIBIL CRM
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to hPanel
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          script: |
+            cd /home/u929623538/domains/cibilrepair.in/public_html
+            php bin/console deploy

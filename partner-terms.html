@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner With Us | Cibil Repair</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #00b894;
+            --primary-dark: #019874;
+            --dark: #2d3436;
+            --gray: #636e72;
+            --light: #f5f6fa;
+            --white: #ffffff;
+            --danger: #ef4444;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0f2ef 0%, #f5f7fa 100%);
+            min-height: 100vh;
+        }
+        .navbar {
+            background: var(--white);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-dark); }
+        .logo span { font-size: 0.8rem; display: block; color: var(--gray); }
+        .nav-links { display: flex; list-style: none; gap: 20px; }
+        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 500; }
+        .nav-links a:hover { color: var(--primary); }
+        .btn-outline { border: 2px solid var(--primary); padding: 8px 20px; border-radius: 25px; }
+        .btn-outline:hover { background: var(--primary); color: white !important; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        .hero-section h1 { font-size: 2.5rem; margin-bottom: 20px; }
+        .hero-section p { font-size: 1.1rem; max-width: 600px; margin: 0 auto; opacity: 0.9; }
+        .content-section { padding: 60px 0; }
+        .section-title { font-size: 2rem; color: var(--primary-dark); margin-bottom: 30px; text-align: center; }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        .benefit-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        .benefit-card:hover { transform: translateY(-5px); }
+        .benefit-icon { font-size: 3rem; margin-bottom: 15px; }
+        .benefit-card h3 { color: var(--primary-dark); margin-bottom: 10px; }
+        .benefit-card p { color: var(--gray); }
+        .terms-box {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+        .terms-box h3 { color: var(--primary-dark); margin-bottom: 20px; border-left: 4px solid var(--primary); padding-left: 15px; }
+        .terms-box h4 { color: var(--primary-dark); margin: 20px 0 10px; }
+        .terms-box p, .terms-box li { color: var(--gray); line-height: 1.6; margin-bottom: 10px; }
+        .terms-box ul, .terms-box ol { margin-left: 20px; margin-bottom: 20px; }
+        .application-form {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+        .application-form h3 { color: var(--primary-dark); margin-bottom: 20px; border-left: 4px solid var(--primary); padding-left: 15px; }
+        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark); }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0,184,148,0.1);
+        }
+        .file-upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: var(--light);
+        }
+        .file-upload-area:hover { border-color: var(--primary); background: #e0f2ef; }
+        .file-upload-area.dragover { border-color: var(--primary); background: #e0f2ef; }
+        .file-upload-icon { font-size: 2rem; margin-bottom: 10px; }
+        .file-upload-text { color: var(--gray); font-size: 0.9rem; }
+        .file-upload-hint { font-size: 0.75rem; color: #999; margin-top: 5px; }
+        .file-list { margin-top: 15px; padding: 10px; background: var(--light); border-radius: 8px; display: none; }
+        .file-list.active { display: block; }
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 10px;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 5px;
+        }
+        .file-name { font-size: 0.85rem; color: var(--dark); word-break: break-all; }
+        .file-size { font-size: 0.7rem; color: var(--gray); margin-left: 10px; }
+        .remove-file {
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .full-width { grid-column: span 2; }
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .btn-primary { background: var(--primary); color: white; width: 100%; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+        .success-message { background: #d1fae5; color: #065f46; padding: 15px; border-radius: 10px; margin-bottom: 20px; display: none; text-align: center; }
+        .error-message { background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 10px; margin-bottom: 20px; display: none; text-align: center; }
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.6s linear infinite;
+            margin-right: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 50px 0 20px;
+            margin-top: 60px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-logo { font-size: 1.5rem; font-weight: bold; margin-bottom: 15px; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: #c8e6e0; text-decoration: none; }
+        .footer-links a:hover { color: var(--white); }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; gap: 15px; text-align: center; }
+            .nav-links { flex-wrap: wrap; justify-content: center; }
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+            .hero-section h1 { font-size: 1.8rem; }
+            .section-title { font-size: 1.5rem; }
+            .terms-box, .application-form { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">🏦 Cibil Repair<span>CIBIL Score Experts</span></div>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#testimonials">Testimonials</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="login.html" class="btn-outline">Login</a></li>
+    </ul>
+</nav>
+
+<section class="hero-section">
+    <div class="container">
+        <h1>🤝 Partner With Us</h1>
+        <p>Join India's fastest-growing credit repair network and earn attractive commissions</p>
+    </div>
+</section>
+
+<div class="container">
+    <div class="content-section">
+        <h2 class="section-title">Why Partner With Us?</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card"><div class="benefit-icon">💰</div><h3>High Commissions</h3><p>Earn best-in-industry commissions on every successful deal.</p></div>
+            <div class="benefit-card"><div class="benefit-icon">📅</div><h3>Monthly Payouts</h3><p>Commissions paid monthly at month end. No delays, no hidden charges.</p></div>
+            <div class="benefit-card"><div class="benefit-icon">📊</div><h3>Dedicated Support</h3><p>24/7 partner support team to help you close deals faster.</p></div>
+            <div class="benefit-card"><div class="benefit-icon">🏆</div><h3>Recognition & Rewards</h3><p>Top performers get exclusive bonuses, certificates, and incentives.</p></div>
+            <div class="benefit-card"><div class="benefit-icon">🌐</div><h3>PAN India Network</h3><p>Work from anywhere. Serve clients across India with our support.</p></div>
+            <div class="benefit-card"><div class="benefit-icon">📈</div><h3>Marketing Support</h3><p>Get marketing materials, leads, and training to grow your business.</p></div>
+        </div>
+    </div>
+
+    <div class="terms-box">
+        <h3>📜 Partnership Terms & Conditions</h3>
+        <h4>1. Eligibility Criteria</h4>
+        <p>Any individual, freelancer, financial advisor, CA, or business entity can apply. You need: valid bank account, PAN card, active phone/email, basic credit repair knowledge.</p>
+        <h4>2. Commission Structure</h4>
+        <p>Attractive commissions on every successful client deal. Rates vary by service and volume. Shared upon onboarding.</p>
+        <h4>3. Payout Terms</h4>
+        <ul><li>Monthly payouts (end of each month)</li><li>Minimum payout: ₹1,000</li><li>Bank transfer (NEFT/IMPS)</li><li>Commission after client payment confirmed</li></ul>
+        <h4>4. Partner Responsibilities</h4>
+        <ul><li>Provide accurate client info</li><li>Never make false promises</li><li>Follow ethical practices</li><li>Maintain confidentiality</li></ul>
+        <h4>5. Code of Conduct</h4>
+        <ul><li>No spamming</li><li>No misrepresentation</li><li>Respect company policies</li></ul>
+        <h4>6. Termination</h4>
+        <p>We may terminate for violation of conduct, fraud, or 6 months inactivity.</p>
+        <h4>7. Non-Compete</h4>
+        <p>During partnership and 6 months after, no promoting competing services without consent.</p>
+        <h4>8. Grievance Redressal</h4>
+        <p>Contact partner support: mycreditsolution40@gmail.com / +91 87094 55441.</p>
+    </div>
+
+    <div class="application-form">
+        <h3>📝 Apply for Partnership</h3>
+        <div id="successMsg" class="success-message"></div>
+        <div id="errorMsg" class="error-message"></div>
+        <form id="partnerForm" enctype="multipart/form-data">
+            <div class="form-grid">
+                <div class="form-group"><label>Full Name *</label><input type="text" id="fullName" required></div>
+                <div class="form-group"><label>Email *</label><input type="email" id="email" required></div>
+                <div class="form-group"><label>Phone *</label><input type="tel" id="phone" required></div>
+                <div class="form-group"><label>City *</label><input type="text" id="city" required></div>
+                <div class="form-group"><label>State *</label><input type="text" id="state" required></div>
+                <div class="form-group"><label>Pincode</label><input type="text" id="pincode"></div>
+                <div class="form-group"><label>Business/Company Name</label><input type="text" id="companyName"></div>
+                <div class="form-group"><label>Years of Experience</label><select id="experience"><option value="0-1">0-1 year</option><option value="1-3">1-3 years</option><option value="3-5">3-5 years</option><option value="5+">5+ years</option></select></div>
+                <div class="form-group"><label>How did you hear about us?</label><select id="source"><option value="Google">Google Search</option><option value="Social Media">Social Media</option><option value="Friend/Referral">Friend/Referral</option><option value="Advertisement">Advertisement</option><option value="Other">Other</option></select></div>
+                <div class="form-group full-width"><label>📎 Attach Documents (Optional)</label>
+                    <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
+                        <div class="file-upload-icon">📁</div>
+                        <div class="file-upload-text">Click or drag & drop files here</div>
+                        <div class="file-upload-hint">Supported: Images, PDF, DOC (Max 5MB)<br>PAN card, GST certificate, business proof</div>
+                    </div>
+                    <input type="file" id="fileInput" name="attachment" style="display: none;" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx">
+                    <div id="fileList" class="file-list"></div>
+                </div>
+                <div class="form-group full-width"><label>Why do you want to partner with us?</label><textarea id="message" rows="3"></textarea></div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Submit Application</button>
+        </form>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div><div class="footer-logo">🏦 Cibil Repair</div><p>India's most trusted credit repair agency.</p></div>
+            <div><h4>Quick Links</h4><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="index.html#services">Services</a></li><li><a href="client-issues.html">Client Issues</a></li><li><a href="partner-terms.html">Partner With Us</a></li></ul></div>
+            <div><h4>Contact Us</h4><ul class="footer-links"><li>📧 contact@cibilrepair.in</li><li>📞 +91 87094 55441</li><li>📍 Delhi NCR, India</li></ul></div>
+            <div><h4>Working Hours</h4><ul class="footer-links"><li>Mon-Fri: 9AM-7PM</li><li>Saturday: 10AM-5PM</li><li>Sunday: Closed</li></ul></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2025 Cibil Repair. All rights reserved. | CIBIL is a trademark of TransUnion</p></div>
+    </div>
+</footer>
+
+<script>
+    let selectedFiles = [];
+    const fileInput = document.getElementById('fileInput');
+    const fileUploadArea = document.getElementById('fileUploadArea');
+    const fileListDiv = document.getElementById('fileList');
+
+    fileUploadArea.addEventListener('dragover', (e) => { e.preventDefault(); fileUploadArea.classList.add('dragover'); });
+    fileUploadArea.addEventListener('dragleave', () => { fileUploadArea.classList.remove('dragover'); });
+    fileUploadArea.addEventListener('drop', (e) => { e.preventDefault(); fileUploadArea.classList.remove('dragover'); handleFiles(Array.from(e.dataTransfer.files)); });
+    fileInput.addEventListener('change', (e) => { handleFiles(Array.from(e.target.files)); });
+
+    function handleFiles(files) {
+        const maxSize = 5 * 1024 * 1024;
+        if (files.length > 1) { showError('Only one file allowed'); return; }
+        const file = files[0];
+        if (file.size > maxSize) { showError('File exceeds 5MB'); return; }
+        selectedFiles = [file];
+        updateFileList();
+    }
+
+    function updateFileList() {
+        if (selectedFiles.length) {
+            fileListDiv.classList.add('active');
+            fileListDiv.innerHTML = `<div class="file-item"><span class="file-name">📎 ${selectedFiles[0].name}</span><span class="file-size">(${(selectedFiles[0].size/1024).toFixed(1)} KB)</span><button type="button" class="remove-file" onclick="removeFile()">×</button></div>`;
+        } else {
+            fileListDiv.classList.remove('active');
+            fileListDiv.innerHTML = '';
+        }
+    }
+
+    function removeFile() { selectedFiles = []; updateFileList(); fileInput.value = ''; }
+
+    document.getElementById('partnerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('full_name', document.getElementById('fullName').value.trim());
+        formData.append('email', document.getElementById('email').value.trim());
+        formData.append('phone', document.getElementById('phone').value.trim());
+        formData.append('city', document.getElementById('city').value.trim());
+        formData.append('state', document.getElementById('state').value.trim());
+        formData.append('pincode', document.getElementById('pincode').value.trim());
+        formData.append('company_name', document.getElementById('companyName').value.trim());
+        formData.append('experience', document.getElementById('experience').value);
+        formData.append('source', document.getElementById('source').value);
+        formData.append('message', document.getElementById('message').value.trim());
+        if (selectedFiles.length) formData.append('attachment', selectedFiles[0]);
+
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="loading-spinner"></span> Submitting...';
+
+        try {
+            const response = await fetch('submit_partner.php', { method: 'POST', body: formData });
+            const result = await response.json();
+            if (result.success) {
+                showSuccess('Application submitted successfully! We will contact you soon.');
+                document.getElementById('partnerForm').reset();
+                selectedFiles = [];
+                updateFileList();
+            } else {
+                showError(result.error || 'Submission failed');
+            }
+        } catch (err) {
+            showError('Network error. Please try again.');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Submit Application';
+        }
+    });
+
+    function showSuccess(msg) { const d = document.getElementById('successMsg'); d.innerHTML = msg; d.style.display = 'block'; setTimeout(() => d.style.display = 'none', 5000); }
+    function showError(msg) { const d = document.getElementById('errorMsg'); d.innerHTML = msg; d.style.display = 'block'; setTimeout(() => d.style.display = 'none', 5000); }
+</script>
+</body>
+</html>

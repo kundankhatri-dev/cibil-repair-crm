@@ -1,0 +1,125 @@
+#!/usr/bin/env php
+<?php
+// CIBIL CRM - Complete Management Console
+
+function g($t){return "\033[32m$t\033[0m";}
+function r($t){return "\033[31m$t\033[0m";}
+function y($t){return "\033[33m$t\033[0m";}
+function b($t){return "\033[34m$t\033[0m";}
+
+// ── HEALTH CHECK ──
+if($argc>1 && $argv[1]==='health'){
+    echo b("🏥 Health Check\n\n");
+    
+    echo "📊 Database... ";
+    try{
+        $pdo=new PDO("mysql:host=localhost;dbname=u929623538_cibil","u929623538_cibilrepair","Kundanlaxmi@1995");
+        echo g("✅ OK\n");
+    }catch(Exception $e){
+        echo r("❌ FAIL\n");
+        exit(1);
+    }
+    
+    echo "📁 Files... ";
+    $files=['admin-dashboard.php','login.php'];
+    $ok=true;
+    foreach($files as $f){ if(!file_exists($f)) $ok=false; }
+    echo $ok ? g("✅ OK\n") : r("❌ FAIL\n");
+    
+    if($ok){ 
+        echo g("\n✅ All good!\n"); 
+        exit(0); 
+    }
+    exit(1);
+}
+
+// ── BACKUP ──
+if($argc>1 && $argv[1]==='backup'){
+    echo b("💾 Backup\n\n");
+    
+    $backupDir = 'backups/production/';
+    if (!is_dir($backupDir)) {
+        mkdir($backupDir, 0755, true);
+    }
+    
+    $timestamp = date('Ymd_His');
+    $backupFile = $backupDir . "backup_{$timestamp}.sql";
+    
+    echo "🔄 Saving... ";
+    
+    try {
+        // Connect to database
+        $pdo = new PDO('mysql:host=localhost;dbname=u929623538_cibil', 'u929623538_cibilrepair', 'Kundanlaxmi@1995');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        // Get all tables
+        $tables = $pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
+        $content = "-- =========================================\n";
+        $content .= "-- Database Backup: " . date('Y-m-d H:i:s') . "\n";
+        $content .= "-- Database: u929623538_cibil\n";
+        $content .= "-- =========================================\n\n";
+        
+        foreach ($tables as $table) {
+            // Get table structure
+            $create = $pdo->query("SHOW CREATE TABLE `$table`")->fetch();
+            $content .= "DROP TABLE IF EXISTS `$table`;\n";
+            $content .= $create[1] . ";\n\n";
+            
+            // Get data
+            $rows = $pdo->query("SELECT * FROM `$table`");
+            $rowCount = 0;
+            while ($row = $rows->fetch(PDO::FETCH_ASSOC)) {
+                $rowCount++;
+                $cols = array_keys($row);
+                $vals = array_map(function($v) {
+                    return $v === null ? 'NULL' : "'" . addslashes($v) . "'";
+                }, $row);
+                $content .= "INSERT INTO `$table` (`" . implode("`, `", $cols) . "`) VALUES (" . implode(", ", $vals) . ");\n";
+            }
+            if ($rowCount > 0) {
+                $content .= "-- $rowCount rows inserted into $table\n\n";
+            } else {
+                $content .= "-- No data in $table\n\n";
+            }
+        }
+        
+        // Save file
+        file_put_contents($backupFile, $content);
+        $size = round(filesize($backupFile) / 1024, 2);
+        echo g("✅ Done! ({$size} KB)\n");
+        echo "📁 Saved to: " . $backupFile . "\n";
+        
+    } catch (Exception $e) {
+        echo r("❌ Failed: " . $e->getMessage() . "\n");
+        exit(1);
+    }
+    exit(0);
+}
+
+// ── DEPLOY ──
+if($argc>1 && $argv[1]==='deploy'){
+    echo b("🚀 Deploy\n\n");
+    
+    echo "🧹 Clearing cache...\n";
+    exec('rm -rf storage/cache/* storage/logs/*');
+    echo g("✅ Cache cleared!\n");
+    
+    echo "🔒 Setting permissions...\n";
+    exec('chmod -R 755 storage/ public/uploads/');
+    echo g("✅ Permissions set!\n");
+    
+    echo g("\n✅ Deployment completed!\n");
+    exit(0);
+}
+
+// ── HELP ──
+echo b("📋 CIBIL Repair CRM - Management Console\n\n");
+echo "Commands:\n";
+echo "  php bin/console health   - Check system health\n";
+echo "  php bin/console backup   - Create database backup\n";
+echo "  php bin/console deploy   - Clear cache & set permissions\n";
+echo "  php bin/console help     - Show this help\n\n";
+echo "Examples:\n";
+echo "  php bin/console health\n";
+echo "  php bin/console backup\n";
+echo "  php bin/console deploy\n";

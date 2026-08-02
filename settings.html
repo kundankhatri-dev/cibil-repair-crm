@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Partner Panel</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f5f7fa; padding: 20px; }
+        .container { max-width: 600px; margin: auto; }
+        .card { background: white; border-radius: 16px; padding: 25px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        h2 { color: #7c3aed; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; }
+        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+        .btn { padding: 10px 20px; background: #7c3aed; color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .logout-btn { background: #dc3545; color: white; border: none; padding: 8px 20px; border-radius: 8px; cursor: pointer; float: right; margin-bottom: 15px; }
+        .message { margin-top: 15px; padding: 10px; border-radius: 8px; display: none; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <button class="logout-btn" onclick="logout()">Logout</button>
+    <div class="card">
+        <h2>⚙️ Account Settings</h2>
+        <form id="passwordForm">
+            <div class="form-group"><label>Current Password</label><input type="password" id="currentPwd" required></div>
+            <div class="form-group"><label>New Password</label><input type="password" id="newPwd" required></div>
+            <div class="form-group"><label>Confirm New Password</label><input type="password" id="confirmPwd" required></div>
+            <button type="submit" class="btn">Change Password</button>
+        </form>
+        <div id="message" class="message"></div>
+    </div>
+</div>
+<script>
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (!user || user.role !== 'partner') window.location.href = 'login.html';
+
+    document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const current = document.getElementById('currentPwd').value;
+        const newPwd = document.getElementById('newPwd').value;
+        const confirm = document.getElementById('confirmPwd').value;
+        if (newPwd !== confirm) { alert('Passwords do not match'); return; }
+        const response = await fetch('partner_api.php?action=updatePassword', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: user.email, current_password: current, new_password: newPwd })
+        });
+        const result = await response.json();
+        const msgDiv = document.getElementById('message');
+        if (result.success) {
+            msgDiv.className = 'message success';
+            msgDiv.innerText = 'Password changed successfully!';
+            msgDiv.style.display = 'block';
+            document.getElementById('passwordForm').reset();
+        } else {
+            msgDiv.className = 'message error';
+            msgDiv.innerText = result.error || 'Failed to change password';
+            msgDiv.style.display = 'block';
+        }
+        setTimeout(() => msgDiv.style.display = 'none', 4000);
+    });
+    function logout() { localStorage.removeItem('currentUser'); window.location.href = 'login.html'; }
+</script>
+</body>
+</html>

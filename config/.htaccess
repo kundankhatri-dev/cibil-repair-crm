@@ -1,0 +1,14 @@
+# Prevent direct access to config files
+<FilesMatch "\.(php|ini|log)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Allow only from localhost or specific IPs (optional)
+# Allow from 127.0.0.1
+# Allow from ::1
+
+# Set proper headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+</IfModule>

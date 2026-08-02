@@ -1,0 +1,15 @@
+# Block script execution - SECURITY
+<FilesMatch "\.(php|phtml|php3|php4|php5|pl|py|cgi|sh|shtml|htaccess|htpasswd)$">
+    Require all denied
+</FilesMatch>
+
+# Allow access to uploaded documents
+<FilesMatch "\.(jpg|jpeg|png|gif|pdf|doc|docx|xls|xlsx)$">
+    Require all granted
+</FilesMatch>
+
+# Disable directory listing
+Options -Indexes
+
+# Enable FollowSymLinks for proper file access
+Options +FollowSymLinks

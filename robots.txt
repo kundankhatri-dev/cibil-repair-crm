@@ -1,0 +1,113 @@
+# robots.txt for cibilrepair.in
+# Last updated: 2026-07-17
+
+User-agent: *
+Allow: /
+
+# ============================================
+# ALLOW MAIN PAGES (Clean URLs - no extensions)
+# ============================================
+Allow: /$
+Allow: /about-us$
+Allow: /services$
+Allow: /success-stories$
+Allow: /contact$
+Allow: /login$
+Allow: /partners$
+Allow: /blog$
+Allow: /careers$
+
+# ============================================
+# ALLOW SERVICE PAGES (Clean URLs)
+# ============================================
+Allow: /service/written-off$
+Allow: /service/settled$
+Allow: /service/suit-filled$
+Allow: /service/analysis$
+Allow: /service/profile$
+Allow: /service/wrong-entry$
+
+# ============================================
+# ALLOW LEGAL/FOOTER PAGES (Clean URLs)
+# ============================================
+Allow: /privacy-policy$
+Allow: /terms-conditions$
+Allow: /refund-cancellation$
+Allow: /disclaimer$
+Allow: /complaints$
+Allow: /rbi-compliance$
+
+# ============================================
+# ALLOW SUCCESS STORIES (Clean URLs)
+# ============================================
+Allow: /success-story/
+Allow: /success-stories$
+
+# ============================================
+# ALLOW CITY PAGES (Clean URLs)
+# ============================================
+Allow: /cibil-repair-
+
+# ============================================
+# ALLOW ASSETS FOLDERS
+# ============================================
+Allow: /images/
+Allow: /assets/
+Allow: /css/
+Allow: /js/
+Allow: /fonts/
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.webp$
+Allow: /*.woff2$
+Allow: /*.ico$
+
+# ============================================
+# DISALLOW SENSITIVE AREAS
+# ============================================
+Disallow: /admin/
+Disallow: /api/
+Disallow: /config/
+Disallow: /includes/
+Disallow: /temp/
+Disallow: /backup/
+Disallow: /data/
+Disallow: /error/
+Disallow: /vendor/
+Disallow: /logs/
+
+# ============================================
+# DISALLOW SPECIFIC FILES
+# ============================================
+Disallow: /analyze_document.php$
+Disallow: /chatbot-api.php$
+Disallow: /logout.php$
+Disallow: /submit-complaint.php$
+
+# ============================================
+# BLOCK SECURITY FILE TYPES
+# ============================================
+Disallow: /*.sql$
+Disallow: /*.log$
+Disallow: /*.env$
+Disallow: /*.ini$
+Disallow: /*.json$
+
+# ============================================
+# ALLOW PAGINATION AND SEARCH PARAMETERS
+# ============================================
+Allow: /*?page=
+Allow: /*?s=
+Allow: /*?q=
+Allow: /*?category=
+Allow: /*?filter=
+
+# ============================================
+# SITEMAP LOCATION
+# ============================================
+Sitemap: https://cibilrepair.in/sitemap.xml

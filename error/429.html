@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>429 - Too Many Requests | CIBIL Repair</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a2e28 0%, #1f8a72 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .error-code {
+            font-size: 100px;
+            font-weight: 800;
+            color: #dc3545;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(220,53,69,0.2);
+        }
+        h1 { font-size: 28px; color: #1a2c2e; margin-bottom: 15px; }
+        p { color: #6c757d; margin-bottom: 15px; line-height: 1.6; }
+        .rate-limit-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 8px;
+        }
+        .rate-limit-box strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #1f8a72, #0e5e4c);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s;
+            margin: 5px;
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(31,138,114,0.3); }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #1f8a72;
+            color: #1f8a72;
+        }
+        .btn-outline:hover { background: #1f8a72; color: white; }
+        .icon { font-size: 60px; margin-bottom: 20px; }
+        .retry-after {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-code">429</div>
+        <div class="icon">🐌</div>
+        <h1>Too Many Requests</h1>
+        <p>You have sent too many requests in a short period.</p>
+        <div class="rate-limit-box">
+            <strong>🛡️ Rate Limit Exceeded</strong>
+            Please wait a few minutes before trying again. This helps protect our servers and ensure fair usage.
+        </div>
+        <a href="/" class="btn">🏠 Go Home</a>
+        <a href="javascript:history.back()" class="btn btn-outline">🔙 Go Back</a>
+        <a href="javascript:location.reload()" class="btn btn-outline">🔄 Try Again Later</a>
+        <div class="retry-after">
+            ⏳ Please wait 5 minutes before retrying
+        </div>
+        <p style="margin-top: 20px; font-size: 12px;">
+            <a href="/contact.html" style="color: #1f8a72;">Need help? Contact Support</a>
+        </p>
+    </div>
+</body>
+</html>

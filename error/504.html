@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>504 - Gateway Timeout | CIBIL Repair</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a2e28 0%, #1f8a72 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .error-code {
+            font-size: 100px;
+            font-weight: 800;
+            color: #9b59b6;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(155,89,182,0.2);
+        }
+        h1 { font-size: 28px; color: #1a2c2e; margin-bottom: 15px; }
+        p { color: #6c757d; margin-bottom: 15px; line-height: 1.6; }
+        .gateway-box {
+            background: #e8f0ff;
+            border-left: 4px solid #9b59b6;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 8px;
+        }
+        .gateway-box strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #1f8a72, #0e5e4c);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s;
+            margin: 5px;
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(31,138,114,0.3); }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #1f8a72;
+            color: #1f8a72;
+        }
+        .btn-outline:hover { background: #1f8a72; color: white; }
+        .icon { font-size: 60px; margin-bottom: 20px; }
+        .alert-box {
+            background: #fff3cd;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #856404;
+        }
+        .countdown { font-size: 14px; color: #1f8a72; margin-top: 15px; font-weight: 600; }
+        .countdown-note {
+            font-size: 11px;
+            color: #999;
+            margin-top: 5px;
+        }
+        .support-link {
+            margin-top: 15px;
+            font-size: 12px;
+        }
+        .support-link a {
+            color: #1f8a72;
+            text-decoration: none;
+        }
+        .support-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-code">504</div>
+        <div class="icon">🌐</div>
+        <h1>Gateway Timeout</h1>
+        <p>The server didn't receive a timely response from the upstream server.</p>
+        <div class="gateway-box">
+            <strong>🌐 What happened?</strong>
+            Our server was waiting for a response from another service, but it took too long. This is temporary.
+        </div>
+        <div class="countdown" id="countdown">
+            Retrying in <span id="timer">10</span> seconds...
+        </div>
+        <div class="countdown-note">
+            If page doesn't reload automatically, click the button below.
+        </div>
+        <a href="/" class="btn">🏠 Go Home</a>
+        <a href="javascript:history.back()" class="btn btn-outline">🔙 Go Back</a>
+        <a href="javascript:location.reload()" class="btn btn-outline">🔄 Try Again</a>
+        <div class="alert-box">
+            📞 If this persists, please <a href="/contact.html" style="color: #856404; text-decoration: underline;">contact our support team</a>.
+        </div>
+        <div class="support-link">
+            <a href="/contact.html">Need help? Contact Support</a>
+        </div>
+    </div>
+    <script>
+        let seconds = 10;
+        const timerElement = document.getElementById('timer');
+        if (timerElement) {
+            const countdown = setInterval(function() {
+                seconds--;
+                if (timerElement) timerElement.textContent = seconds;
+                if (seconds <= 0) {
+                    clearInterval(countdown);
+                    location.reload();
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

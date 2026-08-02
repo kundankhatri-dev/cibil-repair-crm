@@ -1,0 +1,231 @@
+<?php
+// ============================================================
+// CIBIL REPAIR CRM - Delete Entity API (Bank/Lawyer/CA/Franchise/etc.)
+// ============================================================
+
+// ===== DISABLE ERROR DISPLAY =====
+ini_set('display_errors', 0);
+error_reporting(0);
+
+// ===== SET HEADERS =====
+header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: DELETE, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+// ===== REMOVED: Direct access check =====
+// if (basename($_SERVER['PHP_SELF']) === 'delete_bank.php') {
+//     http_response_code(403);
+//     exit('Direct access forbidden.');
+// }
+
+// ===== HANDLE PREFLIGHT =====
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
+// ============================================================
+// DATABASE CONNECTION
+// ============================================================
+
+$db_host = 'localhost';
+$db_name = 'u929623538_cibil';
+$db_user = 'u929623538_cibilrepair';
+$db_pass = 'Kundanlaxmi@1995';
+
+$conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+
+if (!$conn) {
+    echo json_encode(['success' => false, 'error' => 'Database connection failed']);
+    exit;
+}
+
+mysqli_set_charset($conn, 'utf8mb4');
+
+// ============================================================
+// SESSION & AUTHENTICATION
+// ============================================================
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$user_id = $_SESSION['user_id'] ?? 0;
+$role = $_SESSION['user_role'] ?? '';
+$user_name = $_SESSION['user_name'] ?? $_SESSION['name'] ?? 'System';
+
+if (!$user_id) {
+    echo json_encode(['success' => false, 'error' => 'Authentication required']);
+    exit;
+}
+
+if (!in_array($role, ['admin', 'super_admin'])) {
+    echo json_encode(['success' => false, 'error' => 'Unauthorized. Admin access required']);
+    exit;
+}
+
+// ============================================================
+// ENTITY TYPE DEFINITIONS
+// ============================================================
+
+$entityTypes = [
+    'bank' => 'Bank',
+    'lawyer' => 'Law Firm / Advocate',
+    'ca' => 'Chartered Accountant',
+    'franchise' => 'Franchise Store',
+    'real_estate' => 'Real Estate Agent',
+    'insurance' => 'Insurance Agent',
+    'consultant' => 'Business Consultant',
+    'agency' => 'Recruitment Agency',
+    'broker' => 'Broker / Agent',
+    'other' => 'Other'
+];
+
+// ============================================================
+// GET INPUT DATA
+// ============================================================
+
+if ($_SERVER['REQUEST_METHOD'] !== 'DELETE' && $_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['success' => false, 'error' => 'Invalid request method. Use DELETE or POST']);
+    exit;
+}
+
+$input = json_decode(file_get_contents('php://input'), true);
+if (!$input) {
+    $input = $_POST;
+}
+
+$id = isset($input['id']) ? intval($input['id']) : 0;
+$force = isset($input['force']) ? filter_var($input['force'], FILTER_VALIDATE_BOOLEAN) : false;
+
+if (!$id && isset($_GET['id'])) {
+    $id = intval($_GET['id']);
+}
+
+if (!$id) {
+    echo json_encode(['success' => false, 'error' => 'Entity ID is required']);
+    exit;
+}
+
+// ============================================================
+# CHECK IF ENTITY EXISTS
+// ============================================================
+
+$result = mysqli_query($conn, "SELECT * FROM banks WHERE id = $id");
+if (!$result || mysqli_num_rows($result) == 0) {
+    echo json_encode(['success' => false, 'error' => 'Entity not found']);
+    exit;
+}
+$entity = mysqli_fetch_assoc($result);
+
+// ============================================================
+# PARSE ENTITY TYPE
+// ============================================================
+
+$entityType = 'other';
+$entityTypeLabel = 'Other';
+if (!empty($entity['notes']) && preg_match('/Entity Type: (.+)/', $entity['notes'], $matches)) {
+    $entityTypeLabel = trim($matches[1]);
+    $entityType = array_search($entityTypeLabel, $entityTypes);
+    if ($entityType === false) {
+        $entityType = 'other';
+    }
+}
+
+// ============================================================
+# CHECK FOR DEPENDENCIES
+// ============================================================
+
+$related = [];
+
+// Check if entity is used in customers (if bank_id column exists)
+$colCheck = mysqli_query($conn, "SHOW COLUMNS FROM customers LIKE 'bank_id'");
+if (mysqli_num_rows($colCheck) > 0) {
+    $result = mysqli_query($conn, "SELECT COUNT(*) as count FROM customers WHERE bank_id = $id");
+    $count = mysqli_fetch_assoc($result)['count'] ?? 0;
+    if ($count > 0) {
+        $related[] = ['type' => 'customers', 'count' => $count, 'message' => "$count customer(s)"];
+    }
+}
+
+// Check if entity is used in partners (if bank_id column exists)
+$colCheck = mysqli_query($conn, "SHOW COLUMNS FROM partners LIKE 'bank_id'");
+if (mysqli_num_rows($colCheck) > 0) {
+    $result = mysqli_query($conn, "SELECT COUNT(*) as count FROM partners WHERE bank_id = $id");
+    $count = mysqli_fetch_assoc($result)['count'] ?? 0;
+    if ($count > 0) {
+        $related[] = ['type' => 'partners', 'count' => $count, 'message' => "$count partner(s)"];
+    }
+}
+
+// ============================================================
+# IF RELATED RECORDS EXIST AND FORCE IS FALSE
+// ============================================================
+
+if (!empty($related) && !$force) {
+    $relatedMessages = array_column($related, 'message');
+    echo json_encode([
+        'success' => false,
+        'error' => 'Cannot delete entity. Has related records: ' . implode(', ', $relatedMessages) . '. Use force=true to delete anyway.',
+        'data' => [
+            'entity' => [
+                'id' => $id,
+                'name' => $entity['name'],
+                'type' => $entityTypeLabel
+            ],
+            'related' => $related
+        ]
+    ]);
+    exit;
+}
+
+// ============================================================
+# DELETE ENTITY
+// ============================================================
+
+$entityName = $entity['name'] ?? 'Unknown';
+$sql = "DELETE FROM banks WHERE id = $id";
+$result = mysqli_query($conn, $sql);
+
+if ($result) {
+    // Log activity
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+    $logDetails = "Deleted $entityTypeLabel: $entityName (ID: $id)";
+    
+    mysqli_query($conn, "CREATE TABLE IF NOT EXISTS activity_logs (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT,
+        user_name VARCHAR(100),
+        action VARCHAR(100),
+        details TEXT,
+        ip_address VARCHAR(45),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )");
+    
+    mysqli_query($conn, "INSERT INTO activity_logs (user_id, user_name, action, details, ip_address, created_at) 
+                         VALUES ($user_id, '$user_name', 'Deleted entity', '$logDetails', '$ip', NOW())");
+    
+    echo json_encode([
+        'success' => true,
+        'message' => $entityTypeLabel . ' deleted successfully',
+        'data' => [
+            'id' => $id,
+            'name' => $entityName,
+            'entity_type' => $entityType,
+            'entity_type_label' => $entityTypeLabel,
+            'deleted_at' => date('Y-m-d H:i:s'),
+            'related_records' => $related,
+            'force_deleted' => $force
+        ]
+    ]);
+} else {
+    echo json_encode([
+        'success' => false,
+        'error' => 'Failed to delete entity: ' . mysqli_error($conn)
+    ]);
+}
+
+mysqli_close($conn);
+exit;
+?>
