@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Intelligence Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; padding: 20px; }
+        .dashboard { max-width: 1400px; margin: 0 auto; }
+        .header { background: linear-gradient(135deg, #0d9e78, #0a7d60); color: white; padding: 20px 30px; border-radius: 15px; margin-bottom: 25px; }
+        .header h1 { font-size: 28px; }
+        .header p { opacity: 0.8; margin-top: 5px; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 25px; }
+        .kpi-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; }
+        .kpi-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+        .kpi-label { color: #666; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .kpi-value { font-size: 28px; font-weight: 700; color: #0d9e78; margin: 8px 0; }
+        .kpi-change { font-size: 13px; }
+        .kpi-change.up { color: #4caf50; }
+        .kpi-change.down { color: #f44336; }
+        .charts-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 25px; }
+        .chart-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .chart-card h3 { color: #333; margin-bottom: 15px; font-size: 16px; }
+        .chart-wrap { position: relative; height: 250px; }
+        .full-width { grid-column: 1 / -1; }
+        .predictions { background: linear-gradient(135deg, #1a237e, #0d47a1); color: white; padding: 20px; border-radius: 12px; margin-top: 20px; }
+        .predictions h3 { color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 400; }
+        .predictions .value { font-size: 32px; font-weight: 700; margin: 5px 0; }
+        .predictions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        @media (max-width: 768px) { .charts-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <h1>📊 Business Intelligence Dashboard</h1>
+            <p>Real-time insights and analytics for your business</p>
+        </div>
+        
+        <div class="kpi-grid" id="kpiGrid">
+            <div class="kpi-card"><div class="kpi-label">Revenue</div><div class="kpi-value" id="kpiRevenue">—</div></div>
+            <div class="kpi-card"><div class="kpi-label">New Customers</div><div class="kpi-value" id="kpiCustomers">—</div></div>
+            <div class="kpi-card"><div class="kpi-label">New Leads</div><div class="kpi-value" id="kpiLeads">—</div></div>
+            <div class="kpi-card"><div class="kpi-label">Conversion Rate</div><div class="kpi-value" id="kpiConversion">—%</div></div>
+            <div class="kpi-card"><div class="kpi-label">Active Partners</div><div class="kpi-value" id="kpiPartners">—</div></div>
+            <div class="kpi-card"><div class="kpi-label">Avg CIBIL Score</div><div class="kpi-value" id="kpiScore">—</div></div>
+        </div>
+        
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3>📈 Revenue Trend</h3>
+                <div class="chart-wrap"><canvas id="revenueChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>🎯 Service Distribution</h3>
+                <div class="chart-wrap"><canvas id="serviceChart"></canvas></div>
+            </div>
+        </div>
+        
+        <div class="charts-grid">
+            <div class="chart-card full-width">
+                <h3>📈 Client Growth</h3>
+                <div class="chart-wrap"><canvas id="growthChart"></canvas></div>
+            </div>
+        </div>
+        
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3>🏆 Top Partners</h3>
+                <div id="topPartners"></div>
+            </div>
+            <div class="chart-card">
+                <h3>📊 Lead Source Performance</h3>
+                <div id="leadSources"></div>
+            </div>
+        </div>
+        
+        <div class="predictions" id="predictions">
+            <h3>🚀 AI Predictions</h3>
+            <div class="predictions-grid">
+                <div><div class="value" id="predRevenue">—</div><div>Predicted Monthly Revenue</div></div>
+                <div><div class="value" id="predLeads">—</div><div>Predicted Leads</div></div>
+                <div><div class="value" id="predConfidence">—</div><div>Confidence</div></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let charts = {};
+        
+        function formatCurrency(value) {
+            return '₹' + Number(value).toLocaleString('en-IN', { maximumFractionDigits: 0 });
+        }
+        
+        function loadKPIs() {
+            fetch('bi-dashboard.php?action=kpis')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('kpiRevenue').textContent = formatCurrency(data.revenue);
+                    document.getElementById('kpiCustomers').textContent = data.new_customers;
+                    document.getElementById('kpiLeads').textContent = data.new_leads;
+                    document.getElementById('kpiConversion').textContent = data.conversion_rate + '%';
+                    document.getElementById('kpiPartners').textContent = data.active_partners;
+                    document.getElementById('kpiScore').textContent = data.avg_score;
+                });
+        }
+        
+        function loadRevenueTrend() {
+            fetch('bi-dashboard.php?action=revenue_trend&days=30')
+                .then(res => res.json())
+                .then(data => {
+                    const labels = data.map(d => d.date);
+                    const values = data.map(d => d.revenue);
+                    if (charts.revenue) charts.revenue.destroy();
+                    const ctx = document.getElementById('revenueChart').getContext('2d');
+                    charts.revenue = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{ label: 'Revenue', data: values, borderColor: '#0d9e78', backgroundColor: 'rgba(13,158,120,0.1)', fill: true, tension: 0.4 }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+                    });
+                });
+        }
+        
+        function loadServiceDistribution() {
+            fetch('bi-dashboard.php?action=services')
+                .then(res => res.json())
+                .then(data => {
+                    const labels = data.map(d => d.service || 'Other');
+                    const values = data.map(d => d.revenue);
+                    if (charts.service) charts.service.destroy();
+                    const ctx = document.getElementById('serviceChart').getContext('2d');
+                    charts.service = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: labels,
+                            datasets: [{ data: values, backgroundColor: ['#0d9e78', '#2196f3', '#ff9800', '#f44336', '#9c27b0'] }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+                    });
+                });
+        }
+        
+        function loadGrowth() {
+            fetch('bi-dashboard.php?action=growth&days=90')
+                .then(res => res.json())
+                .then(data => {
+                    const labels = data.map(d => d.date);
+                    const values = data.map(d => d.count);
+                    if (charts.growth) charts.growth.destroy();
+                    const ctx = document.getElementById('growthChart').getContext('2d');
+                    charts.growth = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{ label: 'New Clients', data: values, backgroundColor: '#0d9e78', borderRadius: 4 }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+                    });
+                });
+        }
+        
+        function loadTopPartners() {
+            fetch('bi-dashboard.php?action=partners&limit=5')
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById('topPartners');
+                    container.innerHTML = data.map(p => `
+                        <div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee;">
+                            <span>${p.name}</span>
+                            <span>${p.conversions} conversions</span>
+                            <span style="font-weight:700;color:#0d9e78;">₹${Number(p.revenue).toLocaleString()}</span>
+                        </div>
+                    `).join('') || '<p>No partners found</p>';
+                });
+        }
+        
+        function loadLeadSources() {
+            fetch('bi-dashboard.php?action=lead_sources')
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById('leadSources');
+                    container.innerHTML = data.map(p => `
+                        <div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee;">
+                            <span>${p.source || 'Other'}</span>
+                            <span>${p.count} leads</span>
+                            <span style="color:${p.conversion_rate > 20 ? '#4caf50' : '#ff9800'};">${p.conversion_rate}%</span>
+                        </div>
+                    `).join('') || '<p>No lead sources found</p>';
+                });
+        }
+        
+        function loadPredictions() {
+            fetch('bi-dashboard.php?action=predictions')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('predRevenue').textContent = formatCurrency(data.predicted_monthly_revenue);
+                    document.getElementById('predLeads').textContent = data.predicted_leads;
+                    document.getElementById('predConfidence').textContent = data.confidence;
+                });
+        }
+        
+        // Load all data on page load
+        loadKPIs();
+        loadRevenueTrend();
+        loadServiceDistribution();
+        loadGrowth();
+        loadTopPartners();
+        loadLeadSources();
+        loadPredictions();
+        
+        // Refresh every 60 seconds
+        setInterval(() => {
+            loadKPIs();
+            loadRevenueTrend();
+            loadServiceDistribution();
+            loadGrowth();
+            loadTopPartners();
+            loadLeadSources();
+            loadPredictions();
+        }, 60000);
+    </script>
+</body>
+</html>
