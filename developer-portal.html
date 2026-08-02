@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Developer Portal</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { background: linear-gradient(135deg, #1a237e, #0d47a1); color: white; padding: 30px; border-radius: 15px; margin-bottom: 25px; }
+        .header h1 { font-size: 32px; }
+        .header p { opacity: 0.8; margin-top: 5px; }
+        .grid { display: grid; grid-template-columns: 300px 1fr; gap: 25px; }
+        .sidebar { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .sidebar h3 { margin-bottom: 15px; color: #333; }
+        .sidebar ul { list-style: none; }
+        .sidebar li { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; transition: background 0.2s; }
+        .sidebar li:hover { background: #f5f5f5; }
+        .sidebar li.active { background: #e8f5e9; color: #0d9e78; font-weight: 600; }
+        .content { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .endpoint { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .endpoint .method { font-weight: 700; padding: 4px 12px; border-radius: 4px; display: inline-block; font-size: 12px; }
+        .method-get { color: #0d9e78; background: #e8f5e9; }
+        .method-post { color: #ff9800; background: #fff3e0; }
+        .method-put { color: #2196f3; background: #e3f2fd; }
+        .method-delete { color: #f44336; background: #ffebee; }
+        .endpoint path { font-family: monospace; font-size: 14px; margin-left: 10px; }
+        .endpoint .description { color: #666; margin-top: 5px; font-size: 13px; }
+        .code-block { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; overflow: auto; font-family: monospace; font-size: 13px; margin: 10px 0; }
+        .code-block .keyword { color: #569cd6; }
+        .code-block .string { color: #ce9178; }
+        .code-block .comment { color: #6a9955; }
+        .btn { padding: 10px 20px; background: #0d9e78; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; }
+        .btn:hover { background: #0a7d60; }
+        .btn-secondary { background: #666; }
+        .btn-secondary:hover { background: #555; }
+        .key-status { display: flex; justify-content: space-between; padding: 10px; background: #f8f9fa; border-radius: 8px; margin: 10px 0; }
+        .key-status .active { color: #4caf50; font-weight: 600; }
+        .key-status .inactive { color: #f44336; font-weight: 600; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 5px; color: #555; font-size: 13px; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔗 API Developer Portal</h1>
+            <p>Build powerful integrations with the CIBIL Repair API</p>
+        </div>
+        
+        <div class="grid">
+            <div class="sidebar">
+                <h3>📋 API Keys</h3>
+                <div id="apiKeys">
+                    <div style="text-align: center; padding: 20px; color: #999;">
+                        <div style="font-size: 32px; margin-bottom: 10px;">🔑</div>
+                        <p>Generate your API keys to get started</p>
+                        <button class="btn" onclick="generateKey()" style="margin-top: 10px;">+ Generate Key</button>
+                    </div>
+                </div>
+                <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
+                <h3>📚 API Endpoints</h3>
+                <ul id="endpointList">
+                    <li class="active" onclick="showEndpoint('leads')">📊 Leads</li>
+                    <li onclick="showEndpoint('customers')">👤 Customers</li>
+                    <li onclick="showEndpoint('sales')">💰 Sales</li>
+                    <li onclick="showEndpoint('partners')">🤝 Partners</li>
+                    <li onclick="showEndpoint('credit-analysis')">📈 Credit Analysis</li>
+                    <li onclick="showEndpoint('disputes')">⚖️ Disputes</li>
+                    <li onclick="showEndpoint('reports')">📊 Reports</li>
+                </ul>
+            </div>
+            
+            <div class="content">
+                <div id="apiContent">
+                    <h2>📊 Welcome to the API</h2>
+                    <p>Use the CIBIL Repair API to integrate with your applications.</p>
+                    
+                    <h3 style="margin-top: 20px;">📋 Getting Started</h3>
+                    <ol style="margin-left: 20px; line-height: 2;">
+                        <li>Generate an API key from the sidebar</li>
+                        <li>Use your API key and secret in requests</li>
+                        <li>Explore endpoints using the navigation</li>
+                    </ol>
+                    
+                    <div class="code-block">
+                        <span class="comment">// Example API Request</span>
+                        curl -X GET https://cibilrepair.in/api-gateway.php/leads \
+                        -H "X-API-Key: YOUR_API_KEY" \
+                        -H "X-API-Secret: YOUR_API_SECRET"
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <h3>🔑 Rate Limits</h3>
+                        <p>Default rate limit: <strong>100 requests per hour</strong></p>
+                        <p>Contact us for higher limits</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let currentEndpoint = 'leads';
+        let apiKeys = [];
+        
+        function generateKey() {
+            fetch('api-key-manager.php?action=generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: 'API Key ' + (apiKeys.length + 1) })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    loadKeys();
+                    alert('API Key generated!\n\nKey: ' + data.api_key + '\nSecret: ' + data.secret_key + '\n\nSave these values!');
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            });
+        }
+        
+        function loadKeys() {
+            fetch('api-key-manager.php?action=list')
+                .then(res => res.json())
+                .then(data => {
+                    apiKeys = data;
+                    const container = document.getElementById('apiKeys');
+                    if (data.length === 0) {
+                        container.innerHTML = `
+                            <div style="text-align: center; padding: 20px; color: #999;">
+                                <div style="font-size: 32px; margin-bottom: 10px;">🔑</div>
+                                <p>No API keys generated</p>
+                                <button class="btn" onclick="generateKey()" style="margin-top: 10px;">+ Generate Key</button>
+                            </div>
+                        `;
+                        return;
+                    }
+                    container.innerHTML = data.map(k => `
+                        <div class="key-status">
+                            <div>
+                                <strong>${k.name}</strong>
+                                <div style="font-size: 12px; color: #666;">${k.api_key}</div>
+                            </div>
+                            <div>
+                                <span class="${k.status}">${k.status}</span>
+                                <br>
+                                <span style="font-size: 11px; color: #999;">${k.requests_count || 0} requests</span>
+                            </div>
+                        </div>
+                    `).join('') + `
+                        <button class="btn" onclick="generateKey()" style="margin-top: 10px; width: 100%;">+ Generate New Key</button>
+                    `;
+                });
+        }
+        
+        function showEndpoint(type) {
+            currentEndpoint = type;
+            document.querySelectorAll('#endpointList li').forEach(el => el.classList.remove('active'));
+            event.target.closest('li').classList.add('active');
+            
+            const endpoints = {
+                leads: {
+                    name: 'Leads',
+                    endpoints: [
+                        { method: 'GET', path: '/leads', desc: 'Get all leads' },
+                        { method: 'GET', path: '/leads/{id}', desc: 'Get a specific lead' },
+                        { method: 'POST', path: '/leads', desc: 'Create a new lead' }
+                    ]
+                },
+                customers: {
+                    name: 'Customers',
+                    endpoints: [
+                        { method: 'GET', path: '/customers', desc: 'Get all customers' },
+                        { method: 'GET', path: '/customers/{id}', desc: 'Get a specific customer' },
+                        { method: 'POST', path: '/customers', desc: 'Create a new customer' }
+                    ]
+                },
+                sales: {
+                    name: 'Sales',
+                    endpoints: [
+                        { method: 'GET', path: '/sales', desc: 'Get all sales' },
+                        { method: 'GET', path: '/sales/{id}', desc: 'Get a specific sale' },
+                        { method: 'POST', path: '/sales', desc: 'Create a new sale' }
+                    ]
+                },
+                partners: {
+                    name: 'Partners',
+                    endpoints: [
+                        { method: 'GET', path: '/partners', desc: 'Get all partners' },
+                        { method: 'GET', path: '/partners/{id}', desc: 'Get a specific partner' }
+                    ]
+                },
+                'credit-analysis': {
+                    name: 'Credit Analysis',
+                    endpoints: [
+                        { method: 'GET', path: '/credit-analysis', desc: 'Get all credit analyses' },
+                        { method: 'GET', path: '/credit-analysis/{id}', desc: 'Get a specific analysis' }
+                    ]
+                },
+                disputes: {
+                    name: 'Disputes',
+                    endpoints: [
+                        { method: 'GET', path: '/disputes', desc: 'Get all disputes' },
+                        { method: 'GET', path: '/disputes/{id}', desc: 'Get a specific dispute' }
+                    ]
+                },
+                reports: {
+                    name: 'Reports',
+                    endpoints: [
+                        { method: 'GET', path: '/reports', desc: 'Get all reports' },
+                        { method: 'GET', path: '/reports/{id}', desc: 'Get a specific report' }
+                    ]
+                }
+            };
+            
+            const data = endpoints[type];
+            if (!data) return;
+            
+            const container = document.getElementById('apiContent');
+            let html = `<h2>📊 ${data.name} API</h2>`;
+            html += `<p>Endpoints for managing ${data.name.toLowerCase()}</p>`;
+            
+            data.endpoints.forEach(e => {
+                const methodClass = 'method-' + e.method.toLowerCase();
+                html += `
+                    <div class="endpoint">
+                        <div>
+                            <span class="method ${methodClass}">${e.method}</span>
+                            <span class="path">/api-gateway.php${e.path}</span>
+                        </div>
+                        <div class="description">${e.desc}</div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                <h3 style="margin-top: 20px;">💡 Example Request</h3>
+                <div class="code-block">
+                    curl -X ${data.endpoints[0].method} https://cibilrepair.in/api-gateway.php${data.endpoints[0].path} \\
+                    -H "X-API-Key: YOUR_API_KEY" \\
+                    -H "X-API-Secret: YOUR_API_SECRET"
+                </div>
+                <div style="margin-top: 15px;">
+                    <h3>📋 Response Format</h3>
+                    <div class="code-block">
+{
+    "success": true,
+    "data": { ... }
+}
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+        
+        // Initialize
+        loadKeys();
+        
+        // Refresh keys every 30 seconds
+        setInterval(loadKeys, 30000);
+    </script>
+</body>
+</html>
