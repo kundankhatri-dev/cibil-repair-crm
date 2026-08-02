@@ -15,3 +15,4 @@ cron-final-test
 cron-final-test-2
 cron-test-3
 cron-test-final
+auto-deploy-working
