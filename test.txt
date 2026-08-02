@@ -11,3 +11,4 @@ test-final
 cron-test
 cron-test-final
 cron-test
+cron-final-test
