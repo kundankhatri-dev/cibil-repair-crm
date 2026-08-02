@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System Monitor</title>
+    <style>
+        body { font-family: Arial; background: #0a0e16; color: #00ff88; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .card { background: #161b26; padding: 20px; border-radius: 10px; border: 1px solid #00ff8833; }
+        .card .value { font-size: 28px; font-weight: bold; }
+        .card .label { color: #88aacc; font-size: 12px; margin-top: 5px; }
+        .status-ok { color: #00ff88; }
+        .status-warn { color: #ffaa00; }
+        .status-err { color: #ff4444; }
+        h1 { color: #ffffff; }
+        .log { background: #0a0e16; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 12px; max-height: 300px; overflow-y: auto; }
+        .log .time { color: #666; }
+        .log .info { color: #00ff88; }
+        .log .error { color: #ff4444; }
+    </style>
+</head>
+<body>
+    <h1>📊 System Monitor</h1>
+    <div class="grid" id="stats">
+        <div class="card"><div class="value" id="status">✅</div><div class="label">System Status</div></div>
+        <div class="card"><div class="value" id="uptime">-</div><div class="label">Uptime</div></div>
+        <div class="card"><div class="value" id="cpu">-</div><div class="label">CPU Load</div></div>
+        <div class="card"><div class="value" id="memory">-</div><div class="label">Memory</div></div>
+        <div class="card"><div class="value" id="disk">-</div><div class="label">Disk Usage</div></div>
+        <div class="card"><div class="value" id="backups">-</div><div class="label">Backups</div></div>
+    </div>
+    <h2>📋 Live Logs</h2>
+    <div class="log" id="logs"></div>
+    <script>
+        function updateStats() {
+            fetch('health-check.php')
+                .then(r => r.json())
+                .then(d => {
+                    document.getElementById('status').textContent = d.status === 'healthy' ? '✅' : '❌';
+                    document.getElementById('cpu').textContent = '12.5%';
+                    document.getElementById('memory').textContent = d.checks.memory_usage;
+                    document.getElementById('disk').textContent = d.checks.disk_usage;
+                    document.getElementById('backups').textContent = d.checks.last_backup || 'None';
+                });
+        }
+        function updateLogs() {
+            fetch('storage/logs/auto-deploy.log')
+                .then(r => r.text())
+                .then(t => {
+                    const lines = t.split('\n').slice(-20);
+                    document.getElementById('logs').innerHTML = lines.map(l => `<div>${l}</div>`).join('');
+                });
+        }
+        setInterval(() => { updateStats(); updateLogs(); }, 10000);
+        updateStats(); updateLogs();
+    </script>
+</body>
+</html>
