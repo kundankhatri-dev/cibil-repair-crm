@@ -1,0 +1,15 @@
+-bash: about-us.html: command not found
+-bash: about-us.html: command not found
+-bash: about-us.html: command not found
+cd /home/u929623538/domains/cibilrepair.in/public_html
+git pull origin main
+php bin/console deploy
+cd /home/u929623538/domains/cibilrepair.in/public_html
+git pull origin main
+php bin/console deploy
+From github.com:kundankhatri-dev/cibil-repair-crm
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+[34m🚀 Deploy
+
+[0m🧹 Clearing cache...
