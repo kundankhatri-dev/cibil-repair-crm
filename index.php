@@ -1,75 +1,1861 @@
-<?php
-// index.php - Main entry point
-require_once 'chatbot.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CIBIL Repair - Credit Score Improvement</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f4f6f9; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; text-align: center; }
-        h1 { color: #0d9e78; font-size: 48px; margin-bottom: 20px; }
-        p { font-size: 18px; color: #555; margin-bottom: 30px; }
-        .btn { display: inline-block; padding: 15px 30px; background: #0d9e78; color: white; text-decoration: none; border-radius: 8px; font-size: 18px; cursor: pointer; border: none; }
-        .btn:hover { background: #0a7d60; }
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 40px; }
-        .feature { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .feature i { font-size: 40px; color: #0d9e78; margin-bottom: 15px; }
-        .chat-toggle-btn { 
-            position: fixed; bottom: 30px; right: 30px; 
-            background: #0d9e78; color: white; 
-            border: none; border-radius: 50px; 
-            padding: 15px 25px; 
-            font-size: 16px; 
-            cursor: pointer; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a1628">
+<title>Credit Score & CIBIL Score Repair — Upto 98% Success Rate | Fix Your Credit Score</title>
+<meta name="description" content="Credit score repair and CIBIL score improvement with 98% success rate. Remove written-off, settled & legal entries. Free consultation. 5,000+ clients helped.">
+<meta name="keywords" content="CIBIL repair, credit repair India, fix CIBIL score, written off removal, settled account clearance, credit score improvement">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cibilrepair.in/">
+<meta property="og:title" content="CIBIL Repair — Upto 98% Success Rate | Fix Written-Off & Settled Accounts">
+<meta property="og:description" content="Fix your CIBIL score with India's #1 credit repair service. 5,000+ clients helped. Free consultation.">
+<meta property="og:url" content="https://cibilrepair.in/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://cibilrepair.in/images/logo/ciibil-repair-og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CIBIL Repair — Upto 98% Success Rate | Fix Written-Off & Settled Accounts">
+<meta name="twitter:description" content="Fix your CIBIL score with India's #1 credit repair service. 5,000+ clients helped. Free consultation.">
+<meta name="twitter:image" content="https://cibilrepair.in/images/logo/ciibil-repair-og.jpg">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<!-- ============================================================
+     SCHEMA 1: WEBSITE (for site name in search results)
+     ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "CIBIL Repair",
+  "url": "https://cibilrepair.in/"
+}
+</script>
+
+<!-- ============================================================
+     SCHEMA 2: LOCAL BUSINESS
+     ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "CIBIL Repair",
+  "image": "https://cibilrepair.in/images/logo/ciibil-repair-logo.png",
+  "logo": "https://cibilrepair.in/images/logo/ciibil-repair-logo.png",
+  "url": "https://cibilrepair.in/",
+  "telephone": "+919905482503",
+  "email": "contact@cibilrepair.in",
+  "priceRange": "₹₹",
+  "description": "India's most trusted credit repair consultancy. 5,000+ Indians have fixed their CIBIL scores legally with Upto 98% success rate.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Delhi NCR",
+    "addressLocality": "Delhi",
+    "addressRegion": "Delhi",
+    "postalCode": "110070",
+    "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 28.6139,
+    "longitude": 77.2090
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "19:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "10:00",
+      "closes": "17:00"
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "5000",
+    "bestRating": "5"
+  },
+  "sameAs": [
+    "https://www.facebook.com/cibilrepair",
+    "https://www.instagram.com/cibilrepair1",
+    "https://twitter.com/cibilrepair0",
+    "https://www.linkedin.com/company/cibil-repair",
+    "https://www.youtube.com/channel/UCG5yi-vJkUPb2OJESSKf8Kg"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+919905482503",
+    "contactType": "customer service",
+    "areaServed": "IN",
+    "availableLanguage": ["English", "Hindi"]
+  }
+}
+</script>
+
+<!-- ============================================================
+     SCHEMA 3: ORGANIZATION
+     ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "CIBIL Repair",
+  "url": "https://cibilrepair.in/",
+  "image": "https://cibilrepair.in/images/logo/ciibil-repair-logo.png",
+  "logo": "https://cibilrepair.in/images/logo/ciibil-repair-logo.png",
+  "description": "India's most trusted credit repair consultancy. 5,000+ Indians have fixed their CIBIL scores legally with Upto 98% success rate.",
+  "email": "contact@cibilrepair.in",
+  "telephone": "+919905482503",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Delhi NCR",
+    "addressLocality": "Delhi",
+    "addressRegion": "Delhi",
+    "postalCode": "110070",
+    "addressCountry": "IN"
+  },
+  "sameAs": [
+    "https://www.facebook.com/cibilrepair",
+    "https://www.instagram.com/cibilrepair1",
+    "https://twitter.com/cibilrepair0",
+    "https://www.linkedin.com/company/cibil-repair",
+    "https://www.youtube.com/channel/UCG5yi-vJkUPb2OJESSKf8Kg"
+  ],
+  "founders": [
+    {
+      "@type": "Person",
+      "name": "Vikram Malhotra"
+    }
+  ],
+  "foundingDate": "2018",
+  "numberOfEmployees": {
+    "@type": "QuantitativeValue",
+    "value": "25"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "5000",
+    "bestRating": "5"
+  }
+}
+</script>
+
+<!-- ============================================================
+     SCHEMA 4: SERVICE (main service offering)
+     ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "CIBIL Score Repair",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "CIBIL Repair",
+    "url": "https://cibilrepair.in/",
+    "telephone": "+919905482503",
+    "priceRange": "₹₹",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Delhi NCR",
+      "addressLocality": "Delhi",
+      "addressRegion": "Delhi",
+      "postalCode": "110070",
+      "addressCountry": "IN"
+    },
+    "image": "https://cibilrepair.in/images/logo/ciibil-repair-logo.png"
+  },
+  "description": "Complete CIBIL score repair services including written-off removal, settled account clearance, suit filed removal, forensic audit, profile correction, and fraud protection.",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Credit Repair Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Written Off Clearance",
+          "description": "Full legal removal of written-off accounts from bureau records"
         }
-        .chat-toggle-btn:hover { background: #0a7d60; }
-    </style>
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Settled → Closed",
+          "description": "Convert settled accounts to closed across all credit bureaus"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Legal Suit Removal",
+          "description": "Remove court case and legal suit entries from credit report"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Forensic Audit",
+          "description": "Deep forensic audit across all credit bureaus"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Profile Correction",
+          "description": "Fix name, address, PAN, DOB discrepancies"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Fraud Protection",
+          "description": "Remove unauthorized loans and identity theft entries"
+        }
+      }
+    ]
+  },
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "INR",
+    "lowPrice": "3999",
+    "highPrice": "10999",
+    "availability": "https://schema.org/InStock"
+  },
+  "potentialAction": {
+    "@type": "Action",
+    "name": "Get Free Consultation",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://cibilrepair.in/",
+      "actionPlatform": [
+        "http://schema.org/DesktopWebPlatform",
+        "http://schema.org/MobileWebPlatform"
+      ]
+    }
+  }
+}
+</script>
+
+<!-- ============================================================
+     SCHEMA 5: CREDIT SCORE REPAIR SERVICE
+     ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Credit Score Repair",
+  "name": "Credit Score & CIBIL Repair Services",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "CIBIL Repair",
+    "url": "https://cibilrepair.in/"
+  },
+  "description": "Professional credit score repair and CIBIL score improvement services. 98% success rate. Remove written-off, settled, and legal entries legally.",
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "INR",
+    "lowPrice": "4999",
+    "highPrice": "10999",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
+
+<!-- PRELOADS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap">
+<link rel="preload" as="font" type="font/woff2" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-solid-900.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-brands-400.woff2" crossorigin>
+
+<!-- FONTS & ICONS -->
+<style>@font-face{font-family:'Font Awesome 6 Free';font-style:normal;font-weight:900;font-display:swap;src:url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-solid-900.woff2') format('woff2'),url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-solid-900.ttf') format('truetype')}@font-face{font-family:'Font Awesome 6 Brands';font-style:normal;font-weight:400;font-display:swap;src:url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-brands-400.woff2') format('woff2'),url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-brands-400.ttf') format('truetype')}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
+<style>.fa,.fas,.far,.fal,.fab,.fa-solid,.fa-regular,.fa-brands{visibility:hidden}.fontawesome-loaded .fa,.fontawesome-loaded .fas,.fontawesome-loaded .far,.fontawesome-loaded .fal,.fontawesome-loaded .fab,.fontawesome-loaded .fa-solid,.fontawesome-loaded .fa-regular,.fontawesome-loaded .fa-brands{visibility:visible}</style>
+<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'; this.onload=null; document.documentElement.classList.add('fontawesome-loaded');">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"><style>.fa,.fas,.far,.fal,.fab,.fa-solid,.fa-regular,.fa-brands{visibility:visible}</style></noscript>
+
+<!-- MINIFIED CSS -->
+<style>
+:root{--navy:#071428;--navy2:#0a1e3c;--navy3:#0d2550;--blue:#1a4a9c;--blue2:#1e5ac0;--green:#22c55e;--green2:#16a34a;--gold:#f5c518;--gold2:#e8b000;--orange:#f97316;--red:#ef4444;--white:#fff;--light:#f0f4fa;--t1:#1a2340;--t2:#4a5a7a;--t3:#7a8aaa;--bd:#dde5f0;--bds:#edf2fb;--card:#fff;--r:14px;--rs:8px;--teal:#22d4aa}*,::after,::before{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Open Sans',sans-serif;color:var(--t1);overflow-x:hidden}.prog{position:fixed;top:0;left:0;width:100%;height:3px;z-index:10000;background:rgba(255,255,255,.1)}.prog-f{height:100%;background:linear-gradient(90deg,var(--green),var(--gold));width:0;transition:width .1s ease}nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:#fff;box-shadow:0 2px 20px rgba(0,0,0,.12);height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;transition:.3s}nav.scrolled{box-shadow:0 4px 30px rgba(0,0,0,.18)}.nav-logo{display:flex;align-items:center;gap:12px;flex-shrink:0;text-decoration:none}.logo-text-wrap{display:flex;flex-direction:column}.logo-name{font-size:1.5rem;font-weight:900;line-height:1;font-family:Montserrat,sans-serif;color:var(--t1)}.logo-name span{color:var(--green);font-style:italic}.logo-tag{font-size:10px;color:var(--t2);letter-spacing:.5px;margin-top:2px;font-weight:500}.nav-links{list-style:none;display:flex;align-items:center;gap:4px}.nl-item{position:relative}.nl-item>a,.nl-item>button{font-size:13.5px;font-weight:600;color:var(--t1);padding:9px 14px;border-radius:var(--rs);text-decoration:none;background:0 0;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;transition:.2s;white-space:nowrap;font-family:Montserrat,sans-serif}.nl-item>a:hover,.nl-item>button:hover{color:var(--blue2);background:#f0f5ff}.chev{font-size:9px;transition:transform .25s;display:inline-block;color:var(--t3)}.nl-item.open .chev,.nl-item:hover .chev{transform:rotate(180deg);color:var(--green)}.dd{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(8px);background:#fff;border:1px solid var(--bd);border-radius:var(--r);padding:8px;box-shadow:0 20px 60px rgba(0,0,0,.15);min-width:230px;visibility:hidden;opacity:0;pointer-events:none;transition:.26s cubic-bezier(.4,0,.2,1);z-index:200}.dd::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:12px;height:6px;clip-path:polygon(50% 0,0 100%,100% 100%);background:#fff}.nl-item.open .dd,.nl-item:hover .dd{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}.dd-head{font-size:10px;font-weight:700;color:var(--t3);letter-spacing:1.2px;padding:6px 12px 4px;border-bottom:1px solid var(--bd);margin-bottom:4px;text-transform:uppercase}.dd a{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;font-size:13px;font-weight:500;color:var(--t1);text-decoration:none;border-radius:var(--rs);transition:.18s}.dd a:hover{background:#f0f7ff;padding-left:16px;color:var(--blue2)}.dd a i{font-size:13px;width:18px;text-align:center;margin-top:1px;flex-shrink:0;color:var(--blue2)}.dd a strong{display:block;font-size:12.5px;font-weight:700;margin-bottom:2px}.dd a span{font-size:10.5px;color:var(--t3);font-weight:400}.dd-wide{min-width:440px;display:grid;grid-template-columns:1fr 1fr}.dd-wide .dd-col{padding:4px}.dd-div{height:1px;background:var(--bd);margin:4px 8px}.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0}.btn-login{font-size:13px;font-weight:600;background:0 0;border:2px solid var(--bd);padding:8px 18px;border-radius:var(--rs);text-decoration:none;cursor:pointer;transition:.2s;font-family:Montserrat,sans-serif;color:var(--t1)}.btn-login:hover{color:var(--blue2);border-color:var(--blue2)}.btn-partner{font-size:13px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--blue),var(--blue2));padding:9px 20px;border-radius:var(--rs);border:none;cursor:pointer;transition:.2s;font-family:Montserrat,sans-serif;text-decoration:none;box-shadow:0 4px 14px rgba(26,74,156,.35)}.btn-partner:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(26,74,156,.5)}.btn-getstarted{font-size:13px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--green),var(--green2));padding:10px 24px;border-radius:var(--rs);border:none;cursor:pointer;transition:.2s;font-family:Montserrat,sans-serif;text-decoration:none;box-shadow:0 4px 14px rgba(34,197,94,.35)}.btn-getstarted:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(34,197,94,.55)}.ham{display:none;flex-direction:column;gap:5px;background:0 0;border:none;cursor:pointer;padding:10px;z-index:1002}.ham span{background:var(--t1);width:24px;height:2.5px;border-radius:3px;transition:.3s cubic-bezier(.4,0,.2,1);display:block}.ham.active span:first-child{transform:translateY(8px) rotate(45deg)}.ham.active span:nth-child(2){opacity:0;transform:scaleX(0)}.ham.active span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}.mob{position:fixed;top:0;right:-100%;width:320px;height:100vh;background:linear-gradient(180deg,#0a1a2e 0,#0d2a3a 100%);flex-direction:column;padding:0;z-index:1001;transition:right .4s cubic-bezier(.4,0,.2,1);overflow-y:auto;box-shadow:-5px 0 30px rgba(0,0,0,.3);list-style:none;overflow-x:hidden}.mob.open{right:0}.mob-header{padding:25px 20px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:10px}.mob-header .logo{font-family:Montserrat,sans-serif;font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:5px}.mob-header .logo span{color:var(--green)}.mob-header .tagline{font-size:.7rem;color:rgba(255,255,255,.5);letter-spacing:1px}.mob-user{display:flex;align-items:center;padding:20px;background:rgba(255,255,255,.05);margin:10px 15px 20px;border-radius:16px;gap:12px;backdrop-filter:blur(10px)}.mob-user-icon{display:flex;align-items:center;width:48px;height:48px;background:linear-gradient(135deg,var(--green),var(--blue2));border-radius:50%;justify-content:center;font-size:1.2rem;color:#fff}.mob-user-info h4{color:#fff;font-size:.9rem;font-weight:600;margin-bottom:4px}.mob-user-info p{font-size:.7rem;color:rgba(255,255,255,.5)}.mob-nav-item{margin:0 15px 5px;border-radius:12px;transition:.3s}.mob-nav-link{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;color:#fff;text-decoration:none;font-size:.95rem;font-weight:500;cursor:pointer;transition:.3s;border-radius:12px}.mob-nav-link:hover{background:rgba(255,255,255,.08)}.mob-nav-link .link-left{display:flex;align-items:center;gap:14px}.mob-nav-link .link-left i{width:24px;font-size:1.1rem;color:var(--green)}.mob-nav-link .chevron{font-size:.7rem;color:rgba(255,255,255,.5);transition:transform .3s cubic-bezier(.4,0,.2,1)}.mob-dropdown.active>.mob-nav-link .chevron{transform:rotate(180deg)}.mob-submenu{max-height:0;opacity:0;overflow:hidden;transition:.4s cubic-bezier(.4,0,.2,1);background:rgba(0,0,0,.2);margin:0;border-radius:0 0 12px 12px}.mob-dropdown.active .mob-submenu{max-height:500px;opacity:1}.mob-submenu a{display:flex;align-items:center;gap:12px;padding:12px 18px 12px 52px;color:rgba(255,255,255,.7);text-decoration:none;font-size:.85rem;transition:.3s;border-left:2px solid transparent}.mob-submenu a i{width:20px;font-size:.8rem;color:rgba(255,255,255,.4)}.mob-submenu a:hover{background:rgba(34,197,94,.15);color:#fff;padding-left:58px;border-left-color:var(--green)}.mob-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);margin:15px}.mob-actions{padding:15px;margin-top:10px}.mob-action-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;border-radius:40px;font-size:.85rem;font-weight:600;transition:.3s;margin-bottom:10px;text-decoration:none}.mob-action-btn.partner{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border:none}.mob-action-btn.get-started{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none}.mob-action-btn:hover{transform:translateX(5px);box-shadow:0 5px 15px rgba(0,0,0,.2)}.menu-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:1000;transition:.3s;display:none}.menu-overlay.active{display:block}@media(max-width:768px){.ham{display:flex}.nav-links,.nav-right{display:none}}@media(min-width:769px){.ham{display:none}}.hero{min-height:100vh;background:linear-gradient(135deg,#060e1e 0,#091530 40%,#0d1f45 70%,#071020 100%);padding-top:72px;position:relative;display:flex;flex-direction:column}.hero-bg-canvas{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}.hero-bg-canvas::before{content:'';position:absolute;inset:0;background:linear-gradient(rgba(26,74,156,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(26,74,156,.04) 1px,transparent 1px);background-size:40px 40px}.ticker-bar{background:linear-gradient(90deg,var(--green),var(--green2));padding:9px 0;position:relative;z-index:2;overflow:hidden}.ticker-inner{display:flex;gap:60px;width:max-content;animation:35s linear infinite ticker}@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}.ticker-item{display:flex;align-items:center;gap:8px;font-family:Montserrat,sans-serif;font-size:12px;font-weight:700;color:#fff;white-space:nowrap;letter-spacing:.3px}.ticker-item i{font-size:10px;opacity:.85}.hero-main{flex:1;display:flex;align-items:center;padding:60px 0;position:relative;z-index:2}.hero-container{max-width:1280px;margin:0 auto;padding:0 40px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}.hero-left{text-align:left}.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.35);color:var(--green);padding:6px 14px;border-radius:30px;font-size:11px;font-weight:700;font-family:Montserrat,sans-serif;text-transform:uppercase;margin-bottom:20px;animation:.7s both fup}.e-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:1.8s ease-in-out infinite glow}@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}50%{box-shadow:0 0 0 7px rgba(34,197,94,0)}}@keyframes fup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}@keyframes fright{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,7vw,6.5rem);line-height:.95;margin-bottom:20px;animation:.7s .1s both fup;letter-spacing:2px}.h1-white{color:#fff;display:block}.h1-gold{color:var(--gold);display:block;text-shadow:0 0 40px rgba(245,197,24,.3)}.h1-blue{color:#7ab4ff;display:block}.hero-sub{font-size:1.05rem;color:rgba(255,255,255,.65);line-height:1.7;max-width:460px;margin-bottom:32px;animation:.7s .2s both fup}.hero-sub strong{color:#fff;font-weight:700}.hero-btns{display:flex;gap:14px;flex-wrap:wrap;animation:.7s .3s both fup}.btn-hero-main{display:inline-flex;align-items:center;gap:9px;font-size:15px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--green),var(--green2));padding:16px 34px;border-radius:var(--rs);border:none;cursor:pointer;transition:.3s;font-family:Montserrat,sans-serif;text-decoration:none;box-shadow:0 8px 28px rgba(34,197,94,.4)}.btn-hero-main:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(34,197,94,.55)}.btn-hero-ghost{display:inline-flex;align-items:center;gap:9px;font-size:15px;text-decoration:none;background:0 0;border:2px solid rgba(255,255,255,.3);padding:14px 32px;border-radius:var(--rs);font-weight:700;color:#fff;font-family:Montserrat,sans-serif;transition:.3s;cursor:pointer}.btn-hero-ghost:hover{border-color:rgba(255,255,255,.7);background:rgba(255,255,255,.08)}.hero-features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px;animation:.7s .4s both fup}.hf{display:flex;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--rs);padding:14px;gap:12px;transition:.3s;cursor:pointer}.hf:hover{background:rgba(255,255,255,.1);border-color:rgba(34,197,94,.4);transform:translateY(-2px)}.hf-icon{display:flex;width:42px;height:42px;border-radius:10px;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:rgba(34,197,94,.2)!important}.hf-icon.g{background:rgba(34,197,94,.3)!important}.hf-icon.b{background:rgba(26,74,156,.4)!important}.hf-icon.y{background:rgba(245,197,24,.3)!important}.hf-icon i{color:#fff!important}.hf-text strong{display:block;font-size:12px;font-weight:700;color:#fff;font-family:Montserrat,sans-serif;line-height:1.2}.hf-text span{font-size:10.5px;color:rgba(255,255,255,.5);margin-top:2px;display:block}.hero-trust{display:flex;gap:36px;margin-top:32px;padding-top:28px;border-top:1px solid rgba(255,255,255,.1);animation:.7s .5s both fup;flex-wrap:wrap}.ht{text-align:center}.ht-n{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--gold);line-height:1;display:block;letter-spacing:1px}.ht-l{font-size:10.5px;color:rgba(255,255,255,.45);margin-top:3px;letter-spacing:.3px;font-family:Montserrat,sans-serif;font-weight:600}.hero-right{position:relative;display:flex;align-items:center;justify-content:center;animation:1s .3s both fright}.speedo-wrap{position:relative;width:100%;max-width:480px}.speedo-card{background:rgba(255,255,255,.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:36px 32px;box-shadow:0 32px 80px rgba(0,0,0,.5);position:relative;overflow:hidden}.speedo-card::before{content:'';position:absolute;top:-1px;left:15%;right:15%;height:3px;background:linear-gradient(90deg,transparent,var(--green),var(--gold),transparent)}.speedo-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.speedo-title{font-size:11px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:1.5px;font-family:Montserrat,sans-serif;text-transform:uppercase}.speedo-live{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;font-family:Montserrat,sans-serif;color:var(--green)}.speedo-live::before{content:'';width:7px;height:7px;background:var(--green);border-radius:50%;display:block;animation:1.8s infinite glow}.speedo-svg-wrap{position:relative;width:100%;max-width:360px;margin:0 auto 24px}.speedo-svg{width:100%;height:auto;filter:drop-shadow(0 8px 32px rgba(34,197,94,.2))}.sp-float{position:absolute;background:rgba(10,22,50,.9);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:9px;box-shadow:0 8px 24px rgba(0,0,0,.4);white-space:nowrap;animation:3.5s ease-in-out infinite fly}.spf1{top:-10px;right:-30px;animation-delay:0s}.spf2{bottom:40px;left:-40px;animation-delay:-1.8s}@keyframes fly{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}.spf-ico{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}.sig{background:rgba(34,197,94,.2);color:var(--green)}.siy{background:rgba(245,197,24,.15);color:var(--gold)}.spf-t{font-family:Montserrat,sans-serif;font-size:12px;font-weight:700;color:#fff;display:block;line-height:1.2}.spf-s{font-size:10px;color:rgba(255,255,255,.45)}.speedo-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:4px}.sm-item{text-align:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px}.sm-v{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:1px;display:block;line-height:1}.sm-v.grn{color:var(--green)}.sm-v.gld{color:var(--gold)}.sm-v.blu{color:#7ab4ff}.sm-l{font-family:Montserrat,sans-serif;font-size:9px;font-weight:700;color:rgba(255,255,255,.4);margin-top:3px;letter-spacing:.5px;text-transform:uppercase}.stats-band{background:linear-gradient(135deg,#061020,#0a1a38);padding:50px 0;border-top:3px solid var(--green);border-bottom:3px solid rgba(255,255,255,.05)}.stats-grid{max-width:1280px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:repeat(5,1fr);gap:0}.sb{padding:16px;text-align:center;border-right:1px solid rgba(255,255,255,.08)}.sb:last-child{border-right:none}.sb-num{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--gold);display:block;letter-spacing:2px;line-height:1}.sb-num.g{color:var(--green)}.sb-num.b{color:#7ab4ff}.sb-desc{font-size:11.5px;font-weight:600;color:rgba(255,255,255,.45);margin-top:6px;letter-spacing:.3px;font-family:Montserrat,sans-serif}.sec{padding:90px 0}.sec-alt{background:#f4f7fc}.W{max-width:1280px;margin:0 auto;padding:0 40px}.sh{text-align:center;margin-bottom:60px}.pill{display:inline-flex;align-items:center;gap:7px;background:#e8f4ff;border:1px solid #c0d8ff;color:var(--blue2);padding:5px 14px;border-radius:30px;font-size:10.5px;font-weight:700;font-family:Montserrat,sans-serif;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:16px}.pill-green{background:#e8fdf2;border-color:#a7f3cf;color:var(--green2)}.pill-gold{background:#fff8e0;border-color:#fde68a;color:#b45309}.st{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,4.5vw,3.4rem);margin-bottom:14px;color:var(--t1);letter-spacing:2px;line-height:1}.st em{color:var(--green);font-style:normal}.st .t-gold{color:var(--gold2)}.ss{font-size:.96rem;color:var(--t2);max-width:560px;margin:0 auto;line-height:1.75}.r{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}.r.on{opacity:1;transform:translateY(0)}.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.pc{background:#fff;border:2px solid #e8edf8;border-radius:18px;padding:34px 28px;overflow:hidden;transition:.35s;height:100%;display:flex;flex-direction:column;position:relative}.pc:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.1)}.pc.feat{border-color:var(--green);box-shadow:0 12px 40px rgba(34,197,94,.18)}.pc.feat::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--green),var(--blue2))}.pc-crown{position:absolute;top:16px;right:16px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;font-size:10px;padding:4px 12px;border-radius:20px;letter-spacing:.5px;z-index:2;font-family:Montserrat,sans-serif;font-weight:800}.pc-plan{font-size:13px;font-weight:800;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;font-family:Montserrat,sans-serif}.pc-amount{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--green2);line-height:1.2;margin-bottom:12px;letter-spacing:1px;font-weight:600}.pc-tag{font-size:.84rem;color:var(--t2);margin-bottom:22px;line-height:1.5}.pc-div{height:2px;background:#f0f4fa;margin-bottom:20px;border-radius:2px}.pc-feats{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:26px;flex:1}.pc-feats li{display:flex;align-items:flex-start;gap:10px;font-size:.855rem;color:var(--t2);line-height:1.45;font-family:'Open Sans',sans-serif}.pc-feats li i{color:var(--green);font-size:12px;margin-top:2px;flex-shrink:0}.pc-feats li.off{color:var(--t3);text-decoration:line-through}.btn-submit{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:14px;font-family:Montserrat,sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;text-decoration:none;border-radius:var(--rs);background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;margin-top:auto}.btn-submit:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(34,197,94,.4)}.btn-outline2{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:14px;font-family:Montserrat,sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;text-decoration:none;border-radius:var(--rs);background:0 0;color:var(--t1);border:2px solid #dde5f0;margin-top:auto}.btn-outline2:hover{border-color:var(--blue2);color:var(--blue2);transform:translateY(-2px)}.btn-blue2{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:14px;font-family:Montserrat,sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;text-decoration:none;border-radius:var(--rs);background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border:none;margin-top:auto}.btn-blue2:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,74,156,.4)}.price-note{text-align:center;margin-top:32px;font-family:Montserrat,sans-serif;font-size:12px;font-weight:600;color:var(--t2)}.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.about-img-wrap{position:relative}.about-img-svg{width:100%;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,.15);display:block}.about-badge{position:absolute;bottom:-20px;right:-20px;background:#fff;border-radius:16px;padding:20px 26px;box-shadow:0 12px 40px rgba(0,0,0,.12);border:2px solid var(--green);text-align:center}.ab-num{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--green);display:block;letter-spacing:2px;line-height:1}.ab-lbl{font-size:10.5px;color:var(--t2);margin-top:2px;font-weight:700;font-family:Montserrat,sans-serif}.about-tag{position:absolute;top:-14px;left:-14px;background:linear-gradient(135deg,var(--green),var(--green2));border-radius:10px;padding:10px 16px;font-size:12px;font-weight:700;color:#fff;font-family:Montserrat,sans-serif;box-shadow:0 6px 20px rgba(34,197,94,.4)}.about-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1;letter-spacing:1.5px;color:var(--t1);margin-bottom:16px}.about-h em{color:var(--green);font-style:normal}.about-p{font-size:.91rem;color:var(--t2);line-height:1.8;margin-bottom:14px}.about-feats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}.af{display:flex;align-items:center;gap:9px;font-family:Montserrat,sans-serif;font-size:12.5px;font-weight:600;color:var(--t1)}.af i{color:var(--green)}.about-stats{display:flex;gap:24px;padding-top:22px;border-top:2px solid #edf2fb;flex-wrap:wrap}.ast{text-align:center;flex:1;min-width:55px}.ast-n{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--green);line-height:1;display:block;letter-spacing:1px}.ast-l{font-size:9.5px;font-weight:700;color:var(--t2);margin-top:3px;letter-spacing:.3px;font-family:Montserrat,sans-serif}.ba-box{display:grid;grid-template-columns:1fr 1fr;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.1);position:relative;border:2px solid #e8edf8}.ba-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;background:#fff;border:3px solid var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;z-index:3;box-shadow:0 4px 16px rgba(0,0,0,.15)}.ba-side{padding:40px 36px}.ba-before{background:#fff5f6;border-right:2px dashed #fecdd3}.ba-after{background:#f0fdf6}.ba-head{display:flex;align-items:center;gap:10px;margin-bottom:24px}.ba-badge{font-size:11px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:.5px;font-family:Montserrat,sans-serif;text-transform:uppercase}.bb{background:#fee2e2;color:#dc2626;border:1.5px solid #fca5a5}.ba{background:#dcfce7;color:var(--green2);border:1.5px solid #86efac}.ba-items{display:flex;flex-direction:column;gap:12px}.ba-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fff;border:1.5px solid #f0f4fa;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.04)}.ba-item.after{background:#f0fdf6;border-color:#bbf7d0}.ba-label{display:flex;align-items:center;font-size:12.5px;font-weight:600;color:var(--t1);gap:7px}.ba-label i{font-size:11px;color:var(--t3);width:14px}.ba-val{font-size:13px;font-weight:800}.vbad{color:#dc2626}.vgood{color:var(--green2)}.vmid{color:var(--orange)}.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}.proc-grid::before{content:'';position:absolute;top:44px;left:12.5%;right:12.5%;height:3px;background:linear-gradient(90deg,var(--green),var(--blue2))}.proc-step{text-align:center;padding:0 16px;position:relative}.ps-node{width:88px;height:88px;background:#fff;border-radius:50%;border:3px solid var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;z-index:1;position:relative;transition:.3s;box-shadow:0 8px 24px rgba(34,197,94,.2)}.ps-node:hover{transform:scale(1.06);box-shadow:0 12px 32px rgba(34,197,94,.35)}.ps-num{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--green);line-height:1;letter-spacing:2px}.ps-title{font-size:.92rem;font-weight:800;color:var(--t1);margin-bottom:8px;font-family:Montserrat,sans-serif}.ps-desc{font-size:.82rem;color:var(--t2);line-height:1.68}.ps-dur{display:inline-flex;align-items:center;gap:5px;background:#e8f4ff;border:1px solid #c0d8ff;color:var(--blue2);font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:10px;font-family:Montserrat,sans-serif}.calc-box{background:#fff;border:2px solid #e8edf8;border-radius:20px;display:grid;grid-template-columns:1fr 1fr;box-shadow:0 12px 40px rgba(0,0,0,.08);overflow:hidden}.calc-l{padding:46px;background:#f8faff;border-right:2px solid #f0f4fa}.calc-r{padding:46px;background:#f8faff}.calc-title{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--t1);margin-bottom:8px;letter-spacing:1.5px}.calc-sub{font-size:.875rem;color:var(--t2);margin-bottom:28px;line-height:1.65}.fl{font-size:11.5px;font-weight:700;letter-spacing:.5px;margin-bottom:7px;display:block;color:var(--t2);font-family:Montserrat,sans-serif}.rl{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}.rn{font-size:12.5px;font-weight:600;color:var(--t2);font-family:Montserrat,sans-serif}.rv{font-size:13px;color:var(--green2);font-weight:800;font-family:Montserrat,sans-serif}.rw{margin-bottom:22px}input[type=range]{width:100%;-webkit-appearance:none;height:5px;background:#dde5f0;border-radius:5px;outline:0;cursor:pointer}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;background:linear-gradient(135deg,var(--green),var(--green2));border-radius:50%;cursor:pointer;box-shadow:0 2px 10px rgba(34,197,94,.4);border:2px solid #fff}.calc-res{display:flex;flex-direction:column;gap:18px}.cr{background:#f8faff;border:2px solid #e8edf8;border-radius:14px;padding:22px 24px;transition:.3s}.cr:hover{border-color:var(--green);box-shadow:0 4px 16px rgba(34,197,94,.1)}.cr-lbl{font-size:10.5px;font-weight:700;color:var(--t3);letter-spacing:.8px;margin-bottom:7px;font-family:Montserrat,sans-serif;text-transform:uppercase}.cr-val{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:1px;line-height:1}.cr-val.gv{color:var(--green2)}.cr-val.bv{color:var(--blue2)}.cr-val.yv{color:var(--gold2)}.cr-note{font-size:11px;color:var(--t3);margin-top:5px}.cr-bar{height:5px;background:#e8edf8;margin-top:12px;overflow:hidden;border-radius:5px}.cr-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--blue2));border-radius:5px;transition:width 1s}.emi-box{background:#fff;border:2px solid #e8edf8;border-radius:24px;display:grid;grid-template-columns:1fr 1fr;box-shadow:0 12px 40px rgba(0,0,0,.08);overflow:hidden;margin-top:30px}.emi-l{padding:46px;background:#f8faff;border-right:2px solid #f0f4fa}.emi-r{padding:46px;display:flex;flex-direction:column;justify-content:center}.emi-title{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--t1);margin-bottom:8px;letter-spacing:1.5px}.emi-sub{font-size:.875rem;color:var(--t2);margin-bottom:28px;line-height:1.65}.emi-result{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:30px}.emi-card{text-align:center;padding:20px;background:#f8faff;border:2px solid #e8edf8;border-radius:16px;transition:.3s}.emi-card:hover{border-color:var(--green);transform:translateY(-3px)}.emi-card-icon{font-size:2rem;margin-bottom:10px}.emi-card-label{font-family:Montserrat,sans-serif;font-size:11px;font-weight:700;color:var(--t3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}.emi-card-value{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--green);letter-spacing:1px}.emi-breakdown{margin:20px 0;padding:20px;background:#f8faff;border-radius:16px}.emi-breakdown h4{font-size:13px;font-weight:700;margin-bottom:15px;color:var(--t1);font-family:Montserrat,sans-serif}.breakdown-bar{display:flex;height:30px;border-radius:15px;overflow:hidden;margin-bottom:15px}.breakdown-principal{background:linear-gradient(135deg,var(--green),var(--green2));transition:width .5s}.breakdown-interest{background:linear-gradient(135deg,#f5c518,#f97316);transition:width .5s}.breakdown-labels{display:flex;justify-content:center;gap:30px;font-size:12px;color:var(--t2)}.principal-dot{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;background:var(--green)}.interest-dot{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;background:#f5c518}.emi-apply-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:20px;display:flex;align-items:center;justify-content:center;gap:10px;font-family:Montserrat,sans-serif;transition:.3s}.emi-apply-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(34,197,94,.4);gap:15px}.sim-box{background:linear-gradient(135deg,#061020,#0a1a38);border-radius:24px;display:grid;grid-template-columns:1fr 1fr;box-shadow:0 24px 60px rgba(0,0,0,.25);overflow:hidden}.sim-l{padding:50px;border-right:1px solid rgba(255,255,255,.08)}.sim-r{padding:50px;display:flex;flex-direction:column;align-items:center;justify-content:center}.sim-title{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:#fff;margin-bottom:8px;letter-spacing:2px}.sim-sub{font-size:.875rem;color:rgba(255,255,255,.5);margin-bottom:30px;line-height:1.65}.sim-opts{display:flex;flex-direction:column;gap:12px}.sim-opt{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:12px;cursor:pointer;transition:.25s}.sim-opt:hover{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.06)}.sim-opt.active{border-color:var(--green);background:rgba(34,197,94,.1)}.sim-opt-l{display:flex;align-items:center;gap:12px}.sim-check{display:flex;align-items:center;width:22px;height:22px;border:2px solid rgba(255,255,255,.25);border-radius:6px;justify-content:center;transition:.2s;flex-shrink:0}.sim-opt.active .sim-check{background:var(--green);border-color:var(--green)}.sim-chk-ico{font-size:12px;color:#fff;opacity:0;transition:opacity .2s}.sim-opt.active .sim-chk-ico{opacity:1}.sim-opt-name{font-family:Montserrat,sans-serif;font-size:13.5px;font-weight:600;color:#fff}.sim-pts{font-size:1.2rem;color:#22d4aa;background:rgba(34,212,170,.12);border:1px solid rgba(34,212,170,.25);padding:4px 12px;border-radius:20px;letter-spacing:1px;font-family:'Bebas Neue',sans-serif}.sim-display{text-align:center}.sim-ring-w{position:relative;width:200px;height:200px;margin:0 auto 24px}.sim-ring-svg{width:100%;height:100%;transform:rotate(-90deg)}.srb{fill:none;stroke:rgba(255,255,255,.07);stroke-width:12}.srf{fill:none;stroke:url(#simG);stroke-width:12;stroke-linecap:round;stroke-dasharray:502;stroke-dashoffset:502;transition:stroke-dashoffset 1.5s cubic-bezier(.4,0,.2,1)}.sim-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}.sim-val{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;color:var(--gold);line-height:1;letter-spacing:2px}.sim-val-lbl{font-size:10px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:1px;margin-top:4px;font-family:Montserrat,sans-serif;text-transform:uppercase}.sim-new-score{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:6px;font-family:Montserrat,sans-serif}.sim-new-score strong{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--green);letter-spacing:1px}.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.tc{background:#fff;border:2px solid #e8edf8;border-radius:18px;padding:28px;overflow:hidden;position:relative;transition:.3s}.tc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),var(--blue2))}.tc:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.1)}.tc-verified{font-size:9.5px;font-weight:800;color:var(--green2);background:#e8fdf2;padding:3px 10px;border:1px solid #86efac;border-radius:20px;letter-spacing:.5px;margin-bottom:14px;display:inline-block;font-family:Montserrat,sans-serif;text-transform:uppercase}.tc-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:14px}.tc-text{font-size:.875rem;color:var(--t2);line-height:1.78;margin-bottom:22px;font-style:italic}.tc-author{display:flex;align-items:center;gap:12px}.tc-av{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:#fff;flex-shrink:0;letter-spacing:1px}.tc-name{font-size:14px;font-weight:800;color:var(--t1);font-family:Montserrat,sans-serif}.tc-loc{font-size:11px;color:var(--t3);margin-top:2px;font-weight:500;font-family:Montserrat,sans-serif}.tc-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--green2);background:#e8fdf2;padding:3px 10px;border:1px solid #86efac;border-radius:20px;margin-top:14px;font-family:Montserrat,sans-serif}.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.wc{background:#fff;border:2px solid #e8edf8;border-radius:18px;padding:28px;overflow:hidden;position:relative;transition:.3s}.wc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--blue2));opacity:0;transition:opacity .3s}.wc:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,.08)}.wc:hover::after{opacity:1}.wc-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#e8f4ff,#d0e8ff);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px}.wc-name{font-size:.97rem;font-weight:800;color:var(--t1);margin-bottom:9px;font-family:Montserrat,sans-serif}.wc-desc{font-size:.845rem;color:var(--t2);line-height:1.72}.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}.team-card{background:#fff;border:2px solid #e8edf8;border-radius:18px;overflow:hidden;transition:.3s;text-align:center}.team-card:hover{border-color:var(--green);transform:translateY(-5px);box-shadow:0 18px 40px rgba(0,0,0,.1)}.team-img{height:200px;width:100%;overflow:hidden;background:linear-gradient(135deg,#071428,#1a3a7c);display:flex;align-items:center;justify-content:center}.team-img img{width:100%;height:100%;object-fit:cover;transition:transform .3s}.team-card:hover .team-img img{transform:scale(1.05)}.team-info{padding:18px 16px}.team-name{font-size:1rem;font-weight:800;color:var(--t1);margin-bottom:3px;font-family:Montserrat,sans-serif}.team-role{font-family:Montserrat,sans-serif;font-size:11.5px;font-weight:700;color:var(--blue2);margin-bottom:8px}.team-desc{font-size:11.5px;color:var(--t2);line-height:1.6}.partners-sec{padding:60px 0;background:#fff;border-top:2px solid #f0f4fa;border-bottom:2px solid #f0f4fa}.p-label{font-family:Montserrat,sans-serif;font-size:14px;font-weight:700;color:var(--t1);letter-spacing:2px;text-transform:uppercase;margin-bottom:35px;text-align:center}.p-row{display:flex;align-items:center;gap:25px;flex-wrap:wrap;justify-content:center}.pl{display:flex;flex-direction:column;align-items:center;gap:10px;font-family:Montserrat,sans-serif;font-size:12px;font-weight:600;color:var(--t2);padding:15px 22px;background:#f8faff;border:2px solid #e8edf8;border-radius:12px;min-width:100px;cursor:pointer;transition:.3s}.pl:hover{color:var(--blue2);border-color:var(--blue2);background:#e8f0ff;transform:translateY(-3px)}.bank-logo{width:45px;height:45px;object-fit:contain;margin-bottom:5px}.faq-list{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:12px}.fi-wrap{background:#fff;border:2px solid #e8edf8;border-radius:14px;transition:border-color .3s;overflow:hidden}.fi-wrap.open{border-color:var(--green)}.fq{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;font-size:.94rem;font-weight:700;color:var(--t1);gap:16px;font-family:Montserrat,sans-serif}.fi-ico{display:flex;align-items:center;width:28px;height:28px;border-radius:50%;background:#e8f0ff;justify-content:center;color:var(--blue2);font-size:12px;flex-shrink:0;transition:transform .3s}.fi-wrap.open .fi-ico{transform:rotate(45deg);background:var(--green);color:#fff}.fa-ans{max-height:0;overflow:hidden;transition:max-height .4s,padding .3s;font-size:.875rem;color:var(--t2);line-height:1.75;padding:0 24px}.fi-wrap.open .fa-ans{max-height:200px;padding:0 24px 20px}.cta-sec{background:linear-gradient(135deg,#060e1e,#0a1a38,#071428);padding:90px 0;position:relative;overflow:hidden}.cta-sec::before{content:'';position:absolute;inset:0;background:linear-gradient(rgba(34,197,94,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(34,197,94,.03) 1px,transparent 1px);background-size:40px 40px}.cta-inner{text-align:center;position:relative;z-index:2}.cta-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);color:#fff;letter-spacing:3px;line-height:1;margin-bottom:16px}.cta-h em{color:var(--gold);font-style:normal}.cta-p{font-size:1.02rem;color:rgba(255,255,255,.6);max-width:540px;margin:0 auto 36px;line-height:1.75}.cta-acts{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}.cta-trust{display:flex;justify-content:center;gap:24px;margin-top:30px;flex-wrap:wrap}.ct{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:rgba(255,255,255,.5);font-family:Montserrat,sans-serif}.ct i{color:var(--green);font-size:11px}.rv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:52px}.rv-c{background:#fff;border:2px solid #e8edf8;border-radius:16px;padding:24px;transition:.3s}.rv-c:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,.07);border-color:var(--green)}.rv-ver{font-size:9.5px;font-weight:800;color:var(--green2);letter-spacing:.8px;margin-bottom:10px;display:flex;align-items:center;gap:5px;font-family:Montserrat,sans-serif;text-transform:uppercase}.rv-stars{color:var(--gold);font-size:13px;letter-spacing:1px;margin-bottom:12px}.rv-text{font-size:.855rem;color:var(--t2);line-height:1.7;margin-bottom:14px;font-style:italic}.rv-name{font-size:13px;font-weight:800;color:var(--t1);font-family:Montserrat,sans-serif}.rv-date{font-size:10.5px;color:var(--t3);margin-top:3px;font-weight:500;font-family:Montserrat,sans-serif}.rv-form{max-width:640px;margin:0 auto;background:#fff;border:2px solid #e8edf8;border-radius:20px;padding:44px;box-shadow:0 8px 30px rgba(0,0,0,.07)}.rvf-h{font-size:2rem;color:var(--t1);margin-bottom:6px;letter-spacing:1.5px;font-family:'Bebas Neue',sans-serif}.rvf-s{font-size:.855rem;color:var(--t2);margin-bottom:24px}.fi{width:100%;background:#f8faff;border:2px solid #e8edf8;padding:12px 16px;color:var(--t1);font-size:14px;font-family:'Open Sans',sans-serif;outline:0;margin-bottom:14px;border-radius:10px;transition:border-color .2s}.fi:focus{border-color:var(--green)}.fi::placeholder{color:var(--t3)}.fi-sel{width:100%;background:#fff;border:2px solid #e8edf8;padding:12px 16px;color:var(--t1);font-size:14px;font-family:'Open Sans',sans-serif;outline:0;margin-bottom:14px;border-radius:10px;-webkit-appearance:none}.fgr{display:grid;grid-template-columns:1fr 1fr;gap:14px}.brand-strip{background:linear-gradient(135deg,#040c1a,#071428);padding:60px 0;text-align:center;border-top:3px solid rgba(255,255,255,.06);border-bottom:3px solid rgba(255,255,255,.06)}.brand-strip .bs-shield{margin:0 auto 20px;display:block}.brand-strip .bs-name{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:#fff;letter-spacing:3px;margin-bottom:6px}.brand-strip .bs-name b{color:var(--green)}.brand-strip .bs-tag{font-size:1rem;color:rgba(255,255,255,.45);margin-bottom:24px;font-family:Montserrat,sans-serif;letter-spacing:1px}.brand-dots{display:flex;justify-content:center;gap:10px}.brand-dots span{width:24px;height:8px;border-radius:4px}.bd1{background:var(--blue)}.bd2{background:var(--green)}.bd3{background:var(--gold)}.bd4{background:var(--orange)}.bd5{background:#ef4444}footer{background:#040c1a;padding:70px 0 28px}.fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}.f-brand{display:flex;align-items:center;gap:12px;margin-bottom:20px;text-decoration:none}.f-brand-name{font-family:Montserrat,sans-serif;font-size:1.5rem;font-weight:900;line-height:1;color:#fff}.f-brand-name b{color:var(--green)}.f-brand-tag{font-size:10px;color:rgba(255,255,255,.45);letter-spacing:.5px;margin-top:4px;font-weight:500}.f-desc{font-size:.855rem;color:rgba(255,255,255,.6);line-height:1.75;margin-bottom:22px}.f-soc{display:flex;gap:8px}.fs{display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:9px;color:rgba(255,255,255,.4);font-size:13px;transition:.2s;text-decoration:none}.fs:hover{border-color:rgba(34,197,94,.4);color:var(--green)}.f-col h4{font-size:11px;color:rgba(255,255,255,.6);padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:16px;font-family:Montserrat,sans-serif;letter-spacing:1px;text-transform:uppercase}.fl-links{list-style:none}.fl-links li{margin-bottom:9px}.fl-links a{color:rgba(255,255,255,.6);font-family:'Open Sans',sans-serif;font-size:13px;text-decoration:none;transition:color .2s}.fl-links a:hover{color:var(--green)}.f-ci{display:flex;align-items:center;gap:9px;font-size:12.5px;color:rgba(255,255,255,.6);margin-bottom:9px}.f-ci i{color:var(--green);font-size:11px;width:14px;flex-shrink:0}.f-ci a{color:rgba(255,255,255,.6);text-decoration:none;transition:color .2s}.f-ci a:hover{color:var(--green)}.f-badges{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;padding:22px 0;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);margin-bottom:22px}.fbg{display:inline-flex;align-items:center;gap:6px;font-family:Montserrat,sans-serif;font-size:11px;font-weight:600;color:rgba(255,255,255,.45);background:rgba(255,255,255,.04);padding:5px 13px;border:1px solid rgba(255,255,255,.06);border-radius:20px}.fbg-link{display:inline-flex;align-items:center;gap:6px;font-family:Montserrat,sans-serif;font-size:11px;font-weight:600;color:rgba(255,255,255,.45);background:rgba(255,255,255,.04);padding:5px 13px;border:1px solid rgba(255,255,255,.06);border-radius:20px;text-decoration:none;transition:.3s;cursor:pointer}.fbg-link:hover{transform:translateY(-2px);border-color:rgba(34,197,94,.4);color:var(--green);background:rgba(34,197,94,.2)}.f-bot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}.f-leg{display:flex;gap:20px;flex-wrap:wrap}.f-leg a{font-size:11.5px;color:rgba(255,255,255,.35);font-family:Montserrat,sans-serif;text-decoration:none;transition:color .2s}.f-leg a:hover{color:var(--green)}.f-copy{font-size:11.5px;color:rgba(255,255,255,.35);font-family:Montserrat,sans-serif}.wa{position:fixed;bottom:28px;left:28px;width:58px;height:58px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;box-shadow:0 8px 24px rgba(37,211,102,.5);z-index:9999;text-decoration:none;transition:.3s}.wa:hover{transform:scale(1.1);box-shadow:0 12px 32px rgba(37,211,102,.65)}.toast-c{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:8000;display:flex;flex-direction:column;gap:8px;align-items:center;width:320px;pointer-events:none}.toast{display:flex;align-items:center;background:#fff;border:2px solid #e8edf8;border-radius:12px;padding:12px 16px;gap:10px;font-size:12.5px;color:var(--t1);box-shadow:0 8px 24px rgba(0,0,0,.12);animation:.4s both tin;pointer-events:auto}.toast.out{animation:.3s both tout}@keyframes tin{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes tout{from{opacity:1}to{opacity:0;transform:translateY(-10px)}}.t-ico{display:flex;align-items:center;width:28px;height:28px;border-radius:8px;justify-content:center;font-size:13px;flex-shrink:0}.tig{background:#e8fdf2;color:var(--green2)}.tiy{background:#fff8e0;color:var(--gold2)}.tib{background:#e8f0ff;color:var(--blue2)}.t-body strong{display:block;font-family:Montserrat,sans-serif;font-weight:700;font-size:12px;margin-bottom:2px}.t-body span{color:var(--t3);font-size:11px}.cookie{position:fixed;bottom:0;left:0;right:0;background:rgba(4,12,26,.97);border-top:3px solid var(--green);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;z-index:8999;flex-wrap:wrap}.cookie-t{font-family:'Open Sans',sans-serif;font-size:12.5px;color:rgba(255,255,255,.6);max-width:700px;line-height:1.5}.cookie-t a{color:var(--green);text-decoration:none}.cookie-acts{display:flex;gap:10px;flex-shrink:0}.c-acc{font-family:Montserrat,sans-serif;font-size:12.5px;cursor:pointer;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;font-weight:800;padding:9px 22px;border-radius:var(--rs);border:none}.c-dec{font-family:Montserrat,sans-serif;font-size:12.5px;cursor:pointer;background:0 0;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.4);padding:8px 16px;border-radius:var(--rs)}@media(max-width:1100px){.price-grid{grid-template-columns:repeat(2,1fr)}.proc-grid{grid-template-columns:repeat(2,1fr)}.rv-grid{grid-template-columns:repeat(2,1fr)}.team-grid{grid-template-columns:repeat(2,1fr)}.testi-grid{grid-template-columns:repeat(2,1fr)}.why-grid{grid-template-columns:repeat(2,1fr)}.fg{grid-template-columns:1fr 1fr;gap:32px}.about-grid{grid-template-columns:1fr;gap:40px}.hero-container{grid-template-columns:1fr;gap:40px}.calc-box{grid-template-columns:1fr}.sim-box{grid-template-columns:1fr}.calc-l{border-right:none;border-bottom:2px solid #f0f4fa}.sim-l{border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}.proc-grid::before{display:none}}@media(max-width:768px){nav{padding:0 20px}.ham{display:flex}.nav-links,.nav-right{display:none}.hero-container{text-align:center;padding:40px 20px}.hero-sub{margin:0 auto 28px}.hero-right{display:none}.hero-btns{flex-direction:column;align-items:center;width:100%}.btn-hero-main,.btn-hero-ghost{width:auto;min-width:200px}.btn-hero-main{padding:14px 24px;font-size:14px}.btn-hero-ghost{padding:12px 24px;font-size:14px}.hero-features{flex-direction:column;width:100%;display:flex!important}.hf{align-items:center;gap:14px;padding:12px 16px;display:flex!important}.hf-icon{width:44px;height:44px;min-width:44px}.hf-text strong{font-size:13px;display:block}.hf-text span{font-size:11px}.hero-trust{justify-content:center}.stats-grid{grid-template-columns:repeat(2,1fr);padding-left:20px;padding-right:20px}.sb:nth-child(2n){border-right:none}.W{padding-left:20px;padding-right:20px}.price-grid{grid-template-columns:1fr!important;gap:25px!important;padding:0 10px!important}.pc{padding:0!important;border-radius:20px!important;border:none!important;box-shadow:0 10px 30px rgba(0,0,0,.08)!important;overflow:hidden!important}.pc-plan{background:linear-gradient(135deg,#1a4a9c,#0d2550)!important;margin:0!important;padding:18px 20px!important;letter-spacing:2px!important;color:#fff!important}.pc.feat .pc-plan{background:linear-gradient(135deg,#22c55e,#16a34a)!important}.pc-crown{position:relative!important;top:0!important;right:0!important;display:inline-block!important;margin:15px auto 0!important;width:fit-content!important;font-size:11px!important;padding:5px 14px!important}.pc-amount{font-size:2rem!important;padding:20px 0 10px!important;margin:0!important;background:#fff!important;color:var(--t1)!important;text-align:center!important}.pc-tag{padding:0 15px!important;font-size:.8rem!important;color:var(--t3)!important;text-align:center!important}.pc-feats{padding:0 20px!important;gap:12px!important}.pc-feats li{font-size:.85rem!important;padding:8px 0!important;border-bottom:1px solid #f0f0f0!important;align-items:center!important}.pc-feats li:last-child{border-bottom:none!important}.pc-feats li i{width:22px!important}.pc .btn-blue2,.pc .btn-outline2,.pc .btn-submit{margin:0 20px 25px!important;width:auto!important;padding:14px 20px!important;font-size:14px!important;border-radius:50px!important}.price-note{font-size:11px!important;padding:0 15px!important;margin-top:24px!important;line-height:1.6!important}.about-grid{grid-template-columns:1fr}.about-badge{right:0;bottom:-10px}.ba-box{grid-template-columns:1fr}.ba-before{border-right:none;border-bottom:2px dashed #fecdd3}.calc-box{grid-template-columns:1fr}.calc-l{border-right:none;border-bottom:2px solid #f0f4fa}.emi-box{grid-template-columns:1fr}.emi-l{border-right:none;border-bottom:2px solid #f0f4fa}.emi-l,.emi-r{padding:30px}.emi-result{grid-template-columns:1fr}.sim-box{grid-template-columns:1fr}.sim-l{border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}.rv-grid{grid-template-columns:1fr}.rv-form{padding:28px 22px}.fgr{grid-template-columns:1fr}.proc-grid{grid-template-columns:1fr}.proc-grid::before{display:none}.team-grid{grid-template-columns:1fr 1fr}.fg{grid-template-columns:1fr}.f-bot{flex-direction:column;align-items:center;text-align:center}.cta-inner{padding:0 20px}.wa{bottom:20px!important;left:20px!important;width:50px!important;height:50px!important;font-size:24px!important}body{padding-bottom:80px!important}.cookie{flex-direction:column;align-items:flex-start}}@media(max-width:480px){.price-grid{gap:20px!important;padding:0 5px!important}.pc-plan{padding:15px 16px!important;font-size:13px!important}.pc-crown{font-size:10px!important;padding:4px 12px!important;margin:12px auto 0!important}.pc-feats,.pc-tag{margin-bottom:15px!important}.pc-amount{font-size:1.8rem!important;padding:15px 0 8px!important}.pc-tag{font-size:.75rem!important;padding:0 12px!important}.pc-feats{padding:0 16px!important;gap:10px!important}.pc-feats li{font-size:.8rem!important;padding:6px 0!important}.pc-feats li i{font-size:12px!important;width:20px!important}.pc .btn-blue2,.pc .btn-outline2,.pc .btn-submit{margin:0 16px 20px!important;padding:12px 16px!important;font-size:13px!important}.price-note{font-size:10px!important;padding:0 15px!important}.hero-trust{gap:15px!important;justify-content:center!important}.ht{min-width:70px!important}.ht-n{font-size:1.5rem!important}.ht-l{font-size:9px!important}.team-grid{grid-template-columns:1fr}.why-grid{grid-template-columns:1fr}.testi-grid{grid-template-columns:1fr}.rv-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr}.sb{border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}.sb:last-child{border-bottom:none}}
+    .modal-bg{display:none;position:fixed;inset:0;background:rgba(4,12,26,.92);backdrop-filter:blur(10px);z-index:99999;align-items:center;justify-content:center}.modal-bg.open{display:flex}.modal-box{background:#fff;border-top:4px solid var(--green);border-radius:20px;padding:48px 42px;width:90%;max-width:460px;position:relative;animation:modalIn .35s ease;box-shadow:0 32px 80px rgba(0,0,0,.4)}@keyframes modalIn{from{opacity:0;transform:translateY(-20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}.mc{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--t3);font-size:22px;cursor:pointer;transition:color .2s}.mc:hover{color:var(--t1)}.m-ico{font-size:2.6rem;margin-bottom:14px;display:block;text-align:center}.m-h{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;text-align:center;margin-bottom:8px;color:var(--t1);letter-spacing:2px}.m-s{font-size:.875rem;color:var(--t2);text-align:center;margin-bottom:26px;line-height:1.65}.m-input{width:100%;background:#f8faff;border:2px solid var(--bd);border-radius:10px;padding:12px 16px;color:var(--t1);font-size:14px;font-family:'Open Sans',sans-serif;outline:none;margin-bottom:12px;transition:border-color .2s}.m-input:focus{border-color:var(--green);background:#fff}.m-input::placeholder{color:var(--t3)}.m-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:9px;margin-top:4px}.m-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(34,197,94,.4)}.m-disc{font-family:'Montserrat',sans-serif;font-size:11px;color:var(--t3);text-align:center;margin-top:14px}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>🔧 CIBIL Repair</h1>
-        <p>India's most trusted credit score repair consultancy. Fix your CIBIL score legally and get the loans you deserve.</p>
-        <button class="btn" onclick="document.getElementById('chatbot-box').style.display='flex'">💬 Chat with us</button>
-        
-        <div class="features">
-            <div class="feature"><i class="fas fa-shield-alt"></i><h3>100% Legal</h3><p>RBI compliant process</p></div>
-            <div class="feature"><i class="fas fa-rocket"></i><h3>Fast Results</h3><p>30-90 days resolution</p></div>
-            <div class="feature"><i class="fas fa-check-circle"></i><h3>98% Success</h3><p>Proven track record</p></div>
+
+<!-- Progress bar -->
+<div class="prog"><div class="prog-f" id="pf"></div></div>
+
+<!-- ═══════════════════════════════════════
+     NAV — WHITE BAR
+═══════════════════════════════════════ -->
+<nav id="nav">
+  <a href="/" class="nav-logo" aria-label="CIBIL Repair Home">
+    <svg width="52" height="56" viewBox="0 0 52 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M26 2 L48 12 L48 30 C48 43 38 52 26 54 C14 52 4 43 4 30 L4 12 Z" fill="url(#shG)" stroke="url(#shS)" stroke-width="1.5"/>
+      <defs>
+        <linearGradient id="shG" x1="26" y1="2" x2="26" y2="54" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#1a3a7c"/><stop offset="1" stop-color="#071428"/>
+        </linearGradient>
+        <linearGradient id="shS" x1="4" y1="2" x2="48" y2="54" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#4a8aff"/><stop offset="1" stop-color="#1a4a9c"/>
+        </linearGradient>
+      </defs>
+      <rect x="11" y="36" width="5" height="10" rx="1.5" fill="#ef4444"/>
+      <rect x="18" y="30" width="5" height="16" rx="1.5" fill="#f97316"/>
+      <rect x="25" y="24" width="5" height="22" rx="1.5" fill="#f5c518"/>
+      <rect x="32" y="18" width="5" height="28" rx="1.5" fill="#22c55e"/>
+      <path d="M38 18 L42 10 L46 18" stroke="#22c55e" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="42" y1="10" x2="42" y2="22" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/>
+      <path d="M26 4 L46 13 L46 30 C46 41.5 37.5 50.2 26 52" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/>
+    </svg>
+    <div class="logo-text-wrap">
+      <div class="logo-name">CIBIL<span>Repair</span></div>
+      <div class="logo-tag">Better Credit. Better Future.</div>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li class="nl-item"><a href="/">Home</a></li>
+    <li class="nl-item">
+      <a href="/services">Services <span class="chev">▼</span></a>
+      <div class="dd dd-wide">
+        <div class="dd-head" style="grid-column:1/-1">What We Fix For You</div>
+        <div class="dd-col">
+          <a href="/service/written-off"><i class="fas fa-file-alt"></i><div><strong>Complete Removal</strong><span>Removal from Credit bureaus</span></div></a>
+          <a href="/service/settled"><i class="fas fa-handshake"></i><div><strong>Settled → Closed</strong><span>Convert settled → closed</span></div></a>
+          <a href="/service/suit-filled"><i class="fas fa-gavel"></i><div><strong>Legal Removal</strong><span>Legal entry removal</span></div></a>
+        </div>
+        <div class="dd-col">
+          <a href="/service/analysis"><i class="fas fa-chart-bar"></i><div><strong>Forensic Audit</strong><span>Credit bureau forensic audit</span></div></a>
+          <a href="/service/profile"><i class="fas fa-user-edit"></i><div><strong>Quick Fix</strong><span>Fix name, PAN, address errors</span></div></a>
+          <a href="/service/wrong-entry"><i class="fas fa-times-circle"></i><div><strong>Fraud Protection</strong><span>Fraud & identity theft disputes</span></div></a>
+        </div>
+      </div>
+    </li>
+    <li class="nl-item">
+      <button>Tools <span class="chev">▼</span></button>
+      <div class="dd">
+        <a href="/#simulator"><i class="fas fa-sliders-h"></i><div><strong>Score Simulator</strong><span>See your potential improvement</span></div></a>
+        <div class="dd-div"></div>
+        <a href="/#calculator"><i class="fas fa-university"></i><div><strong>Loan Eligibility</strong><span>See how much loan you qualify</span></div></a>
+        <a href="/#emi"><i class="fas fa-calculator"></i><div><strong>EMI Calculator</strong><span>Plan your monthly payments</span></div></a>
+      </div>
+    </li>
+    <li class="nl-item">
+        <button>Company <span class="chev">▼</span></button>
+        <div class="dd">
+            <a href="/about-us"><i class="fas fa-building"></i><div><strong>About Us</strong><span>Our story since 2018</span></div></a>
+            <div class="dd-div"></div>
+            <a href="/#team"><i class="fas fa-users"></i><div><strong>Our Team</strong><span>Meet the experts</span></div></a>
+            <a href="/success-stories"><i class="fas fa-star"></i><div><strong>Success Stories</strong><span>5,000+ transformed lives</span></div></a>
+        </div>
+    </li>
+    <li class="nl-item">
+      <button>Resources <span class="chev">▼</span></button>
+      <div class="dd">
+        <a href="/#faq"><i class="fas fa-question-circle"></i><div><strong>FAQ</strong><span>Common credit repair questions</span></div></a>
+        <a href="/#pricing"><i class="fas fa-tag"></i><div><strong>Pricing</strong><span>Transparent plans</span></div></a>
+        <div class="dd-div"></div>
+        <a href="/blog"><i class="fas fa-book"></i><div><strong>Blog</strong><span>Credit tips & guides</span></div></a>
+      </div>
+    </li>
+    <li class="nl-item"><a href="/contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <a href="/login" class="btn-login">Login</a>
+    <a href="/partners" class="btn-partner">🤝 Partner With Us</a>
+    <button class="btn-getstarted" onclick="openModal()">Get Started</button>
+  </div>
+
+  <button class="ham" id="ham" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile nav -->
+<div class="mob" id="mob">
+    <div class="mob-header">
+        <div class="logo">CIBIL<span>Repair</span></div>
+        <div class="tagline">Better Credit. Better Future.</div>
+    </div>
+    <div class="mob-user">
+        <div class="mob-user-icon"><i class="fas fa-user-shield"></i></div>
+        <div class="mob-user-info"><h4>Welcome Back!</h4><p>Let's fix your credit score</p></div>
+    </div>
+    <div class="mob-nav-item"><a href="/" class="mob-nav-link" onclick="cm()"><div class="link-left"><i class="fas fa-home"></i><span>Home</span></div></a></div>
+    
+    <div class="mob-nav-item mob-dropdown" id="mobServices">
+        <div class="mob-nav-link" onclick="toggleMobSubmenu(this)"><div class="link-left"><i class="fas fa-concierge-bell"></i><span>Services</span></div><i class="fas fa-chevron-right chevron"></i></div>
+        <div class="mob-submenu">
+            <a href="/service/written-off" onclick="cm()"><i class="fas fa-file-alt"></i> Complete Removal</a>
+            <a href="/service/settled" onclick="cm()"><i class="fas fa-handshake"></i> Settled → Closed</a>
+            <a href="/service/suit-filled" onclick="cm()"><i class="fas fa-gavel"></i> Legal Removal</a>
+            <a href="/service/analysis" onclick="cm()"><i class="fas fa-chart-bar"></i> Forensic Audit</a>
+            <a href="/service/profile" onclick="cm()"><i class="fas fa-user-edit"></i> Quick Fix</a>
+            <a href="/service/wrong-entry" onclick="cm()"><i class="fas fa-times-circle"></i> Fraud Protection</a>
         </div>
     </div>
     
-    <?php renderChatbot(); ?>
+    <div class="mob-nav-item mob-dropdown" id="mobTools">
+        <div class="mob-nav-link" onclick="toggleMobSubmenu(this)"><div class="link-left"><i class="fas fa-tools"></i><span>Tools</span></div><i class="fas fa-chevron-right chevron"></i></div>
+        <div class="mob-submenu">
+            <a href="/#simulator" onclick="cm()"><i class="fas fa-sliders-h"></i> Score Simulator</a>
+            <a href="/#calculator" onclick="cm()"><i class="fas fa-university"></i> Loan Eligibility</a>
+            <a href="/#emi" onclick="cm()"><i class="fas fa-calculator"></i> EMI Calculator</a>
+        </div>
+    </div>
     
-    <script>
-        // Show chat toggle button
-        setTimeout(function() {
-            const toggle = document.getElementById('chatbot-toggle');
-            if (toggle) {
-                toggle.style.display = 'flex';
-                toggle.style.position = 'fixed';
-                toggle.style.bottom = '30px';
-                toggle.style.right = '30px';
-                toggle.style.zIndex = '999';
-                toggle.style.background = '#0d9e78';
-                toggle.style.color = 'white';
-                toggle.style.border = 'none';
-                toggle.style.borderRadius = '50px';
-                toggle.style.padding = '15px 25px';
-                toggle.style.cursor = 'pointer';
-                toggle.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+    <div class="mob-nav-item mob-dropdown" id="mobCompany">
+        <div class="mob-nav-link" onclick="toggleMobSubmenu(this)"><div class="link-left"><i class="fas fa-building"></i><span>Company</span></div><i class="fas fa-chevron-right chevron"></i></div>
+        <div class="mob-submenu">
+            <a href="/about-us" onclick="cm()"><i class="fas fa-info-circle"></i> About Us</a>
+            <a href="/#team" onclick="cm()"><i class="fas fa-users"></i> Our Team</a>
+            <a href="/success-stories" onclick="cm()"><i class="fas fa-star"></i> Success Stories</a>
+        </div>
+    </div>
+    
+    <div class="mob-nav-item mob-dropdown" id="mobResources">
+        <div class="mob-nav-link" onclick="toggleMobSubmenu(this)"><div class="link-left"><i class="fas fa-book"></i><span>Resources</span></div><i class="fas fa-chevron-right chevron"></i></div>
+        <div class="mob-submenu">
+            <a href="/#faq" onclick="cm()"><i class="fas fa-question-circle"></i> FAQ</a>
+            <a href="/#pricing" onclick="cm()"><i class="fas fa-tag"></i> Pricing</a>
+            <a href="/blog" onclick="cm()"><i class="fas fa-newspaper"></i> Blog</a>
+        </div>
+    </div>
+    
+    <div class="mob-nav-item">
+        <a href="/contact" class="mob-nav-link" onclick="cm()">
+            <div class="link-left">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </div>
+        </a>
+    </div>
+    
+    <div class="mob-nav-item">
+        <a href="/login" class="mob-nav-link" onclick="cm()">
+            <div class="link-left">
+                <i class="fas fa-sign-in-alt"></i>
+                <span>Login</span>
+            </div>
+        </a>
+    </div>
+    
+    <div class="mob-divider"></div>
+    
+    <div class="mob-actions">
+        <a href="/partners" class="mob-action-btn partner" onclick="cm()">
+            <i class="fas fa-handshake"></i> Partner With Us
+        </a>
+        <a href="#" class="mob-action-btn get-started" onclick="openModal();cm()">
+            <i class="fas fa-rocket"></i> Get Started Free
+        </a>
+    </div>
+</div>
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- ═══════════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════════ -->
+<main>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="ticker-bar">
+    <div class="ticker-inner">
+      <div class="ticker-item"><i class="fas fa-check-circle"></i> 100% Legal RBI-Compliant</div>
+      <div class="ticker-item"><i class="fas fa-shield-alt"></i> Bank-Grade Security</div>
+      <div class="ticker-item"><i class="fas fa-clock"></i> 30-Day Fastest Resolution</div>
+      <div class="ticker-item"><i class="fas fa-trophy"></i> Upto 98% Success Rate</div>
+      <div class="ticker-item"><i class="fas fa-undo"></i> Money-Back Guarantee</div>
+      <div class="ticker-item"><i class="fas fa-users"></i> 5,000+ Happy Clients</div>
+      <div class="ticker-item"><i class="fas fa-star"></i> 4.9★ Google Rating</div>
+      <div class="ticker-item"><i class="fas fa-university"></i> All Credit Bureaus Covered</div>
+      <div class="ticker-item"><i class="fas fa-check-circle"></i> 100% Legal RBI-Compliant</div>
+      <div class="ticker-item"><i class="fas fa-shield-alt"></i> Bank-Grade Security</div>
+      <div class="ticker-item"><i class="fas fa-clock"></i> 30-Day Fastest Resolution</div>
+      <div class="ticker-item"><i class="fas fa-trophy"></i> 98% Success Rate</div>
+      <div class="ticker-item"><i class="fas fa-undo"></i> Money-Back Guarantee</div>
+      <div class="ticker-item"><i class="fas fa-users"></i> 5,000+ Happy Clients</div>
+      <div class="ticker-item"><i class="fas fa-star"></i> 4.9★ Google Rating</div>
+      <div class="ticker-item"><i class="fas fa-university"></i> All Bureaus Covered</div>
+    </div>
+  </div>
+
+  <div class="hero-bg-canvas">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.07" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+      <polyline points="0,600 120,550 240,580 360,520 480,460 600,490 720,420 840,380 960,350 1080,310 1200,260 1320,220 1440,180" stroke="#22c55e" stroke-width="3" fill="none"/>
+      <polyline points="0,700 120,680 240,720 360,660 480,640 600,680 720,620 840,590 960,560 1080,530 1200,500 1320,470 1440,440" stroke="#4c8cff" stroke-width="2" fill="none" stroke-dasharray="8,4"/>
+      <rect x="80" y="500" width="40" height="300" rx="4" fill="rgba(34,197,94,.3)"/>
+      <rect x="140" y="450" width="40" height="350" rx="4" fill="rgba(245,197,24,.25)"/>
+      <rect x="200" y="380" width="40" height="420" rx="4" fill="rgba(76,140,255,.3)"/>
+      <rect x="260" y="420" width="40" height="380" rx="4" fill="rgba(249,115,22,.2)"/>
+      <rect x="1100" y="480" width="40" height="320" rx="4" fill="rgba(34,197,94,.2)"/>
+      <rect x="1160" y="400" width="40" height="400" rx="4" fill="rgba(245,197,24,.2)"/>
+      <rect x="1220" y="340" width="40" height="460" rx="4" fill="rgba(76,140,255,.2)"/>
+      <rect x="1280" y="300" width="40" height="500" rx="4" fill="rgba(34,197,94,.25)"/>
+      <circle cx="480" cy="460" r="8" fill="rgba(34,197,94,.6)"/>
+      <circle cx="720" cy="420" r="8" fill="rgba(245,197,24,.6)"/>
+      <circle cx="960" cy="350" r="8" fill="rgba(34,197,94,.6)"/>
+      <circle cx="1200" cy="260" r="8" fill="rgba(76,140,255,.6)"/>
+    </svg>
+  </div>
+
+  <div class="hero-main">
+    <div class="hero-container">
+      <div class="hero-left">
+        <div class="hero-eyebrow"><div class="e-dot"></div> India's #1 CIBIL Score Experts Since 2018</div>
+        <h1 class="hero-h1">
+          <h1 class="hero-h1">
+             <span class="h1-white">CREDIT SCORE &</span>
+             <span class="h1-gold">CIBIL REPAIR</span>
+             <span class="h1-blue">EXPERTS!</span>
+          </h1>
+        <p class="hero-sub">Take Control of Your Financial Future — <strong>India's most trusted credit score repair and CIBIL experts</strong> legally fix credit issues with Upto 98% success rate and money-back guarantee.</p>
+        <div class="hero-btns">
+          <button class="btn-hero-main" onclick="window.open('https://wa.me/919905482503?text=Hi! I need help with my CIBIL score','_blank')"><i class="fas fa-rocket"></i> Free Consultation</button>
+          <a href="#services" class="btn-hero-ghost"><i class="fas fa-play-circle"></i> Our Services</a>
+        </div>
+        <div class="hero-features">
+          <div class="hf"><div class="hf-icon g"><i class="fas fa-comments"></i></div><div class="hf-text"><strong>Free Consultation</strong><span>Same-day expert advice</span></div></div>
+          <div class="hf"><div class="hf-icon b"><i class="fas fa-file-alt"></i></div><div class="hf-text"><strong>Credit Analysis</strong><span>Deep forensic audit</span></div></div>
+          <div class="hf"><div class="hf-icon y"><i class="fas fa-chart-line"></i></div><div class="hf-text"><strong>Score Improvement</strong><span>Avg. +85 pts guaranteed</span></div></div>
+        </div>
+        <div class="hero-trust">
+          <div class="ht"><span class="ht-n">5K+</span><div class="ht-l">Happy Clients</div></div>
+          <div class="ht"><span class="ht-n">98%</span><div class="ht-l">Success Rate</div></div>
+          <div class="ht"><span class="ht-n">₹500Cr</span><div class="ht-l">Loans Unlocked</div></div>
+          <div class="ht"><span class="ht-n">4.9★</span><div class="ht-l">Google Rating</div></div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="speedo-wrap">
+          <div class="sp-float spf1"><div class="spf-ico sig">📈</div><div><span class="spf-t">Score Improved +185 pts</span><span class="spf-s">Maneet S. · Delhi · 42 days</span></div></div>
+          <div class="sp-float spf2"><div class="spf-ico siy">✅</div><div><span class="spf-t">Home Loan ₹45L Approved</span><span class="spf-s">HDFC Bank · Excellent Score</span></div></div>
+          <div class="speedo-card">
+            <div class="speedo-header"><span class="speedo-title">Live CIBIL Dashboard</span><div class="speedo-live">Live Tracking</div></div>
+            <div class="speedo-svg-wrap">
+              <svg class="speedo-svg" viewBox="0 0 360 220" fill="none">
+                <defs>
+                  <radialGradient id="speedoBg" cx="50%" cy="100%" r="100%"><stop offset="0%" stop-color="#0d1f45"/><stop offset="100%" stop-color="#040c1a"/></radialGradient>
+                  <linearGradient id="arcRed" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ef4444"/><stop offset="100%" stop-color="#f97316"/></linearGradient>
+                  <linearGradient id="arcOrange" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#f5c518"/></linearGradient>
+                  <linearGradient id="arcYellow" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f5c518"/><stop offset="100%" stop-color="#84cc16"/></linearGradient>
+                  <linearGradient id="arcGreen" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#84cc16"/><stop offset="100%" stop-color="#22c55e"/></linearGradient>
+                  <filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                </defs>
+                <ellipse cx="180" cy="195" rx="165" ry="165" fill="url(#speedoBg)" stroke="rgba(255,255,255,.06)" stroke-width="1.5"/>
+                <ellipse cx="180" cy="195" rx="148" ry="148" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+                <path d="M 32 195 A 148 148 0 0 1 77 74" fill="none" stroke="#ef4444" stroke-width="22" stroke-linecap="butt" opacity=".85"/>
+                <path d="M 77 74 A 148 148 0 0 1 152 35" fill="none" stroke="#f97316" stroke-width="22" stroke-linecap="butt" opacity=".85"/>
+                <path d="M 152 35 A 148 148 0 0 1 208 35" fill="none" stroke="#f5c518" stroke-width="22" stroke-linecap="butt" opacity=".85"/>
+                <path d="M 208 35 A 148 148 0 0 1 328 195" fill="none" stroke="#22c55e" stroke-width="22" stroke-linecap="butt" opacity=".85"/>
+                <ellipse cx="180" cy="195" rx="120" ry="120" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+                <ellipse cx="180" cy="195" rx="95" ry="95" fill="rgba(5,14,35,.9)" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+                <line x1="32" y1="195" x2="52" y2="195" stroke="rgba(255,255,255,.2)" stroke-width="2"/>
+                <line x1="328" y1="195" x2="308" y2="195" stroke="rgba(255,255,255,.2)" stroke-width="2"/>
+                <line x1="180" y1="47" x2="180" y2="67" stroke="rgba(255,255,255,.2)" stroke-width="2"/>
+                <line x1="73" y1="71" x2="87" y2="83" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
+                <line x1="287" y1="71" x2="273" y2="83" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
+                <text x="30" y="215" text-anchor="middle" font-family="'Montserrat',sans-serif" font-size="10" font-weight="700" fill="rgba(255,255,255,.4)">300</text>
+                <text x="66" y="64" text-anchor="middle" font-family="'Montserrat',sans-serif" font-size="10" font-weight="700" fill="rgba(255,255,255,.4)">549</text>
+                <text x="180" y="28" text-anchor="middle" font-family="'Montserrat',sans-serif" font-size="10" font-weight="700" fill="rgba(255,255,255,.4)">700</text>
+                <text x="296" y="64" text-anchor="middle" font-family="'Montserrat',sans-serif" font-size="10" font-weight="700" fill="rgba(255,255,255,.4)">750</text>
+                <text x="334" y="215" text-anchor="middle" font-family="'Montserrat',sans-serif" font-size="10" font-weight="700" fill="rgba(255,255,255,.4)">900</text>
+                <g id="needleG" style="transform-origin:180px 195px;transform:rotate(-20deg);animation:needleAnim 2s 0.8s cubic-bezier(.4,0,.2,1) forwards">
+                  <line x1="180" y1="195" x2="180" y2="80" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                  <circle cx="180" cy="195" r="14" fill="#1a3a7c" stroke="rgba(255,255,255,.3)" stroke-width="2"/>
+                  <circle cx="180" cy="195" r="7" fill="white"/>
+                  <circle cx="180" cy="195" r="3" fill="#22c55e"/>
+                </g>
+                <style>@keyframes needleAnim{from{transform:rotate(-88deg)}to{transform:rotate(-20deg)}}</style>
+                <text x="180" y="152" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="38" letter-spacing="2" fill="white" id="speedoNum">785</text>
+                <text x="180" y="170" text-anchor="middle" font-family="'Montserrat',sans-serif" font-size="9" font-weight="700" fill="rgba(255,255,255,.4)" letter-spacing="2">CIBIL SCORE</text>
+                <rect x="140" y="176" width="80" height="18" rx="9" fill="rgba(34,197,94,.2)" stroke="rgba(34,197,94,.5)" stroke-width="1"/>
+                <text x="180" y="189" text-anchor="middle" font-family="'Montserrat',sans-serif" font-size="9" font-weight="800" fill="#22c55e" letter-spacing="1">EXCELLENT</text>
+                <text x="180" y="212" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="14" letter-spacing="4" fill="rgba(255,255,255,.25)">SCORE</text>
+                <circle cx="180" cy="80" r="5" fill="#22c55e" opacity=".4" filter="url(#glow)" style="animation:needleAnim 2s 0.8s cubic-bezier(.4,0,.2,1) forwards;transform-origin:180px 195px"/>
+              </svg>
+            </div>
+            <div class="speedo-meta">
+              <div class="sm-item"><span class="sm-v grn">+185</span><div class="sm-l">Points Gained</div></div>
+              <div class="sm-item"><span class="sm-v gld">42d</span><div class="sm-l">Time Taken</div></div>
+              <div class="sm-item"><span class="sm-v blu">3</span><div class="sm-l">Issues Fixed</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CREDIT SCORE & CIBIL REPAIR SECTION ═══ -->
+<section style="background:linear-gradient(135deg,#f0fdf6,#dcfce7);padding:40px 0;">
+  <div class="W">
+    <div class="sh">
+      <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,3vw,2.8rem);color:var(--t1);letter-spacing:1.5px;">
+        India's #1 <em style="color:var(--green);font-style:normal;">Credit Score Repair</em> & 
+        <em style="color:var(--gold);font-style:normal;">CIBIL Score Improvement</em>
+      </h3>
+      <p style="font-size:.95rem;color:var(--t2);max-width:700px;margin:12px auto 0;line-height:1.7;">
+        We legally fix <strong>credit score</strong> issues, remove written-off accounts, convert 
+        <strong>settled</strong> to closed, and improve your <strong>CIBIL score</strong> with a 
+        <strong>98% success rate</strong> and money-back guarantee.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stats-grid">
+    <div class="sb r"><span class="sb-num" data-target="5000" data-s="+">0</span><div class="sb-desc">Happy Clients Served</div></div>
+    <div class="sb r"><span class="sb-num g" data-target="98" data-s="%">0</span><div class="sb-desc">Industry-Best Success Rate</div></div>
+    <div class="sb r"><span class="sb-num b" data-target="85" data-s="+">0</span><div class="sb-desc">Avg. Points Improved</div></div>
+    <div class="sb r"><span class="sb-num" data-target="500" data-s="Cr+">0</span><div class="sb-desc">₹ Loan Value Unlocked</div></div>
+    <div class="sb r"><span class="sb-num g" data-target="7" data-s="+ Yrs">0</span><div class="sb-desc">Proven Excellence</div></div>
+  </div>
+</div>
+
+<!-- ═══ SERVICES SECTION - 6 SERVICES ═══ -->
+<section class="sec" id="services">
+  <div class="W">
+    <div class="sh r">
+      <div class="pill pill-green">🌟 Our Services</div>
+      <h2 class="st">Complete <em>Credit Repair</em> Solutions</h2>
+      <p class="ss">Every credit issue handled with legal precision, speed, and a money-back guarantee across Credit bureaus.</p>
+    </div>
+    <div class="price-grid">
+      
+      <!-- Service 1: Written Off Clearance -->
+      <div class="pc r">
+        <div class="pc-plan">Written Off Clearance</div>
+        <div class="pc-amount" style="font-size:1.5rem;color:var(--green2)">Complete Removal</div>
+        <p class="pc-tag">Full removal of written-off accounts from all 4 bureaus.</p>
+        <div class="pc-div"></div>
+        <ul class="pc-feats">
+          <li><i class="fas fa-check-circle"></i> Full written-off removal</li>
+          <li><i class="fas fa-check-circle"></i> Bank NOC procurement</li>
+          <li><i class="fas fa-check-circle"></i> RBI-compliant dispute filing</li>
+          <li><i class="fas fa-check-circle"></i> 45-60 day resolution</li>
+          <li><i class="fas fa-check-circle"></i> Legal team support</li>
+          <li><i class="fas fa-check-circle"></i> 98% success rate</li>
+        </ul>
+        <a href="/service/written-off" class="btn-outline2"><i class="fas fa-arrow-right"></i> Credit Score Repair</a>
+      </div>
+      
+      <!-- Service 2: Settled Clearance (Most Popular) -->
+      <div class="pc feat r">
+        <div class="pc-crown">⭐ Most Popular</div>
+        <div class="pc-plan">Settled Clearance</div>
+        <div class="pc-amount" style="font-size:1.5rem;color:var(--green2)">Settled → Closed</div>
+        <p class="pc-tag">Convert "Settled" to "Closed" across all credit bureaus.</p>
+        <div class="pc-div"></div>
+        <ul class="pc-feats">
+          <li><i class="fas fa-check-circle"></i> Settled → Closed conversion</li>
+          <li><i class="fas fa-check-circle"></i> NOC from lender</li>
+          <li><i class="fas fa-check-circle"></i> 30-50 day resolution</li>
+          <li><i class="fas fa-check-circle"></i> Score boost 60-80 points</li>
+          <li><i class="fas fa-check-circle"></i> Dedicated case manager</li>
+          <li><i class="fas fa-check-circle"></i> 95%+ success rate</li>
+        </ul>
+        <a href="/service/settled" class="btn-submit"><i class="fas fa-rocket"></i> CIBIL Score Improvement</a>
+      </div>
+      
+      <!-- Service 3: Suit Filed Removal -->
+      <div class="pc r">
+        <div class="pc-plan">Suit Filed Removal</div>
+        <div class="pc-amount" style="font-size:1.5rem;color:var(--green2)">Legal Removal</div>
+        <p class="pc-tag">Legal removal of court cases and suit entries from credit report.</p>
+        <div class="pc-div"></div>
+        <ul class="pc-feats">
+          <li><i class="fas fa-check-circle"></i> Complete suit removal</li>
+          <li><i class="fas fa-check-circle"></i> Dedicated lawyer assigned</li>
+          <li><i class="fas fa-check-circle"></i> Court representation support</li>
+          <li><i class="fas fa-check-circle"></i> 60-90 day resolution</li>
+          <li><i class="fas fa-check-circle"></i> Legal documentation</li>
+          <li><i class="fas fa-check-circle"></i> 92% success rate</li>
+        </ul>
+        <a href="/service/suit-filled" class="btn-outline2"><i class="fas fa-gavel"></i> Legal Credit Repair</a>
+      </div>
+      
+      <!-- Service 4: Credit Report Analysis -->
+      <div class="pc r">
+        <div class="pc-plan">Credit Report Analysis</div>
+        <div class="pc-amount" style="font-size:1.5rem;color:var(--green2)">Forensic Audit</div>
+        <p class="pc-tag">Complete forensic audit of your credit report across all bureaus.</p>
+        <div class="pc-div"></div>
+        <ul class="pc-feats">
+          <li><i class="fas fa-check-circle"></i> 50-point checklist</li>
+          <li><i class="fas fa-check-circle"></i> Error identification report</li>
+          <li><i class="fas fa-check-circle"></i> Custom improvement plan</li>
+          <li><i class="fas fa-check-circle"></i> Dispute letter templates</li>
+          <li><i class="fas fa-check-circle"></i> 3-5 day turnaround</li>
+          <li><i class="fas fa-check-circle"></i> Expert consultation</li>
+        </ul>
+        <a href="/service/analysis" class="btn-outline2"><i class="fas fa-chart-bar"></i> Credit Report Repair</a>
+      </div>
+      
+      <!-- Service 5: Profile Correction (Fastest) -->
+      <div class="pc feat r">
+        <div class="pc-crown">⚡ Fastest</div>
+        <div class="pc-plan">Profile Correction</div>
+        <div class="pc-amount" style="font-size:1.5rem;color:var(--green2)">Quick Fix</div>
+        <p class="pc-tag">Fix name, PAN, address, DOB errors across all bureaus.</p>
+        <div class="pc-div"></div>
+        <ul class="pc-feats">
+          <li><i class="fas fa-check-circle"></i> Name spelling correction</li>
+          <li><i class="fas fa-check-circle"></i> PAN/Aadhaar sync</li>
+          <li><i class="fas fa-check-circle"></i> Address & DOB fixes</li>
+          <li><i class="fas fa-check-circle"></i> 15-20 day resolution</li>
+          <li><i class="fas fa-check-circle"></i> Score boost 20-40 points</li>
+          <li><i class="fas fa-check-circle"></i> Document verification</li>
+        </ul>
+        <a href="/service/profile" class="btn-submit"><i class="fas fa-user-edit"></i> CIBIL Profile Fix</a>
+      </div>
+      
+      <!-- Service 6: Wrong Entry Removal -->
+      <div class="pc r">
+        <div class="pc-plan">Wrong Entry Removal</div>
+        <div class="pc-amount" style="font-size:1.5rem;color:var(--green2)">Fraud Protection</div>
+        <p class="pc-tag">Remove unauthorized loans, identity theft, and fraudulent entries.</p>
+        <div class="pc-div"></div>
+        <ul class="pc-feats">
+          <li><i class="fas fa-check-circle"></i> Fraudulent entry removal</li>
+          <li><i class="fas fa-check-circle"></i> Identity theft protection</li>
+          <li><i class="fas fa-check-circle"></i> Police complaint support</li>
+          <li><i class="fas fa-check-circle"></i> 20-30 day resolution</li>
+          <li><i class="fas fa-check-circle"></i> CIBIL monitoring</li>
+          <li><i class="fas fa-check-circle"></i> Legal affidavit support</li>
+        </ul>
+        <a href="/service/wrong-entry" class="btn-outline2"><i class="fas fa-shield-alt"></i> CIBIL Fraud Removal</a>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec sec-alt" id="about">
+  <div class="W">
+    <div class="about-grid">
+      <div class="about-img-wrap r">
+        <div class="about-tag">⚖️ 100% Legal & RBI Compliant</div>
+        <svg class="about-img-svg" viewBox="0 0 560 420" fill="none">
+          <rect width="560" height="420" fill="url(#abBg)" rx="20"/>
+          <defs>
+            <linearGradient id="abBg" x1="0" y1="0" x2="560" y2="420" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#071428"/><stop offset="1" stop-color="#0d2550"/>
+            </linearGradient>
+          </defs>
+          <line x1="0" y1="84" x2="560" y2="84" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+          <line x1="0" y1="168" x2="560" y2="168" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+          <line x1="0" y1="252" x2="560" y2="252" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+          <line x1="0" y1="336" x2="560" y2="336" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+          <line x1="140" y1="0" x2="140" y2="420" stroke="rgba(255,255,255,.03)" stroke-width="1"/>
+          <line x1="280" y1="0" x2="280" y2="420" stroke="rgba(255,255,255,.03)" stroke-width="1"/>
+          <line x1="420" y1="0" x2="420" y2="420" stroke="rgba(255,255,255,.03)" stroke-width="1"/>
+          <circle cx="280" cy="210" r="140" fill="none" stroke="rgba(76,140,255,.06)" stroke-width="70"/>
+          <circle cx="280" cy="210" r="140" fill="none" stroke="url(#abArc)" stroke-width="4" stroke-dasharray="480 400" stroke-linecap="round" transform="rotate(-90 280 210)"/>
+          <defs><linearGradient id="abArc" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#22c55e"/><stop offset="1" stop-color="#4c8cff"/></linearGradient></defs>
+          <circle cx="280" cy="210" r="100" fill="rgba(10,22,50,.9)" stroke="rgba(76,140,255,.2)" stroke-width="1.5"/>
+          <text x="280" y="196" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="44" letter-spacing="2" fill="white">785</text>
+          <text x="280" y="216" text-anchor="middle" font-family="sans-serif" font-size="11" fill="rgba(255,255,255,.4)" letter-spacing="2">CIBIL SCORE</text>
+          <rect x="244" y="224" width="72" height="18" rx="9" fill="rgba(34,197,94,.2)" stroke="rgba(34,197,94,.5)" stroke-width="1"/>
+          <text x="280" y="237" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="800" fill="#22c55e" letter-spacing="2">EXCELLENT</text>
+          <rect x="40" y="280" width="32" height="100" rx="5" fill="rgba(239,68,68,.4)"/>
+          <rect x="82" y="240" width="32" height="140" rx="5" fill="rgba(249,115,22,.4)"/>
+          <rect x="40" y="265" width="32" height="5" rx="2.5" fill="rgba(34,197,94,.6)"/>
+          <rect x="82" y="225" width="32" height="5" rx="2.5" fill="rgba(34,197,94,.6)"/>
+          <rect x="446" y="250" width="32" height="130" rx="5" fill="rgba(76,140,255,.45)"/>
+          <rect x="488" y="200" width="32" height="180" rx="5" fill="rgba(34,197,94,.45)"/>
+          <rect x="446" y="232" width="32" height="5" rx="2.5" fill="rgba(245,197,24,.7)"/>
+          <rect x="488" y="182" width="32" height="5" rx="2.5" fill="rgba(245,197,24,.7)"/>
+          <rect x="30" y="28" width="136" height="42" rx="10" fill="rgba(76,140,255,.12)" stroke="rgba(76,140,255,.25)" stroke-width="1"/>
+          <text x="56" y="44" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.5)">✓ Written-off Removed</text>
+          <text x="56" y="60" font-family="'Bebas Neue',sans-serif" font-size="12" letter-spacing="1" fill="#22c55e">+165 PTS • 42 DAYS</text>
+          <circle cx="42" cy="49" r="9" fill="rgba(34,212,170,.2)" stroke="rgba(34,212,170,.5)" stroke-width="1.5"/>
+          <rect x="394" y="28" width="136" height="42" rx="10" fill="rgba(230,184,74,.1)" stroke="rgba(230,184,74,.25)" stroke-width="1"/>
+          <text x="420" y="44" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.5)">Loan Approved</text>
+          <text x="420" y="60" font-family="'Bebas Neue',sans-serif" font-size="12" letter-spacing="1" fill="#f5c518">₹45L • HDFC BANK</text>
+          <circle cx="408" cy="49" r="9" fill="rgba(245,197,24,.15)" stroke="rgba(245,197,24,.4)" stroke-width="1.5"/>
+        </svg>
+        <div class="about-badge"><span class="ab-num">7+</span><div class="ab-lbl">Years Excellence</div></div>
+      </div>
+      <div class="r">
+        <div class="pill pill-green" style="margin-bottom:18px">📖 Our Story</div>
+        <h2 class="about-h">India's Most Trusted <em>Credit Repair</em> Experts</h2>
+        <p class="about-p">Founded in 2018, CIBIL Repair has emerged as India's leading credit repair consultancy, dedicated to helping individuals and businesses achieve financial freedom. A poor credit score can block your home loan, car loan, business funding, or even a credit card.</p>
+        <p class="about-p">Our team of certified credit experts, legal advisors, and financial analysts work tirelessly to identify inaccuracies, dispute errors, and negotiate with all four credit bureaus on your behalf — with an average score improvement of 85+ points.</p>
+        <div class="about-feats">
+          <div class="af"><i class="fas fa-check-circle"></i> RBI Compliant Services</div>
+          <div class="af"><i class="fas fa-check-circle"></i> 100% Legal Process</div>
+          <div class="af"><i class="fas fa-check-circle"></i> Bank-Grade Security</div>
+          <div class="af"><i class="fas fa-check-circle"></i> Money Back Guarantee</div>
+          <div class="af"><i class="fas fa-check-circle"></i> Expert Legal Team</div>
+          <div class="af"><i class="fas fa-check-circle"></i> Fastest Resolution</div>
+        </div>
+        <div class="about-stats">
+          <div class="ast"><span class="ast-n">5K+</span><div class="ast-l">Clients</div></div>
+          <div class="ast"><span class="ast-n">98%</span><div class="ast-l">Success</div></div>
+          <div class="ast"><span class="ast-n">85+</span><div class="ast-l">Avg Pts</div></div>
+          <div class="ast"><span class="ast-n">4.9★</span><div class="ast-l">Rating</div></div>
+        </div>
+        <button class="btn-hero-main" onclick="window.open('https://wa.me/919905482503?text=Hi! I need help with my CIBIL score','_blank')" style="margin-top:28px;display:inline-flex"><i class="fas fa-rocket"></i> Start Your Journey</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="sec" id="compare">
+  <div class="W">
+    <div class="sh r">
+      <div class="pill pill-gold">📊 Transformation</div>
+      <h2 class="st">Before & <em>After</em> CIBIL Repair</h2>
+      <p class="ss">See the real, measurable difference across every dimension of your credit profile — in just 30–90 days.</p>
+    </div>
+    <div class="ba-box r">
+      <div class="ba-center">⚡</div>
+      <div class="ba-side ba-before">
+        <div class="ba-head"><span class="ba-badge bb">❌ Before Repair</span></div>
+        <div class="ba-items">
+          <div class="ba-item"><span class="ba-label"><i class="fas fa-chart-line"></i> CIBIL Score</span><span class="ba-val vbad">580</span></div>
+          <div class="ba-item"><span class="ba-label"><i class="fas fa-file-alt"></i> Written Off</span><span class="ba-val vbad">Present</span></div>
+          <div class="ba-item"><span class="ba-label"><i class="fas fa-handshake"></i> Settled Accounts</span><span class="ba-val vbad">2 Accounts</span></div>
+          <div class="ba-item"><span class="ba-label"><i class="fas fa-university"></i> Loan Eligibility</span><span class="ba-val vbad">Rejected</span></div>
+          <div class="ba-item"><span class="ba-label"><i class="fas fa-credit-card"></i> Credit Card</span><span class="ba-val vmid">₹0 Limit</span></div>
+          <div class="ba-item"><span class="ba-label"><i class="fas fa-percentage"></i> Interest Rate</span><span class="ba-val vbad">18–24%</span></div>
+        </div>
+      </div>
+      <div class="ba-side ba-after">
+        <div class="ba-head"><span class="ba-badge ba">✅ After Repair</span></div>
+        <div class="ba-items">
+          <div class="ba-item after"><span class="ba-label"><i class="fas fa-chart-line"></i> CIBIL Score</span><span class="ba-val vgood">785</span></div>
+          <div class="ba-item after"><span class="ba-label"><i class="fas fa-file-alt"></i> Written Off</span><span class="ba-val vgood">Removed ✓</span></div>
+          <div class="ba-item after"><span class="ba-label"><i class="fas fa-handshake"></i> Settled Accounts</span><span class="ba-val vgood">Cleared ✓</span></div>
+          <div class="ba-item after"><span class="ba-label"><i class="fas fa-university"></i> Loan Eligibility</span><span class="ba-val vgood">₹50L Approved</span></div>
+          <div class="ba-item after"><span class="ba-label"><i class="fas fa-credit-card"></i> Credit Card</span><span class="ba-val vgood">₹3L+ Limit</span></div>
+          <div class="ba-item after"><span class="ba-label"><i class="fas fa-percentage"></i> Interest Rate</span><span class="ba-val vgood">8–10%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec sec-alt" id="process">
+  <div class="W">
+    <div class="sh r">
+      <div class="pill">⚡ How It Works</div>
+      <h2 class="st">Your <em>4-Step</em> Journey to Excellent Score</h2>
+      <p class="ss">Transparent, fully legal process with weekly progress updates and zero hidden steps.</p>
+    </div>
+    <div class="proc-grid r">
+      <div class="proc-step"><div class="ps-node"><span class="ps-num">01</span></div><div class="ps-title">Free Consultation</div><p class="ps-desc">Share your CIBIL report. We analyze every entry and provide a free improvement roadmap.</p><span class="ps-dur"><i class="fas fa-clock"></i> Same day</span></div>
+      <div class="proc-step"><div class="ps-node"><span class="ps-num">02</span></div><div class="ps-title">Custom Action Plan</div><p class="ps-desc">Personalized credit repair roadmap with projected score improvement and exact timeline.</p><span class="ps-dur"><i class="fas fa-clock"></i> 1–2 days</span></div>
+      <div class="proc-step"><div class="ps-node"><span class="ps-num">03</span></div><div class="ps-title">Legal Dispute Filing</div><p class="ps-desc">Our legal team files disputes with banks and all four credit bureaus with weekly reports.</p><span class="ps-dur"><i class="fas fa-clock"></i> 7–45 days</span></div>
+      <div class="proc-step"><div class="ps-node"><span class="ps-num">04</span></div><div class="ps-title">Score Improvement</div><p class="ps-desc">CIBIL score rises. We assist you in applying for loans with our partner bank network.</p><span class="ps-dur"><i class="fas fa-clock"></i> 45–90 days</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOAN CALCULATOR -->
+<section class="sec" id="calculator">
+  <div class="W">
+    <div class="sh r">
+      <div class="pill pill-gold">🏦 Loan Calculator</div>
+      <h2 class="st">Loan <em>Eligibility</em> Calculator</h2>
+      <p class="ss">See how much loan you qualify for after improving your CIBIL score.</p>
+    </div>
+    <div class="calc-box r">
+      <div class="calc-l">
+        <h3 class="calc-title">Calculate Your Eligibility</h3>
+        <p class="calc-sub">Adjust sliders to see estimated loan eligibility and monthly EMI based on your income and CIBIL score.</p>
+        <div class="rw">
+          <div class="rl"><span class="rn">Monthly Income</span><span class="rv" id="iv">₹60,000</span></div>
+          <input type="range" min="20000" max="500000" step="5000" value="60000" id="ir" oninput="uc()" aria-label="Monthly Income">
+        </div>
+        <div class="rw">
+          <div class="rl"><span class="rn">CIBIL Score (After Repair)</span><span class="rv" id="sv">750</span></div>
+          <input type="range" min="550" max="900" step="5" value="750" id="sr2" oninput="uc()" aria-label="CIBIL Score">
+        </div>
+        <div class="rw">
+          <div class="rl"><span class="rn">Loan Tenure</span><span class="rv" id="tv">20 Years</span></div>
+          <input type="range" min="1" max="30" step="1" value="20" id="tr" oninput="uc()" aria-label="Loan Tenure">
+        </div>
+        <div class="rw">
+          <div class="rl"><span class="rn">Interest Rate</span><span class="rv" id="rr2">8.5%</span></div>
+          <input type="range" min="7" max="18" step="0.5" value="8.5" id="rr" oninput="uc()" aria-label="Interest Rate">
+        </div>
+      </div>
+      <div class="calc-r">
+        <div class="calc-res">
+          <div class="cr"><div class="cr-lbl">Max Loan Eligibility</div><div class="cr-val gv" id="le">₹37,80,000</div><div class="cr-note">Based on FOIR & your CIBIL score</div><div class="cr-bar"><div class="cr-fill" id="lb" style="width:75%"></div></div></div>
+          <div class="cr"><div class="cr-lbl">Monthly EMI</div><div class="cr-val bv" id="ea">₹32,840</div><div class="cr-note">Fixed rate, equal monthly installments</div><div class="cr-bar"><div class="cr-fill" id="eb" style="width:55%"></div></div></div>
+          <div class="cr"><div class="cr-lbl">Total Interest Payable</div><div class="cr-val yv" id="ti">₹20,21,600</div><div class="cr-note">Over the full loan tenure</div><div class="cr-bar"><div class="cr-fill" id="ib2" style="background:linear-gradient(90deg,#f5c518,#f97316);width:40%"></div></div></div>
+        </div>
+        <button class="btn-hero-main" onclick="window.open('https://wa.me/919905482503?text=Hi! I need help with my CIBIL score','_blank')" style="display:flex;width:100%;justify-content:center;margin-top:20px;font-size:14px"><i class="fas fa-rocket"></i> Improve My Score Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMI CALCULATOR -->
+<section class="sec sec-alt" id="emi">
+  <div class="W">
+    <div class="sh r">
+      <div class="pill pill-green">📱 EMI Calculator</div>
+      <h2 class="st">Calculate Your <em>Monthly EMI</em></h2>
+      <p class="ss">Plan your loan repayments easily. Know your exact monthly payment before you apply.</p>
+    </div>
+    <div class="emi-box r">
+      <div class="emi-l">
+        <h3 class="emi-title">EMI Calculator</h3>
+        <p class="emi-sub">Adjust the sliders to calculate your monthly EMI instantly</p>
+        <div class="rw">
+          <div class="rl"><span class="rn">💰 Loan Amount</span><span class="rv" id="loanAmountVal">₹5,00,000</span></div>
+          <input type="range" min="50000" max="10000000" step="10000" value="500000" id="loanAmount" oninput="calculateEMI()" aria-label="Loan Amount">
+        </div>
+        <div class="rw">
+          <div class="rl"><span class="rn">📅 Interest Rate (% per annum)</span><span class="rv" id="interestRateVal">8.5%</span></div>
+          <input type="range" min="5" max="24" step="0.5" value="8.5" id="interestRate" oninput="calculateEMI()" aria-label="Interest Rate">
+        </div>
+        <div class="rw">
+          <div class="rl"><span class="rn">⏱️ Loan Tenure (Years)</span><span class="rv" id="loanTenureVal">5 Years</span></div>
+          <input type="range" min="1" max="30" step="1" value="5" id="loanTenure" oninput="calculateEMI()" aria-label="Loan Tenure in Years">
+        </div>
+        <div class="rw">
+          <div class="rl"><span class="rn">📊 Loan Tenure (Months)</span><span class="rv" id="loanMonthsVal">60 Months</span></div>
+          <input type="range" min="12" max="360" step="12" value="60" id="loanMonths" oninput="calculateEMI()" aria-label="Loan Tenure in Months">
+        </div>
+      </div>
+      <div class="emi-r">
+        <div class="emi-result">
+          <div class="emi-card"><div class="emi-card-icon">📅</div><div class="emi-card-label">Monthly EMI</div><div class="emi-card-value" id="monthlyEMI">₹8,796</div></div>
+          <div class="emi-card"><div class="emi-card-icon">💰</div><div class="emi-card-label">Total Interest Payable</div><div class="emi-card-value" id="totalInterest">₹27,760</div></div>
+          <div class="emi-card"><div class="emi-card-icon">💵</div><div class="emi-card-label">Total Amount Payable</div><div class="emi-card-value" id="totalAmount">₹5,27,760</div></div>
+        </div>
+        <div class="emi-breakdown">
+          <h4>Payment Breakdown</h4>
+          <div class="breakdown-bar"><div class="breakdown-principal" id="principalPercent" style="width:65%"></div><div class="breakdown-interest" id="interestPercent" style="width:35%"></div></div>
+          <div class="breakdown-labels"><span><span class="principal-dot"></span> Principal Amount</span><span><span class="interest-dot"></span> Interest Amount</span></div>
+        </div>
+        <button class="emi-apply-btn" onclick="window.open('https://wa.me/919905482503?text=Hi! I need help with my CIBIL score','_blank')">Apply for Loan <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCORE SIMULATOR -->
+<section class="sec sec-alt" id="simulator">
+  <div class="W">
+    <div class="sh r">
+      <div class="pill">🎯 Score Simulator</div>
+      <h2 class="st">See Your <em>Potential Score</em></h2>
+      <p class="ss">Select the issues on your credit report and instantly see how much your CIBIL score can improve.</p>
+    </div>
+    <div class="sim-box r">
+      <div class="sim-l">
+        <h3 class="sim-title">What's on Your Report?</h3>
+        <p class="sim-sub">Select all issues that apply. We'll calculate your estimated score improvement instantly.</p>
+        <div class="sim-opts">
+          <div class="sim-opt" data-points="80" onclick="tSim(this)"><div class="sim-opt-l"><div class="sim-check"><i class="fas fa-check sim-chk-ico"></i></div><span class="sim-opt-name">Written Off Account</span></div><span class="sim-pts">+80 pts</span></div>
+          <div class="sim-opt" data-points="60" onclick="tSim(this)"><div class="sim-opt-l"><div class="sim-check"><i class="fas fa-check sim-chk-ico"></i></div><span class="sim-opt-name">Settled Account</span></div><span class="sim-pts">+60 pts</span></div>
+          <div class="sim-opt" data-points="100" onclick="tSim(this)"><div class="sim-opt-l"><div class="sim-check"><i class="fas fa-check sim-chk-ico"></i></div><span class="sim-opt-name">Suit / Court Case Filed</span></div><span class="sim-pts">+100 pts</span></div>
+          <div class="sim-opt" data-points="40" onclick="tSim(this)"><div class="sim-opt-l"><div class="sim-check"><i class="fas fa-check sim-chk-ico"></i></div><span class="sim-opt-name">Wrong / Unauthorized Entry</span></div><span class="sim-pts">+40 pts</span></div>
+          <div class="sim-opt" data-points="20" onclick="tSim(this)"><div class="sim-opt-l"><div class="sim-check"><i class="fas fa-check sim-chk-ico"></i></div><span class="sim-opt-name">Late Payment History</span></div><span class="sim-pts">+20 pts</span></div>
+          <div class="sim-opt" data-points="30" onclick="tSim(this)"><div class="sim-opt-l"><div class="sim-check"><i class="fas fa-check sim-chk-ico"></i></div><span class="sim-opt-name">Profile / Data Errors</span></div><span class="sim-pts">+30 pts</span></div>
+        </div>
+      </div>
+      <div class="sim-r">
+        <div class="sim-display">
+          <div class="sim-ring-w">
+            <svg class="sim-ring-svg" viewBox="0 0 200 200">
+              <defs><linearGradient id="simG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#22c55e"/><stop offset="100%" stop-color="#f5c518"/></linearGradient></defs>
+              <circle class="srb" cx="100" cy="100" r="80"/>
+              <circle class="srf" id="srf" cx="100" cy="100" r="80"/>
+            </svg>
+            <div class="sim-center"><div class="sim-val" id="simV">0</div><div class="sim-val-lbl">Points Gain</div></div>
+          </div>
+          <div class="sim-new-score">New Score Estimate: <strong id="simNS">—</strong></div>
+          <button class="btn-hero-main" onclick="window.open('https://wa.me/919905482503?text=Hi! I need help with my CIBIL score','_blank')" style="display:flex;justify-content:center;width:100%;margin-top:20px;font-size:14px"><i class="fas fa-rocket"></i> Fix My Score Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec" id="testimonials">
+  <div class="W">
+    <div class="sh r">
+      <div class="pill pill-green">💬 Success Stories</div>
+      <h2 class="st">Real People. <em>Real Results.</em></h2>
+      <p class="ss">Over 5,000 Indians have transformed their financial lives with CIBIL Repair.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="tc r"><div class="tc-verified">✓ Verified Client</div><div class="tc-stars">★★★★★</div><p class="tc-text">"My score went from 580 to 785 in just 45 days. The team removed my written-off account legally. My home loan is now sanctioned — I thought this was impossible!"</p><div class="tc-author"><div class="tc-av" style="background:linear-gradient(135deg,#1a4a9c,#22c55e)">M</div><div><div class="tc-name">Maneet Singh</div><div class="tc-loc">Delhi · Home Loan ₹42L Approved</div></div></div><div class="tc-badge">📈 +205 points in 45 days</div></div>
+      <div class="tc r"><div class="tc-verified">✓ Verified Client</div><div class="tc-stars">★★★★★</div><p class="tc-text">"Professional and completely transparent at every step. My settled account was converted to closed in 6 weeks. Score went up 110 points. Highly recommend!"</p><div class="tc-author"><div class="tc-av" style="background:linear-gradient(135deg,#f5c518,#f97316)">P</div><div><div class="tc-name">Priya Sharma</div><div class="tc-loc">Mumbai · Credit Card Limit ₹4L</div></div></div><div class="tc-badge">📈 +110 points in 42 days</div></div>
+      <div class="tc r"><div class="tc-verified">✓ Verified Client</div><div class="tc-stars">★★★★★</div><p class="tc-text">"Three wrong entries removed in 28 days. Business loan approved the very next month. The expertise and dedication is simply unmatched in this industry."</p><div class="tc-author"><div class="tc-av" style="background:linear-gradient(135deg,#8b5cf6,#ef4444)">R</div><div><div class="tc-name">Rajesh Kumar</div><div class="tc-loc">Bangalore · Business Loan ₹28L</div></div></div><div class="tc-badge">📈 +180 points in 28 days</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE -->
+<section class="sec sec-alt">
+  <div class="W">
+    <div class="sh r">
+      <div class="pill">✨ Why Choose Us</div>
+      <h2 class="st">The <em>CIBIL Repair</em> Difference</h2>
+      <p class="ss">We don't just fix scores — we rebuild financial lives with integrity and guaranteed results.</p>
+    </div>
+    <div class="why-grid">
+      <div class="wc r"><div class="wc-icon">⚖️</div><div class="wc-name">100% Legal RBI Process</div><p class="wc-desc">Every action is fully compliant with RBI guidelines and Indian credit bureau regulations. No shortcuts, no risk to you whatsoever.</p></div>
+      <div class="wc r"><div class="wc-icon">🔒</div><div class="wc-name">Bank-Grade Security</div><p class="wc-desc">256-bit SSL encryption on all your documents and personal data. Enterprise-grade data privacy protocols at every step.</p></div>
+      <div class="wc r"><div class="wc-icon">⚡</div><div class="wc-name">30-Day Resolution</div><p class="wc-desc">Fastest in the industry. We file disputes immediately and track cases daily — weekly progress reports guaranteed.</p></div>
+      <div class="wc r"><div class="wc-icon">💰</div><div class="wc-name">Money-Back Guarantee</div><p class="wc-desc">If we can't resolve your case, you pay nothing. Full refund, no questions asked. We only charge for results.</p></div>
+      <div class="wc r"><div class="wc-icon">🏆</div><div class="wc-name">98% Success Rate</div><p class="wc-desc">The highest verified success rate in Indian credit repair, confirmed across 5,000+ resolved cases since 2018.</p></div>
+      <div class="wc r"><div class="wc-icon">👨‍⚖️</div><div class="wc-name">Dedicated Legal Team</div><p class="wc-desc">Lawyers, certified credit counselors, and bureau-negotiation specialists assigned exclusively to your case.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="sec" id="team">
+  <div class="W">
+    <div class="sh r">
+      <div class="pill pill-green">👥 Our Team</div>
+      <h2 class="st">Meet Your <em>Credit Experts</em></h2>
+      <p class="ss">Certified professionals with decades of combined experience in credit law, banking, and financial counseling.</p>
+    </div>
+    <div class="team-grid">
+      <!-- Team Member 1: Vikram Malhotra -->
+      <div class="team-card r">
+        <div class="team-img">
+          <img src="images/vikram-malhotra.png" alt="Vikram Malhotra - Chief Credit Officer" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="team-info">
+          <div class="team-name">Vikram Malhotra</div>
+          <div class="team-role">Chief Credit Officer</div>
+          <p class="team-desc">15+ years in credit bureau management. Ex-CIBIL analyst. CA & certified credit counselor.</p>
+        </div>
+      </div>
+
+      <!-- Team Member 2: Aditi Sharma -->
+      <div class="team-card r">
+        <div class="team-img">
+          <img src="images/aditi-sharma.png" alt="Aditi Sharma - Senior Legal Advisor" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="team-info">
+          <div class="team-name">Aditi Sharma</div>
+          <div class="team-role">Senior Legal Advisor</div>
+          <p class="team-desc">LLB from Delhi University. Specializes in consumer credit law and banking disputes. 12+ years.</p>
+        </div>
+      </div>
+
+      <!-- Team Member 3: Rohit Kapoor -->
+      <div class="team-card r">
+        <div class="team-img">
+          <img src="images/rohit-kapoor.png" alt="Rohit Kapoor - Bureau Relations Head" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="team-info">
+          <div class="team-name">Rohit Kapoor</div>
+          <div class="team-role">Bureau Relations Head</div>
+          <p class="team-desc">Ex-Equifax relationship manager. Direct escalation contacts at all 4 bureaus. MBA Finance, IIM.</p>
+        </div>
+      </div>
+
+      <!-- Team Member 4: Priya Nair -->
+      <div class="team-card r">
+        <div class="team-img">
+          <img src="images/priya-nair.png" alt="Priya Nair - Client Success Manager" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="team-info">
+          <div class="team-name">Priya Nair</div>
+          <div class="team-role">Client Success Manager</div>
+          <p class="team-desc">8 years in financial services. Ensures every client gets regular updates and maximum support.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<div class="partners-sec">
+  <div class="W">
+    <div class="p-label">Trusted by clients who bank with India's top lenders</div>
+    <div class="p-row">
+      <div class="pl">
+        <img src="images/HDFC.png" alt="HDFC Bank" class="bank-logo">
+        <span>HDFC Bank</span>
+      </div>
+      <div class="pl">
+        <img src="images/SBI.png" alt="SBI" class="bank-logo">
+        <span>SBI</span>
+      </div>
+      <div class="pl">
+        <img src="images/Union-Bank.png" alt="Union Bank" class="bank-logo">
+        <span>Union Bank</span>
+      </div>
+      <div class="pl">
+        <img src="images/Central-Bank.png" alt="Central Bank" class="bank-logo">
+        <span>Central Bank</span>
+      </div>
+      <div class="pl">
+        <img src="images/UCO.png" alt="UCO Bank" class="bank-logo">
+        <span>UCO Bank</span>
+      </div>
+      <div class="pl">
+        <img src="images/Indian-Bank.png" alt="Indian Bank" class="bank-logo">
+        <span>Indian Bank</span>
+      </div>
+      <div class="pl">
+        <img src="images/BOI.png" alt="Bank of India" class="bank-logo">
+        <span>Bank of India</span>
+      </div>
+      <div class="pl">
+        <img src="images/PNB.png" alt="Punjab National Bank" class="bank-logo">
+        <span>PNB</span>
+      </div>
+      <div class="pl">
+        <img src="images/ICICI.png" alt="ICICI Bank" class="bank-logo">
+        <span>ICICI Bank</span>
+      </div>
+      <div class="pl">
+        <img src="images/AXIS.png" alt="Axis Bank" class="bank-logo">
+        <span>Axis Bank</span>
+      </div>
+      <div class="pl">
+        <img src="images/KOTAK.png" alt="Kotak Bank" class="bank-logo">
+        <span>Kotak Bank</span>
+      </div>
+      <div class="pl">
+        <img src="images/IDFC.png" alt="IDFC First" class="bank-logo">
+        <span>IDFC First</span>
+      </div>
+      <div class="pl">
+        <img src="images/CIBIL.png" alt="CIBIL" class="bank-logo">
+        <span>CIBIL™</span>
+      </div>
+      <div class="pl">
+        <img src="images/Equifax.png" alt="Equifax" class="bank-logo">
+        <span>Equifax</span>
+      </div>
+      <div class="pl">
+        <img src="images/Experian.png" alt="Experian" class="bank-logo">
+        <span>Experian</span>
+      </div>
+      <div class="pl">
+        <img src="images/CRIF.png" alt="CRIF Highmark" class="bank-logo">
+        <span>CRIF Highmark</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PRICING SECTION — 3 TIERS ═══ -->
+<section class="sec sec-alt" id="pricing">
+  <div class="W">
+    <div class="sh r">
+      <div class="pill pill-gold">💰 Transparent Pricing</div>
+      <h2 class="st">Simple, <em>Honest</em> Plans</h2>
+      <p class="ss">No hidden fees, no surprises. Pay only for what you need — and remember, if we don't deliver, you get a full refund.</p>
+    </div>
+    <div class="price-grid">
+      
+      <!-- Starter Plan -->
+      <div class="pc r">
+        <div class="pc-plan">Starter</div>
+        <div class="pc-amount" style="font-size:2.2rem;color:var(--green2)">₹4,999</div>
+        <p class="pc-tag">For profile errors & quick fixes</p>
+        <div class="pc-div"></div>
+        <ul class="pc-feats">
+          <li><i class="fas fa-check-circle"></i> Profile Correction (Name, PAN, DOB, Address)</li>
+          <li><i class="fas fa-check-circle"></i> Credit bureaus correct data updated simultaneously</li>
+          <li><i class="fas fa-check-circle"></i> 15–30 day resolution</li>
+          <li><i class="fas fa-check-circle"></i> +20–40 points expected</li>
+          <li><i class="fas fa-check-circle"></i> Weekly progress reports</li>
+          <li class="off"><i class="fas fa-times-circle"></i> DPD or Inquiries removal</li>
+          <li class="off"><i class="fas fa-times-circle"></i> Duplicate Entries removal</li>
+        </ul>
+        <a href="/service/starter.php" class="btn-outline2"><i class="fas fa-shield-alt"></i>Get Started →</a>
+      </div>
+      
+      <!-- Professional Plan (Most Popular) -->
+      <div class="pc feat r">
+        <div class="pc-crown">⭐ Most Popular</div>
+        <div class="pc-plan">Professional</div>
+        <div class="pc-amount" style="font-size:2.2rem;color:var(--green2)">₹10,999</div>
+        <p class="pc-tag">For Wrong Entries, written-off & settled accounts</p>
+        <div class="pc-div"></div>
+        <ul class="pc-feats">
+          <li><i class="fas fa-check-circle"></i> Wrong Entries, Written-off OR settled account clearance</li>
+          <li><i class="fas fa-check-circle"></i> Credit bureaus updated + NOC obtained</li>
+          <li><i class="fas fa-check-circle"></i> 60–90 day resolution</li>
+          <li><i class="fas fa-check-circle"></i> +60–120 points expected</li>
+          <li><i class="fas fa-check-circle"></i> Dedicated case manager</li>
+          <li><i class="fas fa-check-circle"></i> Forensic audit included (₹5,999 value)</li>
+          <li><i class="fas fa-check-circle"></i> Bank introduction post-fix</li>
+        </ul>
+        <a href="/service/professional.php" class="btn-outline2"><i class="fas fa-shield-alt"></i> Get Started Now</a>
+      </div>
+      
+      <!-- Enterprise Plan -->
+      <div class="pc r">
+        <div class="pc-plan">Enterprise</div>
+        <div class="pc-amount" style="font-size:2rem;color:var(--green2)">Custom</div>
+        <p class="pc-tag">For Commercial Cibil, legal suits & complex cases</p>
+        <div class="pc-div"></div>
+        <ul class="pc-feats">
+          <li><i class="fas fa-check-circle"></i> Commercial Cibil, Suit filed & legal entry removal</li>
+          <li><i class="fas fa-check-circle"></i> Companies, LLP, Proprietorship or any Organisation</li>
+          <li><i class="fas fa-check-circle"></i> Court documentation & coordination</li>
+          <li><i class="fas fa-check-circle"></i> Fraud & identity theft removal</li>
+          <li><i class="fas fa-check-circle"></i> Police FIR support if needed</li>
+          <li><i class="fas fa-check-circle"></i> Priority 24/7 case updates</li>
+          <li><i class="fas fa-check-circle"></i> Full profile secured post-resolution</li>
+        </ul>
+        <a href="/service/enterprise.php" class="btn-outline2"><i class="fas fa-shield-alt"></i>Get a Custom Quote →</a>
+      </div>
+      
+    </div>
+    <div class="price-note">🔒 All services include money-back guarantee · No success, no charge · Free consultation before starting</div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq">
+  <div class="W">
+    <div class="sh r">
+      <div class="pill">❓ FAQ</div>
+      <h2 class="st">Frequently Asked <em>Questions</em></h2>
+      <p class="ss">Everything you need to know about CIBIL scores and credit repair.</p>
+    </div>
+    <div class="faq-list r">
+      <div class="fi-wrap" onclick="tfq(this)"><div class="fq">What is a good CIBIL score for a home loan?<div class="fi-ico"><i class="fas fa-plus"></i></div></div><div class="fa-ans">A score of 750 or above is considered excellent and gives you the best home loan rates (7.5–9%). Scores 700–749 are good but attract slightly higher rates. Below 700, most banks reject applications or charge 14–18% interest.</div></div>
+      <div class="fi-wrap" onclick="tfq(this)"><div class="fq">How long does credit repair take?<div class="fi-ico"><i class="fas fa-plus"></i></div></div><div class="fa-ans">Simple cases like profile corrections take 15–30 days. Written-off and settled account clearances take 45–60 days. Complex suit filed removal may take 60–90 days. We provide weekly progress updates throughout.</div></div>
+      <div class="fi-wrap" onclick="tfq(this)"><div class="fq">Is credit repair legal in India?<div class="fi-ico"><i class="fas fa-plus"></i></div></div><div class="fa-ans">Absolutely. Our entire process is 100% legal and RBI-compliant. We file formal disputes with credit bureaus and lenders using established legal frameworks, with a dedicated legal team ensuring full compliance at every step.</div></div>
+      <div class="fi-wrap" onclick="tfq(this)"><div class="fq">What is the money-back guarantee?<div class="fi-ico"><i class="fas fa-plus"></i></div></div><div class="fa-ans">If we are unable to resolve the specific issues we agreed to fix in your service agreement, we refund your payment in full — no questions asked. We only take on cases we're confident we can resolve (98% success rate).</div></div>
+      <div class="fi-wrap" onclick="tfq(this)"><div class="fq">Can a written-off account really be removed?<div class="fi-ico"><i class="fas fa-plus"></i></div></div><div class="fa-ans">Yes. A written-off account can be removed by settling the outstanding amount and obtaining an NOC, or by disputing the entry if it contains errors. Our legal team has successfully removed thousands with a 98% success rate.</div></div>
+      <div class="fi-wrap" onclick="tfq(this)"><div class="fq">Do you work with all four credit bureaus?<div class="fi-ico"><i class="fas fa-plus"></i></div></div><div class="fa-ans">Yes. We file disputes with all four — CIBIL (TransUnion), Equifax, Experian, and CRIF Highmark. This ensures your credit profile is clean across all bureaus, as lenders check different bureaus for different loan types.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <div class="W">
+    <div class="cta-inner r">
+      <h2 class="cta-h">Ready to Reclaim Your <em>Financial Freedom?</em></h2>
+      <p class="cta-p">Join 5,000+ Indians who transformed their CIBIL score and unlocked home loans, business loans, and premium credit cards.</p>
+      <div class="cta-acts">
+        <button class="btn-hero-main" onclick="window.open('https://wa.me/919905482503?text=Hi! I need help with my CIBIL score','_blank')"><i class="fas fa-rocket"></i> Get Free Consultation</button>
+        <a href="https://wa.me/+919905482503" class="btn-hero-ghost" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
+        <a href="tel:+919905482503" class="btn-hero-ghost"><i class="fas fa-phone"></i> Call Now</a>
+      </div>
+      <div class="cta-trust">
+        <div class="ct"><i class="fas fa-check-circle"></i> Free initial consultation</div>
+        <div class="ct"><i class="fas fa-check-circle"></i> No hidden charges</div>
+        <div class="ct"><i class="fas fa-check-circle"></i> Money-back guarantee</div>
+        <div class="ct"><i class="fas fa-check-circle"></i> Results in 30–90 days</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND STRIP -->
+<div class="brand-strip">
+  <svg class="bs-shield" width="100" height="108" viewBox="0 0 52 56" fill="none">
+    <path d="M26 2 L48 12 L48 30 C48 43 38 52 26 54 C14 52 4 43 4 30 L4 12 Z" fill="url(#shG2)" stroke="url(#shS2)" stroke-width="1.5"/>
+    <defs>
+      <linearGradient id="shG2" x1="26" y1="2" x2="26" y2="54" gradientUnits="userSpaceOnUse"><stop stop-color="#1a3a7c"/><stop offset="1" stop-color="#071428"/></linearGradient>
+      <linearGradient id="shS2" x1="4" y1="2" x2="48" y2="54" gradientUnits="userSpaceOnUse"><stop stop-color="#4a8aff"/><stop offset="1" stop-color="#1a4a9c"/></linearGradient>
+    </defs>
+    <rect x="11" y="36" width="5" height="10" rx="1.5" fill="#ef4444"/>
+    <rect x="18" y="30" width="5" height="16" rx="1.5" fill="#f97316"/>
+    <rect x="25" y="24" width="5" height="22" rx="1.5" fill="#f5c518"/>
+    <rect x="32" y="18" width="5" height="28" rx="1.5" fill="#22c55e"/>
+    <path d="M38 18 L42 10 L46 18" stroke="#22c55e" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="42" y1="10" x2="42" y2="22" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/>
+    <path d="M26 4 L46 13 L46 30 C46 41.5 37.5 50.2 26 52" stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/>
+  </svg>
+  <div class="bs-name">CIBIL<b>Repair</b></div>
+  <div class="bs-tag">Better Credit. Better Future.</div>
+  <div class="brand-dots"><span class="bd1"></span><span class="bd2"></span><span class="bd3"></span><span class="bd4"></span><span class="bd5"></span></div>
+</div>
+
+<!-- REVIEWS -->
+<section class="sec sec-alt" id="reviews">
+  <div class="W">
+    <div class="sh r">
+      <div class="pill pill-green">📝 Reviews</div>
+      <h2 class="st">Verified <em>Customer Reviews</em></h2>
+      <p class="ss">Genuine, unfiltered reviews from real clients across India.</p>
+    </div>
+    <div class="rv-grid" id="rvGrid">
+      <div class="rv-c r"><div class="rv-ver"><i class="fas fa-check-circle"></i> Verified Purchase</div><div class="rv-stars">★★★★★</div><p class="rv-text">"Excellent service! Score went from 640 to 758 in 45 days. Professional, responsive, and delivered exactly what they promised."</p><div class="rv-name">Amit Verma</div><div class="rv-date">January 2025 · Delhi</div></div>
+      <div class="rv-c r"><div class="rv-ver"><i class="fas fa-check-circle"></i> Verified Purchase</div><div class="rv-stars">★★★★★</div><p class="rv-text">"Very professional team. They removed my settled account and I became eligible for a home loan. Cannot recommend them enough!"</p><div class="rv-name">Neha Gupta</div><div class="rv-date">February 2025 · Mumbai</div></div>
+      <div class="rv-c r"><div class="rv-ver"><i class="fas fa-check-circle"></i> Verified Purchase</div><div class="rv-stars">★★★★★</div><p class="rv-text">"Wrong entry removed in 20 days. Business loan approved immediately after. Best credit repair service in India, hands down."</p><div class="rv-name">Vikram Singh</div><div class="rv-date">March 2025 · Bangalore</div></div>
+    </div>
+    <div class="rv-form r">
+      <h3 class="rvf-h">Share Your Experience</h3>
+      <p class="rvf-s">Helped by CIBIL Repair? Your review helps others make confident decisions.</p>
+      <form onsubmit="subRv(event)">
+        <div class="fgr"><div><label class="fl">Full Name</label><input type="text" class="fi" id="rvN" placeholder="Your name" required></div><div><label class="fl">Email</label><input type="email" class="fi" id="rvE" placeholder="your@email.com" required></div></div>
+        <label class="fl">Your Review</label>
+        <textarea class="fi" rows="3" id="rvT" placeholder="Write your honest review..." required style="resize:vertical"></textarea>
+        <label class="fl">Rating</label>
+        <select class="fi-sel" id="rvR" style="margin-bottom:16px" aria-label="Rating">
+          <option value="5">★★★★★ (5 — Excellent)</option>
+          <option value="4">★★★★☆ (4 — Good)</option>
+          <option value="3">★★★☆☆ (3 — Average)</option>
+        </select>
+        <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Submit Review</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="W">
+    <div class="fg">
+      <div>
+        <a href="/" class="f-brand" aria-label="CIBIL Repair Home">
+          <svg width="42" height="46" viewBox="0 0 52 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="fshG" x1="26" y1="2" x2="26" y2="54" gradientUnits="userSpaceOnUse"><stop stop-color="#1a3a7c"/><stop offset="1" stop-color="#071428"/></linearGradient>
+              <linearGradient id="fshS" x1="4" y1="2" x2="48" y2="54" gradientUnits="userSpaceOnUse"><stop stop-color="#4a8aff"/><stop offset="1" stop-color="#1a4a9c"/></linearGradient>
+            </defs>
+            <path d="M26 2 L48 12 L48 30 C48 43 38 52 26 54 C14 52 4 43 4 30 L4 12 Z" fill="url(#fshG)" stroke="url(#fshS)" stroke-width="1.5"/>
+            <rect x="11" y="36" width="5" height="10" rx="1.5" fill="#ef4444"/>
+            <rect x="18" y="30" width="5" height="16" rx="1.5" fill="#f97316"/>
+            <rect x="25" y="24" width="5" height="22" rx="1.5" fill="#f5c518"/>
+            <rect x="32" y="18" width="5" height="28" rx="1.5" fill="#22c55e"/>
+            <path d="M38 18 L42 10 L46 18" stroke="#22c55e" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="42" y1="10" x2="42" y2="22" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div class="f-brand-text"><div class="f-brand-name">CIBIL<b>Repair</b></div><div class="f-brand-tag">Better Credit. Better Future.</div></div>
+        </a>
+        <p class="f-desc">India's most trusted <strong>credit score repair</strong> and <strong>CIBIL score improvement</strong> consultancy. 5,000+ Indians have fixed their CIBIL scores legally since 2018. Better Credit. Better Future.</p>
+        <div class="f-soc">
+          <a href="https://www.facebook.com/cibilrepair/" target="_blank" rel="noopener" class="fs" aria-label="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/cibilrepair1" target="_blank" rel="noopener" class="fs" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://twitter.com/cibilrepair0" target="_blank" rel="noopener" class="fs" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.linkedin.com/company/cibil-repair" target="_blank" rel="noopener" class="fs" aria-label="Connect with us on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.youtube.com/channel/UCG5yi-vJkUPb2OJESSKf8Kg" target="_blank" rel="noopener" class="fs" aria-label="Subscribe to our YouTube channel"><i class="fab fa-youtube"></i></a>
+          <a href="https://wa.me/919905482503" target="_blank" rel="noopener" class="fs" aria-label="Chat with us on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="f-col">
+        <h4>Services</h4>
+        <ul class="fl-links">
+          <li><a href="/service/written-off">Written Off Removal</a></li>
+          <li><a href="/service/settled">Settled → Closed</a></li>
+          <li><a href="/service/suit-filled">Legal Removal</a></li>
+          <li><a href="/service/analysis">Forensic Audit</a></li>
+          <li><a href="/service/profile">Quick Fix</a></li>
+          <li><a href="/service/wrong-entry">Fraud Protection</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Company</h4>
+        <ul class="fl-links">
+          <li><a href="/about-us">About Us</a></li>
+          <li><a href="/#team">Our Team</a></li>
+          <li><a href="/success-stories">Success Stories</a></li>
+          <li><a href="/partners">Partner With Us</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/careers">Careers</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Contact</h4>
+        <div class="f-ci"><i class="fas fa-envelope"></i><a href="mailto:contact@cibilrepair.in">contact@cibilrepair.in</a></div>
+        <div class="f-ci"><i class="fas fa-phone"></i><a href="tel:+919905482503">+91 99054 82503</a></div>
+        <div class="f-ci"><i class="fas fa-map-marker-alt"></i>Delhi NCR, India</div>
+        <div class="f-ci"><i class="fas fa-clock"></i>Mon–Fri: 9AM–7PM</div>
+        <div class="f-ci"><i class="fas fa-clock"></i>Sat: 10AM–5PM</div>
+      </div>
+    </div>
+    <div class="f-badges">
+      <span class="fbg">🔒 256-bit SSL</span>
+      <a href="/services" class="fbg-link">📈 CIBIL Score Repair</a>
+      <a href="/rbi-compliance" class="fbg-link">⚖️ RBI Compliant</a>
+      <a href="/refund-cancellation" class="fbg-link">💰 Money-Back Guarantee</a>
+      <span class="fbg">🏆 98% Success Rate</span>
+      <a href="#" class="fbg-link">⭐ 4.9 Google Rating</a>
+      <span class="fbg">🏦 All 4 Bureaus</span>
+    </div>
+    <div class="f-bot">
+      <div class="f-leg">
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms-conditions">Terms & Conditions</a>
+        <a href="/refund-cancellation">Refund Policy</a>
+        <a href="/disclaimer">Disclaimer</a>
+        <a href="/complaints">Grievance Redressal</a>
+      </div>
+      <div class="f-copy">© 2025 Corvanta Financial Services. CIBIL® is a trademark of TransUnion CIBIL.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- WA -->
+<a href="https://wa.me/919905482503?text=Hi! I need help with my CIBIL score" class="wa" target="_blank" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+<!-- TOAST -->
+<div class="toast-c" id="toasts"></div>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-bg" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <button class="mc" onclick="closeModal()" aria-label="Close dialog">×</button>
+    <span class="m-ico" aria-hidden="true">🎯</span>
+    <h3 class="m-h" id="modalTitle">Free CIBIL Consultation</h3>
+    <p class="m-s">Get expert advice on fixing your credit score. Our team contacts you within 2 hours.</p>
+    <label for="mN" class="visually-hidden">Full name</label>
+    <input type="text" class="m-input" id="mN" placeholder="Full Name">
+    <label for="mP" class="visually-hidden">Mobile number</label>
+    <input type="tel" class="m-input" id="mP" placeholder="Mobile Number" maxlength="10" inputmode="numeric">
+    <label for="mEm" class="visually-hidden">Email address (optional)</label>
+    <input type="email" class="m-input" id="mEm" placeholder="Email Address (optional)">
+    <button class="m-btn" onclick="submitModal()"><i class="fab fa-whatsapp"></i> Get Consultation on WhatsApp</button>
+    <div class="m-disc">No spam. 100% confidential. We respect your privacy.</div>
+  </div>
+</div>
+
+<script>
+// ============================================
+// DOM READY WRAPPER
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+
+// ============================================
+// PROGRESS BAR
+// ============================================
+let ticking = false;
+let lastScrollY = 0;
+const pf = document.getElementById('pf');
+const nav = document.getElementById('nav');
+
+window.addEventListener('scroll', function() {
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+    if (Math.abs(scrollY - lastScrollY) < 2) return;
+    lastScrollY = scrollY;
+    
+    if (!ticking) {
+        window.requestAnimationFrame(function() {
+            const h = document.documentElement;
+            const scrollHeight = h.scrollHeight - h.clientHeight;
+            
+            if (pf && scrollHeight > 0) {
+                pf.style.width = Math.min((scrollY / scrollHeight) * 100, 100) + '%';
             }
-        }, 1000);
-    </script>
+            
+            if (nav) {
+                const shouldScrolled = scrollY > 30;
+                if (nav.classList.contains('scrolled') !== shouldScrolled) {
+                    nav.classList.toggle('scrolled', shouldScrolled);
+                }
+            }
+            ticking = false;
+        });
+        ticking = true;
+    }
+}, { passive: true });
+
+// ============================================
+// REVEAL ANIMATIONS
+// ============================================
+const revealElements = document.querySelectorAll('.r');
+const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('on');
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+revealElements.forEach(function(el) { observer.observe(el); });
+
+// ============================================
+// COUNTER ANIMATION
+// ============================================
+const counterElements = document.querySelectorAll('[data-target]');
+const counterObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        
+        const el = entry.target;
+        const target = +el.dataset.target;
+        const suffix = el.dataset.s || '';
+        const startTime = performance.now();
+        const duration = 1000;
+        let lastValue = -1;
+        
+        function updateCounter(timestamp) {
+            const elapsed = (timestamp - startTime) / duration;
+            const progress = Math.min(elapsed, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.floor(eased * target);
+            
+            if (current !== lastValue) {
+                lastValue = current;
+                el.textContent = current + (current >= target ? suffix : '');
+            }
+            
+            if (progress < 1) {
+                requestAnimationFrame(updateCounter);
+            } else {
+                el.textContent = target + suffix;
+            }
+        }
+        requestAnimationFrame(updateCounter);
+        counterObserver.unobserve(el);
+    });
+}, { threshold: 0.5 });
+
+counterElements.forEach(function(el) { counterObserver.observe(el); });
+
+// ============================================
+// HERO SCORE ANIMATION
+// ============================================
+(function() {
+    const startTime = performance.now();
+    const duration = 1800;
+    let lastValue = -1;
+    const el = document.getElementById('speedoNum');
+    
+    function animateScore(timestamp) {
+        const elapsed = (timestamp - startTime) / duration;
+        const progress = Math.min(elapsed, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(300 + (785 - 300) * eased);
+        
+        if (current !== lastValue && el) {
+            lastValue = current;
+            el.textContent = current;
+        }
+        
+        if (progress < 1) {
+            requestAnimationFrame(animateScore);
+        }
+    }
+    requestAnimationFrame(animateScore);
+})();
+
+// ============================================
+// MOBILE MENU
+// ============================================
+const ham = document.getElementById('ham');
+const mob = document.getElementById('mob');
+const menuOverlay = document.getElementById('menuOverlay');
+
+if (ham) {
+    ham.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const isOpen = mob.classList.contains('open');
+        mob.classList.toggle('open');
+        ham.classList.toggle('active');
+        if (menuOverlay) menuOverlay.classList.toggle('active');
+        document.body.style.overflow = !isOpen ? 'hidden' : '';
+        ham.setAttribute('aria-expanded', !isOpen);
+    });
+}
+
+if (menuOverlay) {
+    menuOverlay.addEventListener('click', function() {
+        mob.classList.remove('open');
+        ham.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        if (ham) ham.setAttribute('aria-expanded', 'false');
+    });
+}
+
+window.toggleMobSubmenu = function(element) {
+    const parent = element.closest('.mob-dropdown');
+    document.querySelectorAll('.mob-dropdown.active').forEach(function(dropdown) {
+        if (dropdown !== parent) {
+            dropdown.classList.remove('active');
+        }
+    });
+    parent.classList.toggle('active');
+};
+
+window.cm = function() {
+    mob.classList.remove('open');
+    ham.classList.remove('active');
+    if (menuOverlay) menuOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+};
+
+// ============================================
+// FAQ TOGGLE
+// ============================================
+window.tfq = function(el) {
+    const was = el.classList.contains('open');
+    document.querySelectorAll('.fi-wrap.open').forEach(function(f) { f.classList.remove('open'); });
+    if (!was) {
+        el.classList.add('open');
+    }
+};
+
+// ============================================
+// SCORE SIMULATOR
+// ============================================
+window.tSim = function(el) { 
+    el.classList.toggle('active'); 
+    uSim(); 
+};
+
+function uSim() {
+    let pts = 0;
+    document.querySelectorAll('.sim-opt.active').forEach(function(o) { pts += +o.dataset.points; });
+    document.getElementById('simV').textContent = pts;
+    const circ = 2 * Math.PI * 80;
+    const pct = pts > 0 ? Math.min(pts / 330, 1) : 0;
+    const f = document.getElementById('srf');
+    f.style.strokeDasharray = circ;
+    f.style.strokeDashoffset = circ * (1 - pct);
+    document.getElementById('simNS').textContent = pts > 0 ? Math.min(620 + pts, 900) + ' pts' : '—';
+}
+
+// ============================================
+// LOAN CALCULATOR
+// ============================================
+function fmtI(n) { return '₹' + n.toLocaleString('en-IN'); }
+
+window.uc = function() {
+    const inc = +document.getElementById('ir').value;
+    const sc = +document.getElementById('sr2').value;
+    const ten = +document.getElementById('tr').value;
+    const rt = +document.getElementById('rr').value;
+    
+    document.getElementById('iv').textContent = fmtI(inc);
+    document.getElementById('sv').textContent = sc;
+    document.getElementById('tv').textContent = ten + ' Year' + (ten > 1 ? 's' : '');
+    document.getElementById('rr2').textContent = rt + '%';
+    
+    const foir = sc >= 750 ? 0.65 : sc >= 700 ? 0.55 : 0.45;
+    const maxEmi = inc * foir;
+    const r = rt / 12 / 100;
+    const n = ten * 12;
+    const lE = Math.round(maxEmi * (Math.pow(1 + r, n) - 1) / (r * Math.pow(1 + r, n)));
+    const emi = Math.round(lE * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1));
+    const tI = emi * n - lE;
+    
+    document.getElementById('le').textContent = fmtI(lE);
+    document.getElementById('ea').textContent = fmtI(emi);
+    document.getElementById('ti').textContent = fmtI(tI);
+    document.getElementById('lb').style.width = Math.min((lE / 10000000) * 100, 100) + '%';
+    document.getElementById('eb').style.width = Math.min((emi / 100000) * 100, 100) + '%';
+    document.getElementById('ib2').style.width = Math.min((tI / lE) * 100, 100) + '%';
+};
+uc();
+
+// ============================================
+// EMI CALCULATOR - ZERO FORCED REFLOW
+// ============================================
+window.calculateEMI = function() {
+    const els = {
+        loanAmount: document.getElementById('loanAmount'),
+        interestRate: document.getElementById('interestRate'),
+        loanTenure: document.getElementById('loanTenure'),
+        loanMonths: document.getElementById('loanMonths'),
+        loanAmountVal: document.getElementById('loanAmountVal'),
+        interestRateVal: document.getElementById('interestRateVal'),
+        loanTenureVal: document.getElementById('loanTenureVal'),
+        loanMonthsVal: document.getElementById('loanMonthsVal'),
+        monthlyEMI: document.getElementById('monthlyEMI'),
+        totalInterest: document.getElementById('totalInterest'),
+        totalAmount: document.getElementById('totalAmount'),
+        principalPercent: document.getElementById('principalPercent'),
+        interestPercent: document.getElementById('interestPercent')
+    };
+    
+    if (!els.loanAmount) return;
+    
+    const principal = parseFloat(els.loanAmount.value);
+    const annualRate = parseFloat(els.interestRate.value);
+    let years = parseFloat(els.loanTenure.value);
+    let months = parseFloat(els.loanMonths.value);
+    
+    const active = document.activeElement;
+    if (active === els.loanTenure) {
+        months = years * 12;
+        els.loanMonths.value = months;
+    } else if (active === els.loanMonths) {
+        years = months / 12;
+        els.loanTenure.value = years;
+    }
+    
+    els.loanAmountVal.textContent = '₹' + principal.toLocaleString('en-IN');
+    els.interestRateVal.textContent = annualRate + '%';
+    els.loanTenureVal.textContent = years + ' ' + (years === 1 ? 'Year' : 'Years');
+    els.loanMonthsVal.textContent = months + ' Months';
+    
+    const monthlyRate = annualRate / (12 * 100);
+    const emi = principal * monthlyRate * Math.pow(1 + monthlyRate, months) / (Math.pow(1 + monthlyRate, months) - 1);
+    const totalAmount = emi * months;
+    const totalInterest = totalAmount - principal;
+    
+    els.monthlyEMI.textContent = '₹' + Math.round(emi).toLocaleString('en-IN');
+    els.totalInterest.textContent = '₹' + Math.round(totalInterest).toLocaleString('en-IN');
+    els.totalAmount.textContent = '₹' + Math.round(totalAmount).toLocaleString('en-IN');
+    
+    const principalPercent = (principal / totalAmount) * 100;
+    const interestPercent = (totalInterest / totalAmount) * 100;
+    
+    requestAnimationFrame(function() {
+        els.principalPercent.style.width = principalPercent + '%';
+        els.interestPercent.style.width = interestPercent + '%';
+    });
+};
+
+setTimeout(function() {
+    if (document.getElementById('loanAmount')) {
+        window.calculateEMI();
+    }
+}, 0);
+
+// ============================================
+// REVIEW FORM
+// ============================================
+window.subRv = function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const n = document.getElementById('rvN').value.trim();
+    const t = document.getElementById('rvT').value.trim();
+    const r = +document.getElementById('rvR').value;
+    const stars = '★'.repeat(r) + '☆'.repeat(5 - r);
+    const now = new Date().toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+    const card = document.createElement('div');
+    card.className = 'rv-c';
+    card.innerHTML = '<div class="rv-ver"><i class="fas fa-check-circle"></i> Just Submitted</div><div class="rv-stars">' + stars + '</div><p class="rv-text">"' + t + '"</p><div class="rv-name">' + n + '</div><div class="rv-date">' + now + '</div>';
+    document.getElementById('rvGrid').prepend(card);
+    form.reset();
+    showT('✅', 'Thank you!', 'Review submitted for verification.', 'g');
+};
+
+// ============================================
+// TOAST NOTIFICATIONS
+// ============================================
+const tMsgs = [
+    { i: '🎉', t: 'Score Improved!', b: 'Ravi K. — +142 pts · Delhi', c: 'g' },
+    { i: '🏠', t: 'Loan Approved!', b: 'Sneha M. — ₹38L Home Loan', c: 'y' },
+    { i: '📊', t: 'New Client', b: 'Someone from Mumbai just joined', c: 'b' },
+    { i: '✅', t: 'Case Resolved!', b: 'Written-off cleared · Bangalore', c: 'g' },
+    { i: '💳', t: 'Card Approved', b: '₹2.5L limit · HDFC Bank', c: 'y' }
+];
+let ti = 0;
+
+function showT(ico, title, body, type) {
+    const tc = document.getElementById('toasts');
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.innerHTML = '<div class="t-ico ti' + type + '">' + ico + '</div><div class="t-body"><strong>' + title + '</strong><span>' + body + '</span></div>';
+    tc.appendChild(t);
+    setTimeout(function() {
+        t.classList.add('out');
+        setTimeout(function() { t.remove(); }, 300);
+    }, 4200);
+}
+
+function sched() {
+    setTimeout(function() {
+        const m = tMsgs[ti % tMsgs.length];
+        showT(m.i, m.t, m.b, m.c);
+        ti++;
+        setTimeout(sched, 9000 + Math.random() * 4000);
+    }, 5000 + Math.random() * 3000);
+}
+sched();
+
+}); // END DOMContentLoaded
+
+// ============================================
+// MODAL FUNCTIONS - OUTSIDE DOMContentLoaded
+// ============================================
+function openModal() { 
+    const modal = document.getElementById('modal');
+    if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    } else {
+        alert('Modal not found!');
+    }
+}
+
+function closeModal() {
+    const modal = document.getElementById('modal');
+    if (modal) {
+        modal.style.display = 'none';
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+}
+
+function closeResultModal() {
+    const modal = document.getElementById('resultModal');
+    if (modal) modal.classList.remove('active');
+}
+
+function submitModal() {
+    const n = document.getElementById('mN')?.value?.trim() || '';
+    const p = document.getElementById('mP')?.value?.trim() || '';
+    const em = document.getElementById('mEm')?.value?.trim() || '';
+    if (!n || !p) { 
+        alert('Please enter your name and phone number.'); 
+        return; 
+    }
+    const msg = encodeURIComponent('Hi! I want a free consultation for CIBIL repair.\n\nName: ' + n + '\nPhone: ' + p + (em ? '\nEmail: ' + em : ''));
+    window.open('https://wa.me/919905482503?text=' + msg, '_blank');
+    closeModal();
+}
+
+// Close modal on outside click
+document.addEventListener('click', function(e) {
+    const modal = document.getElementById('modal');
+    if (modal && e.target === modal) {
+        closeModal();
+    }
+});
+
+// Close modal on ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+        closeResultModal();
+    }
+});
+
+</script>
 </body>
 </html>
